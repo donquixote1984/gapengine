@@ -1,0 +1,19 @@
+#pragma once
+enum class ShaderType 
+{
+    NO_SHADER,
+    POINT_SHADER,
+    BASIC_SHADER, 
+    DEFAULT_SHADER,
+    PBR_SHADER,
+    TERRAIN_SHADER,
+    REFLECTIVE_SHADER,
+    POINT_LIGHT_SHADER,
+    DIRECTIONAL_LIGHT_SHADER,
+    WATER,
+    VOLUME,
+    SIMPLE_CLOUD,
+    CLOUD,
+    RAYMARCH_TERRAIN,
+    RAW
+};

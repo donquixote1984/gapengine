@@ -1,0 +1,16 @@
+{
+    "geometry": [
+        "geos/sphere1/sphere1.json"
+    ],
+    "lights": ["lights/light1.json"],
+    "skybox": {
+        "cubemap": {
+            "top": "./res/skybox/night/py.png",
+            "bottom":"./res/skybox/night/ny.png",
+            "left":"./res/skybox/night/nx.png",
+            "right":"./res/skybox/night/px.png",
+            "front":"./res/skybox/night/pz.png",
+            "back":"./res/skybox/night/nz.png"
+        }
+    }
+}

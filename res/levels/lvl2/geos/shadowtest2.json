@@ -1,0 +1,72 @@
+{
+    "type": "mesh",
+    "name": "shadowtest",
+    "asset": "models/hardsurface/shadowtest.asset",
+    
+    "position": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+    },
+    "scale": {
+        "x":1,
+        "y":1,
+        "z":1
+    },
+    "rotate": {
+        "angle": -90,
+        "axis": {
+            "x":1,
+            "y":0,
+            "z":0
+        }
+    },
+    "material": {
+        "shadings": ["pbr"],
+        "ambient": {
+            "basecolor": {
+                "r": 0.5 ,
+                "g": 0.5,
+                "b": 0.5
+            }
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 0.5 ,
+                "g": 0.5,
+                "b": 0.5
+            }
+        },
+        "normal": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1.0,
+                "b": 1.0 
+            }
+        },
+        "metalness": {
+            "basecolor": {
+                "r": 0 ,
+                "g": 0,
+                "b": 0 
+            }
+        },
+        "roughness": {
+            "basecolor": {
+                "r": 0.2 ,
+                "g": 0.2,
+                "b": 0.2
+            }
+        },
+        "specular": {
+            "basecolor": {
+                "r": 0.5,
+                "g": 0.5,
+                "b": 0.5
+            }
+        },
+        "shininess": {
+            "constant": 32
+        }
+    }
+}

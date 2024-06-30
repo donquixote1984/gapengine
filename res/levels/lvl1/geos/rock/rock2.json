@@ -1,0 +1,49 @@
+{
+    "type": "mesh",
+    "name": "rock2",
+    "asset": "models/rock/rock2.asset",
+    "parent": "terrain1",
+    "position": {
+        "x": -3,
+        "y": 1,
+        "z": 0
+    },
+    "scale": {
+        "x":1,
+        "y":1,
+        "z":1
+    },
+    "material": {
+        "ambient": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1,
+                "b": 1
+            }
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1,
+                "b": 1
+            }
+        },
+        "normal": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1.0,
+                "b": 1.0 
+            }
+        },
+        "specular": {
+            "basecolor": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+            }
+        },
+        "shininess": {
+            "constant": 32
+        }
+    }
+}

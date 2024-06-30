@@ -1,0 +1,47 @@
+{
+    "type": "primitive",
+    "subtype": "plane",
+    "name": "floor2",
+    "postprocessing": "scatter",
+    "visible": false,
+    "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "scale": {
+        "x":1,
+        "y":1,
+        "z":1
+    },
+    "material": {
+        "ambient": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            }
+            
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            },
+            "texture": "./res/textures/floor_diffuse.jpg"
+            
+        },
+        "specular": {
+            "basecolor": {
+                "r": 0.5,
+                "g": 0.5,
+                "b": 0.5
+            }
+            
+        },
+        "shininess": {
+            "constant": 32
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "geometry": [
+        "dancer.json",
+        "geos/floor3.json"
+    ],
+    "lights": [
+        "lights/dlight1.json"
+    ]
+}

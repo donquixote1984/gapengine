@@ -1,0 +1,11 @@
+{
+    "geometry": [
+    ],
+    "lights": [
+        "lights/dlight1.json"
+    ],
+    "terrain": "terrain.json",
+    "skybox": {
+        "hdri": "./res/skybox/hdri/night.hdr"
+    }
+}

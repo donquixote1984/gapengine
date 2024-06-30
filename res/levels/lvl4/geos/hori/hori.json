@@ -1,0 +1,69 @@
+{
+    "type": "container",
+    "name": "hori",
+    "preprocessing": {
+        "unitscale": 0.5
+    },
+    "geometry": [
+        "geos/hori/hori1.json", 
+        "geos/hori/frontleg.json", 
+        "geos/hori/rearleg.json", 
+        "geos/hori/drum.json", 
+        "geos/hori/gravity.json", 
+        "geos/hori/jaw.json"
+    ],
+    "position": {
+        "x": 0,
+        "y": 0,
+        "z": 2
+    },
+    "scale": {
+        "x":1,
+        "y":1,
+        "z":1
+    },
+    "rotate": {
+        "axis": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+        },
+        "angle": -90.0
+    },
+    "script": {
+        "file": "hori.lua"
+    },
+    "material": {
+        "ambient": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            }
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            }
+        },
+        "normal": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1.0,
+                "b": 1.0 
+            }
+        },
+        "specular": {
+            "basecolor": {
+                "r": 0.5,
+                "g": 0.5,
+                "b": 0.5
+            }
+        },
+        "shininess": {
+            "constant": 32
+        }
+    }
+}

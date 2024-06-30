@@ -1,0 +1,24 @@
+{
+    "geometry": [
+        {
+            "type": "primitive",
+            "subtype": "cube",
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "material": {
+                "type": "custom",
+                "shader": "./res/shaders/test/geometry.geometry.shader"
+            }
+        }
+       
+    ],
+    "lights": []
+}

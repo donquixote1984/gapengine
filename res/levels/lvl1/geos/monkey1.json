@@ -1,0 +1,54 @@
+{
+    "data": "./res/suzanne3.obj",
+    "type": "mesh",
+    "name": "monkey1",
+    "position": {
+        "x": -1,
+        "y": 0.5,
+        "z": 0
+    },
+    "scale": {
+        "x":0.3,
+        "y":0.3,
+        "z":0.3
+    },
+    "rotate": {
+        "axis": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+        },
+        "angle": 120
+    },
+    "material": {
+        "ambient": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1,
+                "b": 1
+            }
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+            },
+            "texture": "./res/textures/suzanne_diffuse.png"
+        },
+        "specular": {
+            "basecolor": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+            },
+            "texture": "./res/textures/suzanne_specular.png"
+        },
+        "shininess": {
+            "constant": 32
+        }
+    },
+    "defaultShaders": [
+        "outline"
+    ]
+}

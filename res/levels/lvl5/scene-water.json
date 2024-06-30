@@ -1,0 +1,17 @@
+{
+    "geometry": [
+        "geos/water1.json",
+        "geos/cube-above1.json",
+        "geos/cube-above2.json",
+        "geos/cube-above3.json",
+        "geos/cube-above4.json",
+        "geos/sphere-below1.json",
+        "geos/sphere-below2.json"
+    ],
+    "lights": [
+        "lights/dlight1.json"
+    ],
+    "skybox": {
+        "hdri": "./res/skybox/hdri/night.hdr"
+    }
+}

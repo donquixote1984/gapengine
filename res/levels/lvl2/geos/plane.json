@@ -1,0 +1,49 @@
+{
+    "type": "primitive",
+    "subtype": "plane",
+    "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "scale": {
+        "x":2,
+        "y":2,
+        "z":2
+    },
+    "material": {
+        "ambient": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            }
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            },
+            "texture": "./res/textures/grass.png"
+        },
+        "specular": {
+            "basecolor": {
+                "r": 0.5,
+                "g": 0.5,
+                "b": 0.5
+            }
+        },
+        "shininess": {
+            "constant": 32
+        }
+    },
+    "posthandle": [{
+        "OP_NAME": "TEX",
+        "OP_TYPE": "ASSIGN",
+        "OP_PARAM": {
+            "type": "diffuse",
+            "file": "res/textures/grass.png"
+        }
+    }]
+}

@@ -1,0 +1,8 @@
+{
+    "geometry": [
+        "cloud.json"
+    ],
+    "lights": [
+        "lights/dlight1.json"
+    ]
+}

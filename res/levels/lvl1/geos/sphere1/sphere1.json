@@ -1,0 +1,53 @@
+{
+    "type": "primitive",
+    "subtype": "sphere",
+    "name": "sphere1",
+    "asset": "textures/stonefloor.asset",
+    "position": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+    },
+    "scale": {
+        "x":0.5,
+        "y":0.5,
+        "z":0.5
+    },
+    "material": {
+        "tile": {
+            "constant": 6
+        },
+        "ambient": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            }
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            }
+        },
+        "specular": {
+            "basecolor": {
+                "r": 0.5,
+                "g": 0.5,
+                "b": 0.5
+            }
+            
+        },
+        "normal": {
+            "basecolor": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+            }
+        },
+        "shininess": {
+            "constant": 32
+        }
+    }
+}

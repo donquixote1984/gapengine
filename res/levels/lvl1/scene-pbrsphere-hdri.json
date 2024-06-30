@@ -1,0 +1,12 @@
+{
+    "geometry": [
+        "geos/sphere/metal.json",
+        "geos/floor3/floor3.json"
+    ],
+
+    "lights": ["lights/light1.json"],
+    "skybox": {
+        "hdri": "./res/skybox/hdri/night.hdr"
+    }
+    
+}

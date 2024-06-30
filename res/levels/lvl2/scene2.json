@@ -1,0 +1,4 @@
+{
+    "geometry": ["geos/plane.json"],
+    "lights": ["lights/light1.json", "lights/light2.json"]
+}

@@ -1,0 +1,1 @@
+obj.rotation.y = obj.rotation.y + 1*deltaTime;

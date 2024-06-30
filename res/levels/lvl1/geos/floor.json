@@ -1,0 +1,46 @@
+{
+    "shader": "./res/shaders/geometry/geometry.multilight.shader",
+    "data": "./res/floor.geo.data",
+    "type": "mesh",
+    "name": "floor",
+    "position": {
+        "x": 0,
+        "y": 3,
+        "z": 0
+    },
+    "scale": {
+        "x":3,
+        "y":3,
+        "z":3
+    },
+    "material": {
+        "ambient": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            }
+            
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            },
+            "texture": "./res/textures/floor_diffuse.jpg"
+            
+        },
+        "specular": {
+            "basecolor": {
+                "r": 0.5,
+                "g": 0.5,
+                "b": 0.5
+            }
+            
+        },
+        "shininess": {
+            "constant": 32
+        }
+    }
+}

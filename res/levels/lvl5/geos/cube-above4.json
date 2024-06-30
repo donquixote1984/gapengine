@@ -1,0 +1,64 @@
+{
+    "type": "primitive",
+    "subtype": "cube",
+    "name": "cube4",
+    "asset": "textures/stonefloor.asset",
+    "position": {
+        "x": -1,
+        "y": 1,
+        "z": -1
+    },
+    "scale": {
+        "x":0.5,
+        "y":0.5,
+        "z":0.5
+    },
+    "material": {
+        "shadings": ["pbr"],
+        "ambient": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 0.5,
+                "b": 0.31
+            }
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1,
+                "b": 1
+            }
+        },
+        "normal": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1.0,
+                "b": 1.0 
+            }
+        },
+        "metalness": {
+            "basecolor": {
+                "r": 0 ,
+                "g": 0,
+                "b": 0 
+            }
+        },
+        "roughness": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1.0,
+                "b": 1.0 
+            }
+        },
+        "specular": {
+            "basecolor": {
+                "r": 0.5,
+                "g": 0.5,
+                "b": 0.5
+            }
+        },
+        "shininess": {
+            "constant": 32
+        }
+    }
+}

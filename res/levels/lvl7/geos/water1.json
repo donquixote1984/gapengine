@@ -1,0 +1,61 @@
+{
+    "type": "water",
+    "name": "water1",
+    "position": {
+        "x": 0,
+        "y": 0,
+        "z":0 
+    },
+    "scale": {
+        "x":5,
+        "y":5,
+        "z":5
+    },
+    "rotate": {
+        "angle":0,
+        "axis": {
+            "x":1,
+            "y":0,
+            "z":0
+        }
+    },
+    "material": {
+        "type": "water",
+        "tint": {
+            "basecolor": {
+                "r": 0,
+                "g": 0.4,
+                "b": 0.5
+            }
+        },
+        "flow": {
+            "basecolor": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+            },
+            "texture": "res/textures/water/default/dudv.jpeg"
+        },
+        "normal": {
+            "basecolor": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+            },
+            "texture":  "res/textures/water/default/normal.jpeg"
+        },
+        "waveStrength": {
+            "constant": 0.1
+        },
+        "transparency": {
+            "constant": 0.5
+        },
+        "waveSpeed": {
+            "basecolor": {
+                "r": 0.01,
+                "g": 0.01,
+                "b": 1
+            }
+        }
+    }
+}

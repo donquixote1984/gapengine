@@ -1,0 +1,63 @@
+{
+    "asset": "models/grass/grass1.asset",
+    "unitscale": 0.01,
+    "type": "instancing",
+    "name": "grass1",
+    "meta": {
+        "instancing": {
+            "type": "static", 
+            "distribution": "circle",
+            "count": 1000, 
+            "radius": 10.0,
+            "scaleVariant": 0.5,
+            "rotationVariant": {"x": 0, "y": 1, "z" : 0}
+        }
+    },
+    "position": {
+        "x": -1,
+        "y": 0.5,
+        "z": 0
+    },
+    "scale": {
+        "x":1,
+        "y":1,
+        "z":1
+    },
+    "rotate": {
+        "axis": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+        },
+        "angle": 120
+    },
+    "material": {
+        "ambient": {
+            "basecolor": {
+                "r": 1.0 ,
+                "g": 1,
+                "b": 1
+            }
+        } ,
+        "diffuse": {
+            "basecolor": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+            }
+        },
+        "specular": {
+            "basecolor": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+            }
+        },
+        "shininess": {
+            "constant": 32
+        }
+    },
+    "defaultShaders": [
+        "outline"
+    ]
+}
