@@ -18,6 +18,7 @@
 #include "render/lightmap/PointLightMap.h"
 #include "terrain/Terrain.h"
 #include "atomsphere/Atomsphere.h"
+#include "water/Sea.h"
 #include "render/passes/RenderPassLinkList.h"
 #include <typeinfo>
 
@@ -42,6 +43,7 @@ private:
     Camera *m_Camera = nullptr;
     Ground *m_Ground = nullptr;
     Terrain *m_Terrain = nullptr;
+    Sea* m_Sea = nullptr;
     Atomsphere *m_Atomsphere = nullptr;
     TestGeometry *m_TestGeometry = nullptr;
     void UpdateMVP();
@@ -77,6 +79,7 @@ public:
     EnvBox *GetEnvBox() const;
     bool UseCSM();
     void AddTerrain(Terrain *);
+    void AddSea(Sea*);
     void AddAtomsphere(Atomsphere * atomsphere);
     const LightMapRenderer &GetLightMapRenderer() const;
     void AppendPreRenderPass(RenderPass *pass);

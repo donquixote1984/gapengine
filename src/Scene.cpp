@@ -32,6 +32,8 @@ Scene::~Scene()
     m_Terrain = NULL;
     delete m_Atomsphere;
     m_Atomsphere = NULL;
+    delete m_Sea;
+    m_Sea = NULL;
 }
 void Scene::InitRenderPasses()
 {
@@ -142,6 +144,10 @@ void Scene::AddTerrain(Terrain *terrain)
     }
     terrain->SetScene(this);
 }
+void Scene::AddSea(Sea* sea)
+{
+    m_Sea = sea;
+}
 void Scene::AddAtomsphere(Atomsphere * atomsphere)
 {
     m_Atomsphere = atomsphere;
@@ -177,6 +183,11 @@ void Scene::RenderEnv(RenderContext & rc)
     if (m_Atomsphere != nullptr)
     {
         m_Atomsphere->OnRender();
+    }
+
+    if (m_Sea != nullptr)
+    {
+        m_Sea->OnRender();
     }
     m_Ground->OnUpdateRender(rc);
 }

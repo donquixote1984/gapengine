@@ -33,7 +33,7 @@ add_compile_definitions(GLFW_INCLUDE_NONE)
 
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (${PROJECT_NAME} ${MAIN_SRC} ${PROJECT_SOURCE_DIR}/gapengine.cpp)
+add_executable (${PROJECT_NAME} ${MAIN_SRC} ${PROJECT_SOURCE_DIR}/gapengine.cpp "src/water/Sea.h" "src/water/Sea.cpp")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
 glm::glm fmt::fmt glfw assimp::assimp Boost::program_options Boost::log_setup Boost::log nlohmann_json mstch::mstch glfw magic_enum::magic_enum  glad::glad
@@ -49,6 +49,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include
 
 file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 file(COPY ${PROJECT_SOURCE_DIR}/src/config.ini DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+add_custom_target(
+	copyres ALL
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/res ${CMAKE_CURRENT_BINARY_DIR}
+)
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET gapengine PROPERTY CXX_STANDARD 20)
 endif()

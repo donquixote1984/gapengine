@@ -91,6 +91,15 @@ JsonSceneReader::JsonSceneReader(const std::string &file)
         }
     }
 
+    if (j.contains("sea"))
+    {
+        bool hasSea = j["sea"];
+        if (hasSea)
+        {
+            m_Sea = new Sea();
+        }
+    }
+
     ResolveHierarchy(geojsons, nullptr);
     ReadRoot(root);
 
@@ -266,7 +275,10 @@ void JsonSceneReader::AddToScene(Scene &scene)
         scene.AddTerrain(static_cast<Terrain *>(m_Terrain));
     }
 
-
+    if (m_Sea != nullptr)
+    {
+        scene.AddSea(m_Sea);
+    }
     scene.settings.showNormal = m_ShowNormal;
 
     Global::ui->RegisterComponent(UIComponent::LIGHTS, (void *)scene.GetLights());

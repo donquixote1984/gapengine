@@ -10,6 +10,7 @@
 #include "lights/Light.h"
 #include "terrain/Terrain.h"
 #include "atomsphere/Atomsphere.h"
+#include "water/Sea.h"
 #include "Scene.h"
 #include <unordered_map>
 #include <vector>
@@ -17,6 +18,7 @@
 #include <any>
 #include <sstream>
 #include "Logger.h"
+#include "water/Sea.h"
 
 using namespace nlohmann;
 class WorldGraphNode
@@ -46,6 +48,7 @@ private:
     EnvBox *m_EnvBox = nullptr;
     EmptyTransform *m_Terrain = nullptr;
     Atomsphere *m_Atomsphere = nullptr;
+    Sea* m_Sea = nullptr;
     void ResolveHierarchy(json g, WorldGraphNode *);
     void ResolveNode(json geojson, WorldGraphNode*);
     void ResolveSceneSettings(json settingsjson);

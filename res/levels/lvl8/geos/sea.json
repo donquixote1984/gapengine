@@ -1,0 +1,32 @@
+{
+  "type": "sea",
+  "name": "sea1",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "scale": {
+    "x": 5,
+    "y": 5,
+    "z": 5
+  },
+  "rotate": {
+    "angle": 0,
+    "axis": {
+      "x": 1,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "material": {
+    "type": "sea",
+    "tint": {
+      "basecolor": {
+        "r": 0,
+        "g": 0.4,
+        "b": 0.5
+      }
+    }
+  }
+}
