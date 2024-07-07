@@ -44,6 +44,7 @@ void VariantObjReader::operator >> (Geometry* g)
         if (r.GetMeshes().size() > 0)
         {
             variableGeometryData[m_VariantSize].FeedData(r.GetMeshes()); 
+            variableGeometryData[m_VariantSize].SetUseAssetMaterial(m_OPP.useAssetMaterial);
             m_VariantSize += 1;
         }
     }

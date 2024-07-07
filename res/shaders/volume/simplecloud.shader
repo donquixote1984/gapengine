@@ -105,7 +105,7 @@ vec4 raymarch(vec3 rayOrigin, vec3 rayDirection, float offset) {
     // We only draw the density if it's greater than 0
     if (density > 0.0) {
 
-      float diffuse = clamp((scene(p) - scene(p + 0.3 * ub__DynamicDirLights[0].direction)) / 0.3, 0.0, 1.0 );
+      float diffuse = clamp((scene(p) - scene(p + 0.3 * ub_DynamicDirLights[0].direction)) / 0.3, 0.0, 1.0 );
       vec3 lin = vec3(0.60,0.60,0.75) * 1.1 + 0.8 * vec3(1.0,0.6,0.3) * diffuse;
 
       vec4 color = vec4(mix(vec3(1.0,1.0,1.0), vec3(0.0, 0.0, 0.0), density), density );

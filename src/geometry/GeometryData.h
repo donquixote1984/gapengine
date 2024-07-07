@@ -13,6 +13,7 @@
 #include "../animation/Bone.h"
 #include "../animation/BoneAnimation.h"
 #include "../animation/SceneAnimation.h"
+#include "../reader/TextureReader.h"
 
 
 enum class GeometryDataType
@@ -27,34 +28,48 @@ class GeometryData
     friend class GeometryDataFactory;
 protected:
     std::vector<Mesh> m_Meshes;
-    std::vector<std::unordered_map<std::string, Bone *>> m_Bones;
+    std::vector<std::unordered_map<std::string, Bone*>> m_Bones;
     //std::vector<BoneAnimation*> m_Animations;
     std::vector<SceneAnimation*> m_SceneAnimations;
-    
+
     bool m_IsEmpty = true;
     GeometryData();
     GeometryData(std::vector<Mesh> meshes);
-    GeometryData(std::vector<Mesh> meshes, std::vector<std::unordered_map<std::string, Bone *>> bones);
+    GeometryData(std::vector<Mesh> meshes, std::vector<std::unordered_map<std::string, Bone*>> bones);
     GeometryData(Mesh mesh);
-    
-    GeometryData(float *rawArr, int size, std::initializer_list<int> layouts);
+
+    GeometryData(float* rawArr, int size, std::initializer_list<int> layouts);
     GeometryData(std::shared_ptr<float[]> rawArrSP, int size, std::initializer_list<int> layouts);
-    Bone * FindBone(const std::string &name);
-    
+    Bone* FindBone(const std::string& name);
+    TexturePackagePath m_DefaultTextures;
+    bool m_UseAssetMaterial = false;
+
 public:
     ~GeometryData();
     void FeedData(std::vector<Mesh> meshes);
-    void FeedData(std::vector<std::unordered_map<std::string, Bone *>> bones);
-    void FeedData(float *rawArr, int size, std::initializer_list<int> layouts);
+    void FeedData(std::vector<std::unordered_map<std::string, Bone*>> bones);
+    void FeedData(float* rawArr, int size, std::initializer_list<int> layouts);
     void FeedData(std::shared_ptr<float[]> rawArrSp, int vertexCount, std::initializer_list<int> layouts);
     void FeedData(Mesh mesh);
     bool IsEmpty();
-    std::vector<Mesh> GetMeshes();
+    std::vector<Mesh>& GetMeshes();
+    void SetUseAssetMaterial(bool uam);
+    bool UseAssetMaterial();
     int GetLayoutSize();
     bool HasBone();
     bool HasAnimation();
-    void FeedSceneAnimation(std::vector<SceneAnimation *> animations);
-    SceneAnimation * GetSceneAnimation(unsigned int index);
+    void FeedSceneAnimation(std::vector<SceneAnimation*> animations);
+    SceneAnimation* GetSceneAnimation(unsigned int index);
+
+    void SetDefaultTextures(TexturePackagePath t)
+    {
+        m_DefaultTextures = t;
+    }
+
+    TexturePackagePath GetDefaultTextures()
+    {
+        return m_DefaultTextures;
+    }
 
 };
 

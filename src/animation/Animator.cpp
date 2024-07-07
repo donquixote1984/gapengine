@@ -8,12 +8,15 @@ Animator::Animator()
     for (int i = 0; i < 100; i++)
         m_FinalBoneMatrices.push_back(glm::mat4(1.0f));
 }
-void Animator::UpdateAnimation(float dt)
+void Animator::UpdateAnimation(float dt, bool additive)
 {
     m_DeltaTime = dt;
     if (m_CurrentSceneAnimation)
     {
-        m_CurrentTime += m_CurrentSceneAnimation->GetTicksPerSecond() * dt;
+        if (additive)
+        {
+            m_CurrentTime += m_CurrentSceneAnimation->GetTicksPerSecond() * dt;
+        }
         m_CurrentTime = fmod(m_CurrentTime, m_CurrentSceneAnimation->GetDuration());
         CalculateBoneTransform(&m_CurrentSceneAnimation->GetRootNode(), glm::mat4(1.0f));
     }

@@ -45,7 +45,7 @@ void ShadowRenderPass::Render(RenderContext &rc)
     {
         if (g->IsGeometry()) 
         {
-            GetScene()->GetLightMapRenderer().RenderGeometry(static_cast<Geometry *>(g));
+            GetScene()->GetLightMapRenderer().RenderGeometry(static_cast<Geometry *>(g), rc);
         }
     }
 }

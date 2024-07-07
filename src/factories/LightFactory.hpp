@@ -35,7 +35,8 @@ public:
 
         std::shared_ptr<MaterialValueNode> mvn = MaterialNodeReader::ReadMaterial(materialJson, pmt);
         LightMaterial* lm = static_cast<LightMaterial*> ( mvn.get()->GetFirstOutputValue().GetPtr());
-        l->SetMaterial(lm);
+        l->ClearMaterial();
+        l->AddMaterial(lm);
         
         delete pmt;
         return l;
@@ -55,7 +56,8 @@ public:
         MaterialTemplate *pmt = new DirectionalLightMaterialTemplate();
         std::shared_ptr<MaterialValueNode> mvn = MaterialNodeReader::ReadMaterial(materialJson, pmt);
         LightMaterial* lm = static_cast<LightMaterial*> ( mvn.get()->GetFirstOutputValue().GetPtr());
-        l->SetMaterial(lm); 
+        l->ClearMaterial();
+        l->AddMaterial(lm); 
         delete pmt;
         return l;
     }

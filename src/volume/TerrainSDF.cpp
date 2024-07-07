@@ -11,9 +11,9 @@ TerrainSDF::~TerrainSDF()
 }
 void TerrainSDF::PreRender()
 {
-    Shader *s = this->GetMaterial()->GetShader();
-    m_TerrainNoise->Bind(0);
-    s->setUniform1i("u_TerrainNoiseTexture", 0);
-    s->setUniform2f("u_Resolution", m_CanvasWidth, m_CanvasHeight);
+    //Shader *s = this->GetMaterial()->GetShader();
+    //m_TerrainNoise->Bind(0);
+    this->GetUniforms().Cache("u_TerrainNoiseTexture", 0);
+    this->GetUniforms().Cache("u_Resolution", m_CanvasWidth, m_CanvasHeight);
     glViewport(0, 0, m_CanvasWidth, m_CanvasHeight);
 }

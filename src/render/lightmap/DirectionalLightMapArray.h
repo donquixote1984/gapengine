@@ -6,7 +6,7 @@
 class DirectionalLightMapArray: public LightMapArray
 {
 private:
-    float lvls[constants::MAX_CSM_LVLS - 1] = {.2f, .3f, .4f, .5f};
+    float lvls[constants::MAX_CSM_LVLS - 1] = {.02f, .08f, .3f, .5f};
     std::vector<float> m_ShadowCascadeLevels;
     bool m_UseCSM;
     Camera * m_Camera;
@@ -24,6 +24,6 @@ public:
     void OnRenderLightSpace() override;
     void RenderDebug(Geometry*g) override;
     void EnableCSM(bool csm);
-    void OnRenderGeometry(Geometry * g) override;
+    void OnRenderGeometry(Geometry * g, RenderContext &rc) override;
     bool HasLights() override;
 };

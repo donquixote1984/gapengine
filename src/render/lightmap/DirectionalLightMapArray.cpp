@@ -81,10 +81,11 @@ void DirectionalLightMapArray::OnRenderLightSpace()
 void DirectionalLightMapArray::InitShaders()
 {
     m_LightMapShader      = new Shader("res/shaders/lightmap/csm/depth.shader");
-    ShaderSnippet::InstancingSnippet(5).ApplyToShader(m_LightMapShader);
+    ShaderSnippet::InstancingSnippet(7).ApplyToShader(m_LightMapShader);
     m_LightMapShader->Nohup();
     m_LightMapDebugShader = new Shader("res/shaders/lightmap/csm/debug.shader");
     m_LightMapDebugShader->Nohup();
+    ShaderSnippet::AnimationSnippet().ApplyToShader(m_LightMapShader);
     m_LightMapShader->Ready();
     m_LightMapShader->BindToUniformBuffer(MatricesUniformBufferBindings::CSMSlot);
     GeometryShaderPartials::AddPartials(m_LightMapDebugShader);
@@ -158,12 +159,12 @@ void DirectionalLightMapArray::OnRenderGeometryCSM(Geometry * g)
     LightMapUtils::OnRenderGeometryCSM(g, m_Camera, m_ShadowCascadeLevels, m_UseCSM);
 }
 
-void DirectionalLightMapArray::OnRenderGeometry(Geometry * g)
+void DirectionalLightMapArray::OnRenderGeometry(Geometry * g, RenderContext &rc)
 {
     if (HasLights()) 
     {
         OnRenderGeometryCSM(g);
-        LightMapArray::OnRenderGeometry(g);
+        LightMapArray::OnRenderGeometry(g, rc);
     }
 }
 

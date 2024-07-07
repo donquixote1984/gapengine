@@ -28,7 +28,7 @@ public:
     //void OnRenderMVP(Geometry * g , Light * l) override;
     void ActiveTexture() override;
     void OnRenderLightSpace() override;
-    void OnRenderGeometry(Geometry * g) override;
+    void OnRenderGeometry(Geometry * g, RenderContext& rc) override;
     void RenderDebug(Geometry *g) override;
     void Bind() override;
     void CalculateLightSpaceMatricesCSM();

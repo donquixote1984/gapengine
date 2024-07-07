@@ -55,13 +55,17 @@ void Geometry::ReadyToScene()
 {
     if (m_GeoData->HasBone())
     {
-        m_Mat->AddShaderSnippet(ShaderSnippet::AnimationSnippet());
+        HandleMaterials([](Material* mat) {
+            mat->AddShaderSnippet(ShaderSnippet::AnimationSnippet());
+            });
     }
     ShadedEmptyTransform::ReadyToScene();
    
 }
+
 void Geometry::RenderDrawCall()
 {
+    /*
     if (m_HasVariant) {
         int x = util::RandInRange(0, m_DataVariantNum-1);
         //m_GeoData[0].Draw();
@@ -71,8 +75,31 @@ void Geometry::RenderDrawCall()
         //m_GeoData[0].Draw();
         m_Dp->Draw();
     }
+    */
+
+    int clusterNum = 0;
+    auto rawVertices = m_Dp->GetRawVertices(clusterNum);
+
+    for (int i = 0; i < clusterNum; i++)
+    {
+        static_cast<BasicMaterial*>(m_Mats[i])->FlushToShader(m_ShaderUniformsCache);
+        rawVertices[i].Draw(DisplayMode::MESH);
+    }
+
+    m_ShaderUniformsCache.Clear();
+
 }
 
+void Geometry::RenderDrawCall(Shader* shader)
+{
+    int clusterNum = 0;
+    auto rawVertices = m_Dp->GetRawVertices(clusterNum);
+    shader->Bind();
+    for (int i = 0; i < clusterNum; i++)
+    {
+        rawVertices[i].Draw(DisplayMode::MESH);
+    }
+}
 void Geometry::OnUpdateRender(GLFWwindow *window)
 {
     RenderToScene();
@@ -129,7 +156,7 @@ void Geometry::AddPostProcessing(DataPostProcessing * dpp)
 {
     if (dpp->GetType() == PostProcessingType::SCATTER) 
     {
-        SwitchMaterial(SharedMaterial::GetSharedPointMaterial());
+        //SwitchMaterial(SharedMaterial::GetSharedPointMaterial());
     }
     static_cast<GeometryDataProcessor*>(m_Dp)->AddPostProcessing(dpp);
 }
@@ -138,12 +165,6 @@ void Geometry::ProcessData()
 {
     m_Dp->Process(this);
 }
-void Geometry::SwitchMaterial(Material * m)
-{
-    // memory leak;
-   m_Mat = m;
-}
-
 void Geometry::AttachMeta(GeometryMeta meta)
 {
     m_Meta = meta;
@@ -236,12 +257,17 @@ void Geometry::MoveEmbedTexturesToMaterial()
 {
     //TODO currently only use single material per geometry(which may contains mulitple mesh),  will refactor to multiple material.
     //TODO 
-    BasicMaterial *m = static_cast<BasicMaterial*>(m_Mat);
-    for(auto mesh: m_GeoData->GetMeshes())
+    auto meshes = m_GeoData->GetMeshes();
+
+    for (int i = 0; i < meshes.size(); i++)
     {
-        for(auto texture: mesh.GetEmbedTextures())
+        for (auto texture : meshes[i].GetTextures())
         {
-            m->UpdateTextureFromMemory(texture.type, texture.data);
+            if (texture.embeded)
+            {
+                BasicMaterial* m = static_cast<BasicMaterial*>(m_Mats[i]);
+                m->UpdateTextureFromMemory(texture.type, texture.data);
+            }
         }
     }
 }

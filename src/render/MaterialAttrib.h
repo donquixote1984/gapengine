@@ -21,6 +21,7 @@ public:
     glm::vec3 color = glm::vec3(1.0f);
     float constant;
     bool enable = true;
+    bool reverseY = false;
 
     MaterialAttrib();
     ~MaterialAttrib();

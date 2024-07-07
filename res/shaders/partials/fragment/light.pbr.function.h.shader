@@ -5,7 +5,7 @@ vec3 pointLightResolvePBR(vec3 fragPos, vec3 normal, vec3 viewDir, float shadow)
     vec3 lightColor = vec3(0.0);
 
     vec3 ambient;
-    if(ub__HasHDRIMap == 1)    {
+    if(ub_HasHDRIMap == 1)    {
         vec3 ir = CalculateIR(normal, viewDir);
         vec3 specular = CalculateSpecular(normal, viewDir);
         //vec3 specular = vec3(0);
@@ -14,9 +14,9 @@ vec3 pointLightResolvePBR(vec3 fragPos, vec3 normal, vec3 viewDir, float shadow)
         ambient = vec3(0.003) * CalcChannel(material.diffuse);
     }
 
-    for (int i = 0; i < ub__DynamicPointLightNum; i++)
+    for (int i = 0; i < ub_DynamicPointLightNum; i++)
     {
-        PointLight pLight = ub__DynamicPointLights[i];
+        PointLight pLight = ub_DynamicPointLights[i];
         vec3 pbr; 
         float shadow = 0;
         if (pLight.castShadow == 1) {
@@ -48,9 +48,9 @@ vec3 pointLightResolvePBR(vec3 fragPos, vec3 normal, vec3 viewDir, float shadow)
 vec3 dirLightResolvePBR(vec3 normal, vec3 viewDir, float shadow)
 {
     vec3 color = vec3(0);
-    for (int i = 0; i < ub__DynamicDirLightNum; i++)
+    for (int i = 0; i < ub_DynamicDirLightNum; i++)
     {
-        DirLight dLight = ub__DynamicDirLights[i];
+        DirLight dLight = ub_DynamicDirLights[i];
         vec3 lightDir = normalize(-dLight.direction);
         float diff = max(dot(normal, lightDir), 0.0);
         vec3 reflectDir = reflect(-lightDir, normal);
@@ -71,9 +71,9 @@ vec3 PBRLighting(vec3 normal, vec3 viewDir)
     vec3 sunresult  = vec3(0.0, 0.0, 0.0);
     vec3 ambient    = vec3(0.0, 0.0, 0.0);
     vec3 skyambient = vec3(0.0, 0.0, 0.0);
-    for (int i = 0; i < ub__DynamicPointLightNum; i++)
+    for (int i = 0; i < ub_DynamicPointLightNum; i++)
     {
-        PointLight pLight = ub__DynamicPointLights[i];
+        PointLight pLight = ub_DynamicPointLights[i];
         vec3 color; 
         float shadow = 0;
         if (pLight.castShadow == 1) {
@@ -89,14 +89,14 @@ vec3 PBRLighting(vec3 normal, vec3 viewDir)
         presult += color;
     }
 
-    for (int i = 0; i < ub__DynamicDirLightNum; i++)
+    for (int i = 0; i < ub_DynamicDirLightNum; i++)
     {
-        DirLight dLight = ub__DynamicDirLights[i];
+        DirLight dLight = ub_DynamicDirLights[i];
         vec3 color; 
         float shadow = 0.0;
         if (dLight.castShadow == 1)
         {
-            if (ub__UseShadowPCF == 0) 
+            if (ub_UseShadowPCF == 0) 
             {
                 shadow = ShadowCalculationDirectionalLight(dLight, normal);
             } else {
@@ -111,19 +111,19 @@ vec3 PBRLighting(vec3 normal, vec3 viewDir)
         dresult += color;
     }
     
-    if (ub__SunLight.enable == 1)
+    if (ub_SunLight.enable == 1)
     {
         float shadow = 0.0;
-        if (ub__SunLight.castShadow == 1) {
-            if (ub__UseShadowPCF == 0) 
+        if (ub_SunLight.castShadow == 1) {
+            if (ub_UseShadowPCF == 0) 
             {
-                shadow = ShadowCalculationDirectionalLight(ub__SunLight, normal);
+                shadow = ShadowCalculationDirectionalLight(ub_SunLight, normal);
             } else {
-                shadow = ShadowCalculationDirectionalLightPCF(ub__SunLight, normal);
+                shadow = ShadowCalculationDirectionalLightPCF(ub_SunLight, normal);
             }
         }
         
-        vec3 sun_ir = CalculatePBR(ub__SunLight, normal, viewDir, ScreenSpaceDir, skyambient);
+        vec3 sun_ir = CalculatePBR(ub_SunLight, normal, viewDir, ScreenSpaceDir, skyambient);
 
         //skyambient = (skyambient)  * CalcChannel(material.diffuse);
         skyambient = CalculateIRSky(normal, viewDir, skyambient + sun_ir);
@@ -132,7 +132,7 @@ vec3 PBRLighting(vec3 normal, vec3 viewDir)
     }
    
 
-     if(ub__HasHDRIMap == 1)    {
+     if(ub_HasHDRIMap == 1)    {
         vec3 ir = CalculateIR(normal, viewDir);
         vec3 specular = CalculateSpecular(normal, viewDir);
         //vec3 specular = vec3(0);
@@ -175,10 +175,10 @@ vec3 PBRLighting(vec3 normal, vec3 viewDir)
        vec3 in_scatter = GetSkyRadianceToPoint(camera - earth_center,
         point - earth_center, shadow_length, sun_direction, transmittance); 
     */
-    if (ub__SunLight.enable == 1)
+    if (ub_SunLight.enable == 1)
     {
         vec3 transmittance = vec3(0);
-        //vec3 sunlight = GetSkyRadianceToPoint(ub__SunLight.depth, FragPos - earth_center, 0, -ub__SunLight.direction, transmittance); 
+        //vec3 sunlight = GetSkyRadianceToPoint(ub_SunLight.depth, FragPos - earth_center, 0, -ub_SunLight.direction, transmittance); 
         {{__ATOMSPHERE_TRANSMITTANCE__}}
         color = mix(color, vec3(1, 1, 1.1), 1-transmittance.r);
     }

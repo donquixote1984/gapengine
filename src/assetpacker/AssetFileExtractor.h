@@ -20,8 +20,8 @@ namespace assetpacker {
         bool ExtractHeader();
 
     public:
-        AssetFileExtractor(const std::string &outputPath = "");
-        bool Extract(const std::string &filepath);
+        AssetFileExtractor(const std::string& outputPath = "");
+        bool Extract(const std::string& filepath);
 
         bool ExtractModels();
         //bool ExtractModels(const std::string &inputfilepath);

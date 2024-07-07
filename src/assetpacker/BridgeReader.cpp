@@ -1,16 +1,16 @@
 #include "BridgeReader.h"
 namespace assetpacker {
-    BridgeReader::BridgeReader(const std::string &path): Reader(path)
+    BridgeReader::BridgeReader(const std::string& path) : Reader(path)
     {}
 
     bool BridgeReader::Validate()
     {
-        if(!Reader::Validate())
+        if (!Reader::Validate())
         {
             return false;
         }
-       
-        for(const auto f : std::filesystem::directory_iterator(m_Dir))
+
+        for (const auto f : std::filesystem::directory_iterator(m_Dir))
         {
             std::filesystem::path filepath = f.path();
             if (filepath.extension() == ".json")
@@ -28,7 +28,7 @@ namespace assetpacker {
         std::ifstream f(m_MetaJsonPath);
         m_Meta = json::parse(f);
 
-        if(!m_Meta.is_object())
+        if (!m_Meta.is_object())
         {
             std::cout << "Invalid Json Format in " + m_MetaJsonPath << std::endl;
             return;
@@ -40,24 +40,25 @@ namespace assetpacker {
 
         if (meta.contains("models") || meta.contains("meshes"))
         {
-            if (meta.contains("models")) 
+            if (meta.contains("models"))
             {
                 models = meta["models"];
             }
             else if (meta.contains("meshes"))
             {
-                for (const auto & mesh : meta["meshes"])
+                for (const auto& mesh : meta["meshes"])
                 {
                     if (mesh.contains("uris"))
                     {
-                        for (const auto &uri: mesh["uris"])
+                        for (const auto& uri : mesh["uris"])
                         {
                             models.push_back(uri);
                         }
                     }
                 }
             }
-        } else 
+        }
+        else
         {
             //throw ReaderException("no 'models' or 'meshes' in metadata");
         }
@@ -66,8 +67,8 @@ namespace assetpacker {
     void BridgeReader::ProcessModels()
     {
         json models = GetModels(m_Meta);
-        
-        for (const auto &model: models)
+
+        for (const auto& model : models)
         {
             if (ModelFilter(model))
             {
@@ -77,7 +78,7 @@ namespace assetpacker {
                 //i.open(m_Path + "/" + uri, std::ios::in | std::ios::binary);
                 //m_AssetFile->Append(i, contentLength);
                 std::string uri = m_Dir + "/" + ruri;
-                m_Models[m_ModelCount] = {contentLength, uri, ModelType::FBX};
+                m_Models[m_ModelCount] = { contentLength, uri, ModelType::FBX };
                 m_ModelCount += 1;
                 if (m_ModelCount > MAX_MODEL_COUNT)
                 {
@@ -99,15 +100,15 @@ namespace assetpacker {
 
             else if (meta.contains("components"))
             {
-                for (const auto &comp : meta["components"])
+                for (const auto& comp : meta["components"])
                 {
                     std::string type = comp["type"];
-                    for (const auto &uri : comp["uris"])
+                    for (const auto& uri : comp["uris"])
                     {
-                        for (const auto &res : uri["resolutions"])
+                        for (const auto& res : uri["resolutions"])
                         {
                             std::string resolution = res["resolution"];
-                            for (const auto &format: res["formats"])
+                            for (const auto& format : res["formats"])
                             {
                                 std::string ruri = format["uri"];
                                 std::string uri = m_Dir + "/" + ruri;
@@ -135,31 +136,31 @@ namespace assetpacker {
     }
     void BridgeReader::ProcessTextures()
     {
-    json textures = GetTextures(m_Meta);
-    for (const auto &texture: textures)
-    {
-        if (TextureFilter(texture))
+        json textures = GetTextures(m_Meta);
+        for (const auto& texture : textures)
         {
-            int contentLength = texture["contentLength"];
-            std::string ruri = texture["uri"];
-            std::string uri = m_Dir + "/" + ruri;
-            TextureType type = GetTypeByStr(texture["type"]);
-            MimeType mtype = GetMimeTypeByStr(texture["mimeType"]);
-
-            m_Textures[m_TextureCount] = {contentLength, uri, type, mtype};
-            m_TextureCount += 1;
-
-            if (m_TextureCount > MAX_TEXTURE_CHANNELS)
+            if (TextureFilter(texture))
             {
-                return;
+                int contentLength = texture["contentLength"];
+                std::string ruri = texture["uri"];
+                std::string uri = m_Dir + "/" + ruri;
+                TextureType type = GetTypeByStr(texture["type"]);
+                MimeType mtype = GetMimeTypeByStr(texture["mimeType"]);
+
+                m_Textures[m_TextureCount] = { contentLength, uri, type, mtype };
+                m_TextureCount += 1;
+
+                if (m_TextureCount > MAX_TEXTURE_CHANNELS)
+                {
+                    return;
+                }
             }
         }
-    }
     }
 
     void BridgeReader::Read()
     {
-        if(!Validate()) {
+        if (!Validate()) {
             return;
         }
         ReadMeta();
@@ -167,11 +168,11 @@ namespace assetpacker {
         ProcessTextures();
     }
 
-    bool BridgeReader::ModelFilter(const json &model)
+    bool BridgeReader::ModelFilter(const json& model)
     {
         std::string mt = model["mimeType"];
-        
-        if ( mt == "application/x-fbx" )
+
+        if (mt == "application/x-fbx")
         {
             if (model.contains("lod"))
             {
@@ -180,7 +181,8 @@ namespace assetpacker {
                 {
                     return true;
                 }
-            } else {
+            }
+            else {
                 std::string uri = model["uri"];
                 if (StrEndsWithIgnoreCase(uri, "_LOD3.fbx"))
                 {
@@ -192,7 +194,7 @@ namespace assetpacker {
         return false;
     }
 
-    bool BridgeReader::TextureFilter(const json &texture)
+    bool BridgeReader::TextureFilter(const json& texture)
     {
         std::string res = texture["resolution"];
         std::string uri = texture["uri"];
@@ -207,7 +209,7 @@ namespace assetpacker {
 
         if (mimeType == "image/jpeg")
         {
-            if(m_TextureRes == 0 && std::filesystem::exists(testPath)) {
+            if (m_TextureRes == 0 && std::filesystem::exists(testPath)) {
                 m_TextureRes = (int)(res[0] - '0');
                 return true;
             }
@@ -221,11 +223,11 @@ namespace assetpacker {
         return false;
     }
 
-    std::string BridgeReader::ToString() const 
+    std::string BridgeReader::ToString() const
     {
         std::string output;
 
-        for (auto & model: m_Textures)
+        for (auto& model : m_Textures)
         {
             output += ("size: " + std::to_string((int)model.size) + ", uri: " + model.uri + "\n");
         };

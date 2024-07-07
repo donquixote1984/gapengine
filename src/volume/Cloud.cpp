@@ -24,12 +24,12 @@ void Cloud::InitPasses()
 void Cloud::PreRender()
 {
     m_Frame += 1;
-    Shader *s = this->GetMaterial()->GetShader();
-    s->Bind();
-    s->setUniform2f("u_Resolution", m_CanvasWidth, m_CanvasHeight);
-    s->setUniform1i("u_Frame", m_Frame);
+    //Shader *s = this->GetMaterial()->GetShader();
+    //s->Bind();
+    this->GetUniforms().Cache("u_Resolution", m_CanvasWidth, m_CanvasHeight);
+    this->GetUniforms().Cache("u_Frame", m_Frame);
     m_DitherNoise->Bind(2);
-    s->setUniform1i("u_BlueNoiseTexture", 2);
+    this->GetUniforms().Cache("u_BlueNoiseTexture", 2);
     //this->Bind(m_CanvasWidth, m_CanvasHeight); // bind to frame buffer
     //glViewport(0, 0, m_CanvasHeight, m_CanvasHeight);
 }

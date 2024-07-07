@@ -6,7 +6,7 @@
 
 // settings
 const unsigned int SCR_WIDTH = 2400;
-const unsigned int SCR_HEIGHT = 1280;
+const unsigned int SCR_HEIGHT = 2160;
 
 struct CameraSettings
 {

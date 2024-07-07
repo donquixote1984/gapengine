@@ -44,14 +44,6 @@ void GeometryInstancing::InitProcessor()
     m_Dp = new GeometryInstancingDataProcessor();
 }
 
-void GeometryInstancing::SetMaterial(Material *m)
-{
-    if (m_Mat != nullptr)
-    {
-        delete m_Mat;
-    }
-    m_Mat = m;
-}
 void GeometryInstancing::SetInstancingCount(int count)
 {
     m_InstancingCount = count;
@@ -60,19 +52,23 @@ void GeometryInstancing::SetInstancingCount(int count)
 void GeometryInstancing::ReadyToScene()
 {
     int offset = m_GeoData->GetLayoutSize();
-    m_Mat->AddShaderSnippet(ShaderSnippet::InstancingSnippet(offset));
-    Shader * shader = m_Mat->GetShader();
-    //UniformBuffer* ubo = UniformBuffer::GetUniformBuffer();
-    //shader->BindToUniformBuffer(ubo, "Matrices");
-    shader->Ready();
-    shader->Bind();
-    shader->setUniform1i("instancingCount", m_InstancingCount);
-    shader->BindToUniformBuffer(MatricesUniformBufferBindings::MatricesSlot);
-    shader->BindToUniformBuffer(MatricesUniformBufferBindings::CSMSlot);
-    shader->BindToUniformBuffer(LightUniformBufferBindings::LightSlot);
-    shader->BindToUniformBuffer(SettingsUniformBufferBindings::SettingsSlot);
-    shader->BindToUniformBuffer(MatricesUniformBufferBindings::PSMSlot);
-    shader->BindToUniformBuffer(MatricesUniformBufferBindings::SUNSlot);
-    //shader->BindToUniformBuffer(UniformBufferBindings::TEST_MVP_1);
-    //shader->BindToUniformBuffer(UniformBufferBindings::TEST_MVP_2);
+    for (auto mat : m_Mats)
+    {
+        mat->AddShaderSnippet(ShaderSnippet::InstancingSnippet(offset));
+        Shader* shader = mat->GetShader();
+        //UniformBuffer* ubo = UniformBuffer::GetUniformBuffer();
+        //shader->BindToUniformBuffer(ubo, "Matrices");
+        shader->Ready();
+        shader->Bind();
+        shader->setUniform1i("instancingCount", m_InstancingCount);
+        shader->BindToUniformBuffer(MatricesUniformBufferBindings::MatricesSlot);
+        shader->BindToUniformBuffer(MatricesUniformBufferBindings::CSMSlot);
+        shader->BindToUniformBuffer(LightUniformBufferBindings::LightSlot);
+        shader->BindToUniformBuffer(SettingsUniformBufferBindings::SettingsSlot);
+        shader->BindToUniformBuffer(MatricesUniformBufferBindings::PSMSlot);
+        shader->BindToUniformBuffer(MatricesUniformBufferBindings::SUNSlot);
+        //shader->BindToUniformBuffer(UniformBufferBindings::TEST_MVP_1);
+        //shader->BindToUniformBuffer(UniformBufferBindings::TEST_MVP_2);
+
+    }
 }

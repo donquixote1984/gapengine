@@ -10,6 +10,10 @@ vec3 CalcChannel(Channel c)
     if (c.hasTexture == 1)
     {
         tex = texture(c.tex, TexCoords {{__TILE_FACTOR__}});
+        if (c.reverseY == 1)
+        {
+            tex.g *=-1;
+        }
         if (tex.a < 0.1)
         {
            // discard;

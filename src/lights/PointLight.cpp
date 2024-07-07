@@ -73,13 +73,14 @@ LightType PointLight::GetLightType() const
 
 void PointLight::InitMaterial()
 {
-    m_Mat = new PointLightMaterial();
+    //m_Mat = new PointLightMaterial();
+    m_Mats.push_back(new PointLightMaterial());
 }
 
 void PointLight::GetImpact(LightImpact* impacts, int &size)
 {
     //impacts.reserve(10);
-    LightMaterial *lm = static_cast<LightMaterial *>(m_Mat);
+    LightMaterial *lm = static_cast<LightMaterial *>(m_Mats[0]);
     const glm::vec3 &amb = lm->GetAmbient();
     const glm::vec3 &diff = lm->GetDiffuse();
     float constant = lm->GetConstant();
@@ -100,7 +101,7 @@ void PointLight::GetImpact(LightImpact* impacts, int &size)
 
 float PointLight::GetFarPlane()
 {
-    LightMaterial *lm = static_cast<LightMaterial *> (m_Mat);
+    LightMaterial *lm = static_cast<LightMaterial *> (m_Mats[0]);
     return glm::length(lm->GetDiffuse());
 }
 
@@ -111,7 +112,7 @@ std::string PointLight::GetName()
 ShaderPointLight PointLight::Serialize()
 {
 
-    LightMaterial *lm = static_cast<LightMaterial *>(m_Mat);
+    LightMaterial *lm = static_cast<LightMaterial *>(m_Mats[0]);
     ShaderPointLight spl;
     spl.castShadow = 1;
     spl.intensity = lm->GetIntensity();

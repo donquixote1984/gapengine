@@ -97,7 +97,7 @@ public:
     static ShaderSnippet AnimationSnippet()
     {
         ShaderSnippet ss;
-        std::string bone = "layout (location = 5) in ivec4 boneIds;";
+        std::string bone = "layout (location = 5) in vec4 boneIds;";
         std::string weight = "layout (location = 6) in vec4 weights;";
         ss.AddArgs(ShaderTemplateKeys::location4, bone);
         ss.AddArgs(ShaderTemplateKeys::location5, weight);
@@ -114,7 +114,7 @@ public:
             if (u_IsPlaying == 1) 
             {
                 vec4 totalPosition = vec4(0.0f);
-                vec4 totalNormal = vec4(0.0f);
+                vec3 totalNormal = vec3(0.0f);
                 for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
                 {
                     if(boneIds[i] < 0.0) 
@@ -124,11 +124,14 @@ public:
                         totalPosition = pos;
                         break;
                     }
-                    vec4 localPosition = finalBonesMatrices[boneIds[i]] * pos;
+                    vec4 localPosition = finalBonesMatrices[int(boneIds[i])] * pos;
                     totalPosition += localPosition * weights[i];
-                   // vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * norm;
+                
+                    vec3 localNormal = mat3(finalBonesMatrices[int(boneIds[i])]) * norm;
+                    totalNormal+=localNormal * weights[i];
                 }
                 pos = totalPosition;
+                norm = totalNormal;
             }
            
         )";
@@ -153,7 +156,7 @@ public:
             sun_irradiance = GetSunAndSkyIrradiance(light.depth, norm, L, sky_irradiance);
         )";
         std::string atomsphereTransmittance = R"(
-            GetSkyRadianceToPoint(ub__SunLight.depth, FragPos - earth_center, 0, -ub__SunLight.direction, transmittance); 
+            GetSkyRadianceToPoint(ub_SunLight.depth, FragPos - earth_center, 0, -ub_SunLight.direction, transmittance); 
         )";
 
         ss.AddArgs(ShaderTemplateKeys::ATOMSPHERE_DECLARATIONS, atomsphere);

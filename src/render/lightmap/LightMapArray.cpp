@@ -57,7 +57,7 @@ void LightMapArray::EnableDebug()
     m_LightMapDebugShader->Bind();
     m_LightMapDebugShader->UnBind();
 }
-void LightMapArray::OnRenderMVP(Geometry * geo)
+void LightMapArray::OnRenderMVP(Geometry * geo, RenderContext &rc)
 {
 //    Shader * targetShader = geo->HasTess() ? m_LightMapTessShader : m_LightMapShader; (Mac M1 fallback on EVAL_PROG + GEOM_PROG)
     Shader *targetShader = m_LightMapShader;
@@ -69,16 +69,32 @@ void LightMapArray::OnRenderMVP(Geometry * geo)
     } else {
         targetShader->setUniform1i("instancing", 0);
     }
+    //animation goes here
+    if (geo->GetGeoData()->HasAnimation() && geo->IsPlaying())
+    {
+        geo->PlayAnimation();
+        targetShader->setUniform1i("u_IsPlaying", true);
+        geo->GetAnimator()->UpdateAnimation(rc.deltaTime);
+        std::vector<glm::mat4> transforms = geo->GetAnimator()->GetFinalBoneMatrices();
+        for (int i = 0; i < transforms.size(); ++i)
+        {
+            targetShader->setUniform4m("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+        }
+    }
+    else
+    {
+        targetShader->setUniform1i("u_IsPlaying", false);
+    }
 }
 
-void LightMapArray::OnRenderGeometry(Geometry * g)
+void LightMapArray::OnRenderGeometry(Geometry * g, RenderContext &rc)
 {
     
     //m_LightMapShader->Bind();
     //g->OnUpdateScript(window);
     if (HasLights()) {
-        OnRenderMVP(g);
-        g->RenderDrawCall();
+        OnRenderMVP(g, rc);
+        g->RenderDrawCall(m_LightMapShader);
     }
     
 }

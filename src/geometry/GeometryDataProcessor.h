@@ -22,10 +22,10 @@ protected:
 public:
     virtual void Process(Geometry *g) = 0;
     virtual ~DataProcessor();
-    virtual void Draw();
     void SetDisplayMode(DisplayMode mode);
     DisplayMode GetDisplayMode() const;
     std::vector<Mesh> GetProcessedData();
+    RawVertices* GetRawVertices(int& clusterNum);
 };
 
 class GeometryDataProcessor: public DataProcessor

@@ -102,11 +102,3 @@ std::shared_ptr<glm::mat4[]> GeometryInstancingDataProcessor::GetInstancingMVP(G
         }
     }
 }
-
-void GeometryInstancingDataProcessor::Draw()
-{
-    for (int i = 0; i < m_RawVerticesClusterNum; i++)
-    {
-        m_RawVerticesCluster[i].Draw(m_DisplayMode);
-    }
-}

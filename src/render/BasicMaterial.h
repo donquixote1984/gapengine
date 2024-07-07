@@ -25,6 +25,7 @@ public:
     BasicMaterial();
     ~BasicMaterial();
     void FlushToShader() override;
+    void FlushToShader(ShaderUniformsCache& cache);
     
     void BindOutsideShaderAttrib(MaterialAttrib mAttrib) const;
     void InitAttribs() override;
@@ -33,4 +34,5 @@ public:
     void SetShadow(bool receiveShadow);
     void InitDefaultSnippets();
     void UpdateTextureFromMemory(TextureType type, MemoryTextureData data);
+    void UpdateTextureFromPath(TextureType type, std::string path);
 };

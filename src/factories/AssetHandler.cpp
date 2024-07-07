@@ -51,49 +51,27 @@ void AssetHandler::ResolveModel(Geometry *g)
 void AssetHandler::operator >> (Geometry *g)
 {
     ResolveModel(g);
-}
-
-void AssetHandler::operator >> (BasicMaterial * m)
-{
-    ResolveTex(m);
-}
-
-void AssetHandler::ResolveTex(BasicMaterial* m)
-{
     std::string texFolder = m_AssetTempFullPath + "/" + constants::TEMP_TEX_FOLDER;
-    TextureReader tr(texFolder);
-    TexturePackage tp = tr.GetTexturePackage();
-    if (tp.ao != nullptr) 
+    if (g->GetGeoData()->UseAssetMaterial())
     {
-        m->ambient.texture = tp.ao;
+        for (auto& mesh : g->GetGeoData()->GetMeshes())
+        {
+            for (auto& t : mesh.GetMaterial().textures)
+            {
+                if (!t.embeded)
+                {
+                    t.path = texFolder + "/" + t.path;
+                }
+            }
+        }
     }
-    
-    if (tp.diffuse != nullptr)
+    else
     {
-        m->diffuse.texture = tp.diffuse;
-    }
-
-    if (tp.metalness != nullptr)
-    {
-        m->metalness.texture = tp.metalness;
-    }
-
-    if (tp.normal != nullptr)
-    {
-        m->normal.texture = tp.normal;
-        m->SetTangent(true);
-    }
-    if (tp.roughness != nullptr)
-    {
-        m->roughness.texture = tp.roughness;
-    }
-
-    if (tp.specular != nullptr)
-    {
-        m->specular.texture = tp.specular;
+        TextureReader tr(texFolder);
+        TexturePackagePath tp = tr.GetTexturePackage();
+        g->GetGeoData()->SetDefaultTextures(tp);
     }
 }
-
 bool AssetHandler::ValidateModel()
 {
     //TODO

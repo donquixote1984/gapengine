@@ -18,9 +18,9 @@ void CanvasRenderPass::Render(RenderContext &rc)
 
 void CanvasRenderPass::OnRenderMaterial(RenderContext &rc) const
 {
-    Material * mat = m_Geo-> GetMaterial();
+    //Material * mat = m_Geo-> GetMaterial();
     
-    mat->FlushToShader();
-    mat->FlushToGlobalSettings();
+    //mat->FlushToShader();
+    //mat->FlushToGlobalSettings();
     
 }

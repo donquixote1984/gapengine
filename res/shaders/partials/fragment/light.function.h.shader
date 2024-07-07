@@ -33,7 +33,7 @@ vec3 pointLightResolve(vec3 fragPos, vec3 normal, vec3 viewDir, float shadow)
     vec3 presult = vec3(0.0, 0.0, 0.0);
     for (int i = 0; i < u_PointLightNum; i++)
     {
-        PointLight pLight = ub__DynamicPointLights[i];
+        PointLight pLight = ub_DynamicPointLights[i];
         float distance = length(pLight.position-fragPos);
         float attenuation = 1.0 / (pLight.constant + pLight.linear * distance + pLight.quadratic * (distance * distance));
 

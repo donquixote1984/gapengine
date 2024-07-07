@@ -3,14 +3,6 @@
 DataProcessor::~DataProcessor()
 {}
 
-void DataProcessor::Draw()
-{
-    for (int i = 0; i < m_RawVerticesClusterNum; i++)
-    {
-        m_RawVerticesCluster[i].Draw(m_DisplayMode);
-    }
-}
-
 void DataProcessor::SetDisplayMode(DisplayMode mode)
 {
     m_DisplayMode = mode;
@@ -20,10 +12,19 @@ DisplayMode DataProcessor::GetDisplayMode() const
 {
     return m_DisplayMode;
 }
- std::vector<Mesh> DataProcessor::GetProcessedData()
- {
+std::vector<Mesh> DataProcessor::GetProcessedData()
+{
     return m_Result;
- }
+}
+
+RawVertices* DataProcessor::GetRawVertices(int& clusterNum)
+{
+    clusterNum = m_RawVerticesClusterNum;
+    return m_RawVerticesCluster.get();
+}
+
+
+
  
 GeometryDataProcessor::~GeometryDataProcessor()
 {}
@@ -39,7 +40,6 @@ void GeometryDataProcessor::Process(Geometry *g)
     }
     ProcessResult(m_Result, g);
 }
-
 
 
 void GeometryDataProcessor::AddPostProcessing(DataPostProcessing * dpp)

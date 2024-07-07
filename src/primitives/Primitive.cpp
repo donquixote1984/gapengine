@@ -10,5 +10,6 @@ Primitive::Primitive(const std::string file): Geometry(GeometryType::PRIMITIVE)
 
 void Primitive::InitMaterial()
 {
-    m_Mat = new DefaultMaterial();
+    //m_Mat = new DefaultMaterial();
+    m_Mats.push_back(new DefaultMaterial());
 }

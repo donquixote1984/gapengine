@@ -15,24 +15,24 @@ namespace assetpacker {
     class BridgeReader : public Reader
     {
     private:
-        int lod=3;
+        int lod = 3;
         std::string m_MetaJsonPath;
         json m_Meta;
-        
-        bool ModelFilter(const json &model);
-        bool TextureFilter(const json &texture);
+
+        bool ModelFilter(const json& model);
+        bool TextureFilter(const json& texture);
         void ProcessModels();
         void ProcessTextures();
         int m_TextureRes = 0;
     public:
-        
-        BridgeReader(const std::string &path);
+
+        BridgeReader(const std::string& path);
         void ReadMeta();
         bool Validate() override;
         void Read() override;
         json GetModels(json meta);
         json GetTextures(json meta);
-       // char *ToModelBinary( int & size);
+        // char *ToModelBinary( int & size);
         std::string ToString() const;
 
     };

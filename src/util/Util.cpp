@@ -84,3 +84,8 @@ int util::GetLayoutSize(std::bitset<32> layout)
     }
     return size;
 }
+std::string util::GetFileNameByPath(const std::string& path)
+{
+    std::filesystem::path p = path;
+    return p.filename().string();
+}

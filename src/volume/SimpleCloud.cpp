@@ -19,14 +19,14 @@ SimpleCloud::~SimpleCloud()
 void SimpleCloud::PreRender()
 {
     m_Frame += 1;
-    Shader *s = this->GetMaterial()->GetShader();
-    s->Bind();
+    //Shader *s = this->GetMaterial()->GetShader();
+    //s->Bind();
     m_BlueNoiseTexture->Bind(0);
     m_DitherNoise->Bind(1);
-    s->setUniform1i("u_NoiseTexture", 0);
-    s->setUniform1i("u_DitherTexture", 1);
-    s->setUniform1i("u_Frame", m_Frame);
-    s->setUniform2f("u_Resolution", m_CanvasWidth/2, m_CanvasHeight/2);
+    this->GetUniforms().Cache("u_NoiseTexture", 0);
+    this->GetUniforms().Cache("u_DitherTexture", 1);
+    this->GetUniforms().Cache("u_Frame", m_Frame);
+    this->GetUniforms().Cache("u_Resolution", m_CanvasWidth/2, m_CanvasHeight/2);
     this->Bind(m_CanvasWidth/2, m_CanvasHeight/2); // bind to frame buffer
 }
 void SimpleCloud::InitPasses()

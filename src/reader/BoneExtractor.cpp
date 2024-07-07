@@ -1,7 +1,7 @@
 #include "BoneExtractor.h"
 BoneExtractor::BoneExtractor(const aiScene *scene)
 {
-    aiAnimation *animation = scene->mAnimations[0];
+    //aiAnimation *animation = scene->mAnimations[0];
     int meshNum = scene->mNumMeshes;
     for (int i = 0; i < meshNum; i++)
     {

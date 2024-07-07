@@ -3,7 +3,6 @@
 #include <filesystem>
 #include "../exceptions/ResourceNotFoundException.h"
 #include "../textures/TextureType.h"
-#include "../global/GlobalData.h"
 #include "../textures/Texture.h"
 #include "../util/JsonUtil.h"
 
@@ -17,13 +16,23 @@ struct TexturePackage
     Texture * specular = nullptr;
     Texture * ao = nullptr;
 };
+struct TexturePackagePath
+{
+    std::string diffuse = "";
+    std::string roughness = "";
+    std::string metalness = "";
+    std::string opacity = "";
+    std::string normal = "";
+    std::string specular = "";
+    std::string ao = "";
+};
 
 class TextureReader
 {
 private:
     std::string m_TextureFolder;
-    TexturePackage tp;
+    TexturePackagePath tp;
 public:
     TextureReader(const std::string &textureFolder);
-    TexturePackage GetTexturePackage();
+    TexturePackagePath GetTexturePackage();
 };

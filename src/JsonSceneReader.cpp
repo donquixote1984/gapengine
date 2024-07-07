@@ -356,6 +356,7 @@ void JsonSceneReader::ResolveHierarchy(json geojsons, WorldGraphNode * parent)
             std::string geopath = georef;
             path = fmt::format("{}/{}", m_BasePath, geopath); //m_BasePath + "/" +i;
             geoBasePath = util::GetContainerFolder(path);
+
             std::ifstream geofile(path);
             geofile >> geo;
             geofile.close();

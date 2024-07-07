@@ -91,8 +91,10 @@ float Terrain::FitSize(float x)
 
 void Terrain::PreRender()
 {
-    Shader * s = this->GetMaterial()->GetShader();
-    s->setUniform1i("u_CombineNormal", 1);
+//    Shader * s = this->GetMaterial()->GetShader();
+//    s->setUniform1i("u_CombineNormal", 1);
+    this->GetUniforms().Cache("u_CombineNormal", 1);
+
 }
 TerrainMeta & Terrain::GetTerrainMeta()
 {
@@ -110,7 +112,7 @@ bool Terrain::HasTess()
 
 void Terrain::ReadyToScene()
 {
-    m_Mat->AddShaderSnippet(ShaderSnippet::TerrainSnippet(m_Meta.renderType == TerrainRenderType::GPU));
+    m_Mats[0]->AddShaderSnippet(ShaderSnippet::TerrainSnippet(m_Meta.renderType == TerrainRenderType::GPU));
     Geometry::ReadyToScene();
 }
 int Terrain::TerrainCounter = 0;

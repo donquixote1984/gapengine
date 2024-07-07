@@ -22,7 +22,6 @@ protected:
     std::shared_ptr<Transform[]> m_InstancingMVP;
     void InitGeoData() override;
 public:
-    void SetMaterial(Material *m) override;
     GeometryInstancing(GeometryType gType);
     GeometryInstancing(GeometryType gtype, GeometryInstancingType itype);
     void SetInstancing(std::shared_ptr<Transform[]> mvps, unsigned int count);

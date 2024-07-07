@@ -13,7 +13,7 @@ void CloudRenderPass::Render(RenderContext &rc)
 
 void CloudRenderPass::OnRenderMaterial(RenderContext &rc) const
 {
-    Material * mat = m_Cloud -> GetMaterial();
+    Material * mat = m_Cloud -> GetMaterial()[0];
     mat->FlushToShader();
 }
 

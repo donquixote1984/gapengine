@@ -62,10 +62,15 @@ void DirectionalLightMap::RenderToGeometry(Geometry *g, Light *light)
     glActiveTexture(GL_TEXTURE31);
     glBindTexture(GL_TEXTURE_2D, m_LightMapTex);
 
+    /*
     Shader * s = g->GetMaterial()->GetShader();
     s->setUniform1i("hasShadowMap", 1);
     s->setUniform1i("u_ShadowMap", constants::CSM);
     s->setUniform4m("lightSpaceMatrix", GetLightSpaceMat(light));
+    */
+    g->GetUniforms().Cache("hasShadowMap", 1);
+    g->GetUniforms().Cache("u_ShadowMap", constants::CSM);
+    g->GetUniforms().Cache("lightSpaceMatrix", GetLightSpaceMat(light));
 
     
 }

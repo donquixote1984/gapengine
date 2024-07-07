@@ -5,6 +5,7 @@
 #include <map>
 #include "../ui/UISettings.h"
 #include "MaterialAttrib.h"
+#include "../shaders/ShaderUniformsCache.h"
 
 class Material
 {
@@ -21,5 +22,6 @@ public:
     void AddShaderSnippet(ShaderSnippet ss);
     void AddShaderPartial(std::string key, std::string content);
     void FlushToGlobalSettings();
+    void FlushToShader(ShaderUniformsCache& cache);
     void BindMaterialShaderAttrib(MaterialAttrib &mAttrib, unsigned int index) const;
 };

@@ -25,7 +25,6 @@ protected:
     glm::mat4 * instancingMVPs;
     void ProcessResult(std::vector<Mesh> meshes, Geometry *g) override;
 public:
-    void Draw() override;
     int GetInstancingCount(GeometryInstancing * g) const;
     std::shared_ptr<glm::mat4 []> GetInstancingMVP(GeometryInstancing * g) const;
 };

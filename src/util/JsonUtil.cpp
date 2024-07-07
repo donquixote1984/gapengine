@@ -238,5 +238,10 @@ ObjPreProcessing util::GetObjPreProcessing(nlohmann::json preprocessing)
         bool withAnimation = preprocessing["withAnimation"];
         opp.withAnimation = withAnimation;
     }
+    if (preprocessing.contains("useAssetMaterial"))
+    {
+        bool useAssetMaterial = preprocessing["useAssetMaterial"];
+        opp.useAssetMaterial = useAssetMaterial;
+    }
     return opp;
 }

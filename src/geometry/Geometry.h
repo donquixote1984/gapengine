@@ -28,6 +28,7 @@
 #include "../script/GeometryScript.h"
 #include "../UniformBuffer.h"
 #include "../animation/Animator.h"
+#include "../shaders/ShaderUniformsCache.h"
 
 
 class DataProcessor;
@@ -77,10 +78,10 @@ public:
     void AddPostProcessing(DataPostProcessing * dpp);
     DisplayMode GetDisplayMode() const;
     void RenderDrawCall() override;
+    void RenderDrawCall(Shader* shader) override;
     
     
     virtual void ProcessData();
-    void SwitchMaterial(Material *m);
     
     void AttachMeta(GeometryMeta meta);
     virtual void ResolveMeta();

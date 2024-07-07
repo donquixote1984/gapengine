@@ -4,7 +4,7 @@
 using namespace std;
 namespace assetpacker {
 
-    MimeType GetMimeTypeByPath(const std::string &path)
+    MimeType GetMimeTypeByPath(const std::string& path)
     {
         std::string ext = filesystem::path(path).extension().string();
 
@@ -25,7 +25,7 @@ namespace assetpacker {
 
         return MimeType::UNSUPPORTED;
     }
-    MimeType GetMimeTypeByStr(const std::string &mimeType)
+    MimeType GetMimeTypeByStr(const std::string& mimeType)
     {
         if (mimeType == "image/jpeg")
         {
@@ -92,7 +92,7 @@ namespace assetpacker {
         }
         return true;
     }
-    std::string getLeftPaddingString(std::string const &str, int n, char paddedChar = ' ')
+    std::string getLeftPaddingString(std::string const& str, int n, char paddedChar = ' ')
     {
         std::ostringstream ss;
         ss << std::right << std::setfill(paddedChar) << std::setw(n) << str;
@@ -102,10 +102,10 @@ namespace assetpacker {
     {
         auto start = std::chrono::system_clock::now();
         std::time_t now = std::chrono::system_clock::to_time_t(start);
-        std::tm * ptm = std::localtime(&now);
+        std::tm* ptm = std::localtime(&now);
         char timebuffer[100];
         unsigned short seed = std::rand();
-        std::strftime(timebuffer,20, "%Y%m%d%H%M%S", ptm);
+        std::strftime(timebuffer, 20, "%Y%m%d%H%M%S", ptm);
         std::string name = timebuffer;
         name = name + getLeftPaddingString(std::to_string(seed), 6, '0');
         return name;
@@ -209,7 +209,7 @@ namespace assetpacker {
         return ".unknown";
     }
 
-    bool IsColorTex(const std::string path) 
+    bool IsColorTex(const std::string path)
     {
         if (ToLowerStr(path).find("albedo") != std::string::npos)
         {
@@ -260,7 +260,7 @@ namespace assetpacker {
         {
             return true;
         }
-         if (ToLowerStr(path).find("translucency") != std::string::npos)
+        if (ToLowerStr(path).find("translucency") != std::string::npos)
         {
             return true;
         }
@@ -298,7 +298,7 @@ namespace assetpacker {
     bool isModel(const std::string path)
     {
         std::string testpath = ToLowerStr(path);
-         if (StrEndsWith(testpath, ".obj"))
+        if (StrEndsWith(testpath, ".obj"))
         {
             return true;
         }
@@ -315,10 +315,10 @@ namespace assetpacker {
         std::transform(str.begin(), str.end(), str.begin(), ::tolower);
         return str;
     }
-    
 
 
-    bool StrEndsWith(std::string const & value, std::string const & ending)
+
+    bool StrEndsWith(std::string const& value, std::string const& ending)
     {
         if (ending.size() > value.size()) return false;
         return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
@@ -331,10 +331,10 @@ namespace assetpacker {
         return std::equal(lowerEnding.rbegin(), lowerEnding.rend(), lowerCaseValue.rbegin());
     }
 
-    ModelType GetModelTypeByPath(const std::string &path)
+    ModelType GetModelTypeByPath(const std::string& path)
     {
         std::string ext = filesystem::path(path).extension().string();
-        if(ext == ".fbx")
+        if (ext == ".fbx")
         {
             return ModelType::FBX;
         }
@@ -347,7 +347,7 @@ namespace assetpacker {
         return ModelType::UNSUPPORTED;
     }
 
-    Model GetModelStruct(const std::string &path)
+    Model GetModelStruct(const std::string& path)
     {
         Model m;
         m.size = filesystem::file_size(path);
@@ -355,8 +355,8 @@ namespace assetpacker {
         m.uri = path;
         return m;
     }
-     Texture GetTexStruct(const std::string &path)
-     {
+    Texture GetTexStruct(const std::string& path)
+    {
         Texture t;
         t.size = filesystem::file_size(path);
         t.mineType = GetMimeTypeByPath(path);
@@ -393,7 +393,7 @@ namespace assetpacker {
         }
         t.uri = path;
         return t;
-     }
+    }
 
-        
+
 }

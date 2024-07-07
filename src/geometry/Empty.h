@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <functional>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -29,7 +30,7 @@ protected:
     Scene * m_Scene = nullptr;
     glm::mat4 m_TransMat;
     RenderPassLinkList *m_RenderPasses = nullptr; // have to be ptr for circluar reference
-public:
+   public:
     virtual ~EmptyTransform();
     EmptyTransform * GetParent();
     void SetVisible(bool v);
@@ -43,6 +44,7 @@ public:
     void Rotate(glm::quat rot);
     void SetPosition(glm::vec3);
     virtual void RenderDrawCall();
+    virtual void RenderDrawCall(Shader* shader);
     glm::mat4 & GetModelMat();
     void SetInitScale(glm::vec3 scale);
     virtual void AttachScript(const std::string &script);
@@ -59,14 +61,19 @@ public:
 class ShadedEmptyTransform: public EmptyTransform
 {
 protected:
-    Material *m_Mat = nullptr;
+    std::vector<Material*> m_Mats;
+    ShaderUniformsCache m_ShaderUniformsCache;
+
 public:    
     ~ShadedEmptyTransform();
-    virtual void SetMaterial(Material *m);
+    virtual void AddMaterial(Material *m);
+    virtual void ClearMaterial();
     virtual bool IsInstancing();
     virtual void PreRender();
-    Material * GetMaterial() const;
+    std::vector<Material* > GetMaterial() const;
     void ReadyToScene() override;
     bool IsEmpty() override;
     bool IsGeometry() override;
+    void HandleMaterials(std::function<void(Material*)> ops);
+    ShaderUniformsCache& GetUniforms();
 };

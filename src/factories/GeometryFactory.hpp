@@ -109,14 +109,14 @@ public:
         return g;
     }
 
-    ShadedEmptyTransform *PresolveGeometryMaterial(ShadedEmptyTransform * g, const nlohmann::json &geojson)
+    virtual ShadedEmptyTransform *PresolveGeometryMaterial(ShadedEmptyTransform * g, const nlohmann::json &geojson)
     {
         if (geojson.contains("material")) {
             nlohmann::json materialJson = geojson["material"];
             std::shared_ptr<MaterialTemplate> t = MaterialTemplateBuilder::buildTemplate(materialJson);
             std::shared_ptr<MaterialValueNode> mvn = MaterialNodeReader::ReadMaterial(materialJson, t.get());
             Material * df = static_cast<Material*> (mvn.get()->GetFirstOutputValue().GetPtr());
-            g->SetMaterial(df);
+            g->AddMaterial(df);
         } 
         return g;
     }
@@ -141,7 +141,7 @@ public:
             
             AssetHandler r(assetPath, opp);
             r >> g;
-            r >> static_cast<BasicMaterial *>(g->GetMaterial());
+            //r >> static_cast<BasicMaterial *>(g->GetMaterial());
         }
         
         if (geojson.contains("animation"))
@@ -299,12 +299,43 @@ public:
 
         //TexturedGeometry *tg = new TexturedGeometry(geoFilePath);
         PresolveGeometryMVP(g, geojson);
-        PresolveGeometryMaterial(g, geojson);
+        // reverse order on mesh
         PresolveGeometryData(g, geojson);
+        PresolveGeometryMaterial(g, geojson);
         PresolveGeometryScript(g, geojson);
         //return tg;
         return g;
     }
+
+    ShadedEmptyTransform* PresolveGeometryMaterial(ShadedEmptyTransform* _g, const nlohmann::json& geojson) override
+    {
+        Geometry* g = static_cast<Geometry*> (_g);
+        if (g->GetGeoData()->UseAssetMaterial())
+        {
+            for (auto mesh : g->GetGeoData()->GetMeshes())
+            {
+                nlohmann::json materialJson = geojson["material"];
+                std::shared_ptr<MaterialTemplate> t = MaterialTemplateBuilder::buildTemplate(materialJson);
+                std::shared_ptr<MaterialValueNode> mvn = MaterialNodeReader::ReadMaterial(materialJson, t.get());
+                DefaultMaterial* df = static_cast<DefaultMaterial*>(mvn.get()->GetFirstOutputValue().GetPtr());
+                g->AddMaterial(df);
+                if (mesh.HasMaterial())
+                {
+                    df->FeedMeshMaterial(mesh.GetMaterial());
+                }
+            }
+        }
+        else
+        {
+            // single material
+            GeometryFactory::PresolveGeometryMaterial(_g, geojson);
+            DefaultMaterial* df = static_cast<DefaultMaterial*>(g->GetMaterial()[0]);
+            df->FeedTexturePackage(g->GetGeoData()->GetDefaultTextures());
+        }
+        return g;
+    }
+
+
 };
 
 class PrimitiveGeometryFactory: public GeometryFactory
@@ -332,9 +363,39 @@ class PrimitiveGeometryFactory: public GeometryFactory
             p->AttachParent(parent);
         }
         PresolveGeometryMVP(p, geojson);
-        PresolveGeometryMaterial(p, geojson);
         PresolveGeometryData(p, geojson);
+        PresolveGeometryMaterial(p, geojson);
         PresolveGeometryScript(p, geojson);
         return p;
     }
+
+    ShadedEmptyTransform* PresolveGeometryMaterial(ShadedEmptyTransform* _g, const nlohmann::json& geojson) override
+    {
+        Geometry* g = static_cast<Geometry*> (_g);
+        if (g->GetGeoData()->UseAssetMaterial())
+        {
+            for (auto mesh : g->GetGeoData()->GetMeshes())
+            {
+                nlohmann::json materialJson = geojson["material"];
+                std::shared_ptr<MaterialTemplate> t = MaterialTemplateBuilder::buildTemplate(materialJson);
+                std::shared_ptr<MaterialValueNode> mvn = MaterialNodeReader::ReadMaterial(materialJson, t.get());
+                DefaultMaterial* df = static_cast<DefaultMaterial*>(mvn.get()->GetFirstOutputValue().GetPtr());
+                g->AddMaterial(df);
+                if (mesh.HasMaterial())
+                {
+                    df->FeedMeshMaterial(mesh.GetMaterial());
+                }
+            }
+        }
+        else
+        {
+            // single material
+            GeometryFactory::PresolveGeometryMaterial(_g, geojson);
+            DefaultMaterial* df = static_cast<DefaultMaterial*>(g->GetMaterial()[0]);
+            df->FeedTexturePackage(g->GetGeoData()->GetDefaultTextures());
+        }
+        return g;
+    }
+
+
 };

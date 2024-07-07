@@ -83,15 +83,15 @@ void TerrainGPU::ProcessData()
 
 void TerrainGPU::PreRender()
 {
-    Shader * s = this->GetMaterial()->GetShader();
-    s->Bind();
-    s->setUniform1i("u_CombineNormal", 1);
+    //Shader * s = this->GetMaterial()->GetShader();
+    //s->Bind();
+    this->GetUniforms().Cache("u_CombineNormal", 1);
     if (!m_Meta.useNoise) 
     {
         m_Texture->Bind(constants::HEIGHT_MAP);
     }
-    s->setUniform1i("u_HeightMap", constants::HEIGHT_MAP);
-    s->setUniform4f("u_MapRange", m_Meta.range.x, m_Meta.range.y, m_Meta.range.z, m_Meta.range.w);
+    this->GetUniforms().Cache("u_HeightMap", constants::HEIGHT_MAP);
+    this->GetUniforms().Cache("u_MapRange", m_Meta.range);
 
    // m_RenderPasses->First()
 }

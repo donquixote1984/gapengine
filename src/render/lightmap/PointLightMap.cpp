@@ -109,8 +109,11 @@ void PointLightMap::OnRenderMVP(Geometry * geo, Light* light)
 void PointLightMap::RenderToGeometry(Geometry *g, Light *l) // used at geometryrender
 {
     //Global::scene->GetPointLightMapArray()->ActiveTexture();
-    Shader * s = g->GetMaterial()->GetShader();
-    s->setUniform1i("u_ShadowCubes", constants::SHADOWCUBE);
+    //Shader * s = g->GetMaterial()->GetShader();
+    //s->setUniform1i("u_ShadowCubes", constants::SHADOWCUBE);
+    g->GetUniforms().Cache("u_ShadowCubes", constants::SHADOWCUBE);
+
+
 }
 
 void PointLightMap::RenderDebug(Geometry*g, Light * light)

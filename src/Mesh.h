@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 #include <initializer_list>
 #include <unordered_map>
 #include <glm/glm.hpp>
@@ -29,12 +30,20 @@ struct MeshMeta
     std::shared_ptr<float []> facesAreaList; // range list, calculate scatter chance, {0.01, 0.02, 0.342, 0.56, 0.8.1}
 };
 
-struct MeshEmbedTexture
+struct MeshTexture
 {
-    TextureType type;
+    bool embeded = false;
+    TextureType type = TextureType::NO_TEXTURE;
+    std::string path = "";
     MemoryTextureData data;
+    bool valid = false;
 };
 
+struct MeshMaterial
+{
+    bool valid = false;
+    std::vector<MeshTexture> textures;
+};
 class Mesh
 {
 private:
@@ -56,9 +65,8 @@ private:
     bool m_HasNormal = false;
     bool m_HasBone = false;
 
-    std::vector<MeshEmbedTexture> m_EmbedTextures;
     //std::unordered_map<std::string, BoneTransform> m_Bones;
-
+    MeshMaterial m_Material;
     unsigned int m_BoneCounter = 0;
 public:
     Mesh();
@@ -94,11 +102,13 @@ public:
     void SetName(const std::string &name);
     int GetStride();
     void RebuildUV();
-    void AddEmbedTextures(TextureType type, MemoryTextureData data);
-    std::vector<MeshEmbedTexture> GetEmbedTextures();
+    void AddTextures(MeshTexture texture);
+    std::vector<MeshTexture> GetTextures();
    // std::unordered_map<std::string, BoneTransform> &GetBones();
     //unsigned int InsertBone(std::string name, glm::mat4 offset);
     //unsigned int GetBoneId(std::string name);
     void UpdateBoneData(int indices, unsigned int boneId, float weight);
     bool HasBone();
+    bool HasMaterial();
+    MeshMaterial& GetMaterial();
 };

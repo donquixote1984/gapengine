@@ -72,6 +72,10 @@ void ObjReader::LoadModel()
     }
     ProcessNode(scene->mRootNode, scene);
     //ProcessAnimation(scene);  move to AnimationReader.h
+    if (m_OPP.useAssetMaterial)
+    {
+        //ProcessMaterials(scene);
+    }
     ProcessBones(scene);
     ProcessVertexWeight();
 }
@@ -147,6 +151,7 @@ void ObjReader::operator >> (Geometry *g)
     *  storage end.
     * 
    */
+    data->SetUseAssetMaterial(m_OPP.useAssetMaterial);
     g->InitGeometryData(data);
 }
 

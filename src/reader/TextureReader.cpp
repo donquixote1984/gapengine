@@ -1,4 +1,5 @@
 #include "TextureReader.h"
+#include "../global/GlobalData.h"
 
 TextureReader::TextureReader(const std::string &textureFolder)
 {
@@ -11,39 +12,32 @@ TextureReader::TextureReader(const std::string &textureFolder)
     for(auto const & entry: std::filesystem::directory_iterator(textureFolder))
     {
         std::string textureRealPath = entry.path().string();
-        Texture *t;
-        if (Global::texturesMap.find(textureRealPath) != Global::texturesMap.end())
-        {
-            t = Global::texturesMap[textureRealPath];
-        } else {
-            t = new Texture(textureRealPath);
-            Global::texturesMap[textureRealPath] = t;
-        }
-        // xxx.color.jpg
+
+               // xxx.color.jpg
         // xxx.roughness.png
         TextureType textureType = util::FromFilePath(textureRealPath);
         switch (textureType)
         {
             case TextureType::AO_TEXTURE:
-                tp.ao        = t;
+                tp.ao        = textureRealPath;
                 break;
             case TextureType::DIFFUSE_TEXTURE:
-                tp.diffuse   = t;
+                tp.diffuse   = textureRealPath;
                 break;
             case TextureType::METALNESS_TEXTURE:
-                tp.metalness = t;
+                tp.metalness = textureRealPath;
                 break;
             case TextureType::NORMAL_TEXTURE:
-                tp.normal    = t;
+                tp.normal    = textureRealPath;
                 break;
             case TextureType::ROUGHNESS_TEXTURE:
-                tp.roughness = t;
+                tp.roughness = textureRealPath;
                 break;
             case TextureType::SPECULAR_TEXTURE:
-                tp.specular  = t;
+                tp.specular  = textureRealPath;
                 break;
             case TextureType::OPACITY_TEXTURE:
-                tp.opacity   = t;
+                tp.opacity   = textureRealPath;
                 break;
             default:
                 break;
@@ -51,7 +45,7 @@ TextureReader::TextureReader(const std::string &textureFolder)
     }
 }
 
-TexturePackage TextureReader::GetTexturePackage()
+TexturePackagePath TextureReader::GetTexturePackage()
 {
     return tp;
 }

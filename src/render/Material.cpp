@@ -53,5 +53,12 @@ void Material::BindMaterialShaderAttrib(MaterialAttrib &attrib, unsigned int ind
         } else {
             m_IntrinsicShader->setUniform1i("material."+std::string(attrib.uniform) + ".hasTexture", 0); 
         }
+        m_IntrinsicShader->setUniform1i("material." + std::string(attrib.uniform) + ".reverseY", attrib.reverseY);
     }
+}
+
+void Material::FlushToShader(ShaderUniformsCache& cache)
+{
+    FlushToShader();
+    cache.FlushToShader(m_IntrinsicShader);
 }

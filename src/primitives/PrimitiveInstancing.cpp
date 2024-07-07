@@ -10,5 +10,6 @@ PrimitiveInstancing::PrimitiveInstancing(const std::string &objPath): GeometryIn
 
 void PrimitiveInstancing::InitMaterial()
 {
-    m_Mat = new DefaultMaterial();
+    //m_Mat = new DefaultMaterial();
+    m_Mats.push_back(new DefaultMaterial());
 }

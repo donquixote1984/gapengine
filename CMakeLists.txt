@@ -33,7 +33,7 @@ add_compile_definitions(GLFW_INCLUDE_NONE)
 
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (${PROJECT_NAME} ${MAIN_SRC} ${PROJECT_SOURCE_DIR}/gapengine.cpp "src/water/Sea.h" "src/water/Sea.cpp")
+add_executable (${PROJECT_NAME} ${MAIN_SRC} ${PROJECT_SOURCE_DIR}/gapengine.cpp "src/water/Sea.h" "src/water/Sea.cpp" "src/shaders/ShaderUniformsCache.h" "src/shaders/ShaderUniformsCache.cpp"                    "src/assetpacker/AssetFile.h" "src/assetpacker/AssetFileExtractor.h" "src/assetpacker/BridgeReader.h" "src/assetpacker/Config.h" "src/assetpacker/ExtractorException.h" "src/assetpacker/Meta.h" "src/assetpacker/MultiMatReader.h" "src/assetpacker/NormalReader.h" "src/assetpacker/Reader.h" "src/assetpacker/ReaderException.h" "src/assetpacker/AssetFile.cpp" "src/assetpacker/AssetFileExtractor.cpp" "src/assetpacker/BridgeReader.cpp" "src/assetpacker/Meta.cpp" "src/assetpacker/MultiMatReader.cpp" "src/assetpacker/NormalReader.cpp" "src/assetpacker/Reader.cpp")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
 glm::glm fmt::fmt glfw assimp::assimp Boost::program_options Boost::log_setup Boost::log nlohmann_json mstch::mstch glfw magic_enum::magic_enum  glad::glad

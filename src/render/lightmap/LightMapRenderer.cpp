@@ -63,7 +63,7 @@ void LightMapRenderer::OnRenderSingleLightMap(LightMapArray *lma, std::vector<Ge
     lma->OnRenderLightSpace();
     for (Geometry * g : geos)
     {
-        lma->OnRenderGeometry(g);
+        lma->OnRenderGeometry(g, rc);
     }
     if (lma->IsDebugging())
     {
@@ -90,14 +90,14 @@ void LightMapRenderer::ActiveTexture()
     m_DirectionalLightMapArray->ActiveTexture();
 }
 
-void LightMapRenderer::RenderGeometry(Geometry *g) const
+void LightMapRenderer::RenderGeometry(Geometry *g, RenderContext &rc) const
 {
     //lma->Bind();
 // check empty
     if (m_Lights->HasDirectionalLights())
     {
         m_DirectionalLightMapArray->Bind();
-        m_DirectionalLightMapArray->OnRenderGeometry(g);
+        m_DirectionalLightMapArray->OnRenderGeometry(g, rc);
         m_DirectionalLightMapArray->UnBind();
 
         //m_DirectionalLightMapArray->EnableDebug();
@@ -113,7 +113,7 @@ void LightMapRenderer::RenderGeometry(Geometry *g) const
     if (m_Lights->HasPointLights())
     {
         m_PointLightMapArray->Bind();
-        m_PointLightMapArray->OnRenderGeometry(g);
+        m_PointLightMapArray->OnRenderGeometry(g, rc);
         m_PointLightMapArray->UnBind();
         if (m_PointLightMapArray->IsDebugging())
         {
@@ -127,7 +127,7 @@ void LightMapRenderer::RenderGeometry(Geometry *g) const
     if (m_Lights->HasSunLight()) 
     {
         m_SunLightMap->Bind();
-        m_SunLightMap->OnRenderGeometry(g);
+        m_SunLightMap->OnRenderGeometry(g, rc);
         m_SunLightMap->UnBind();
 
         //m_SunLightMap->EnableDebug();

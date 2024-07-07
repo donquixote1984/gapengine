@@ -12,6 +12,7 @@
 #include "util/AssimpGLMHelpers.h"
 #include "reader/BoneExtractor.h"
 #include "animation/Bone.h"
+#include "util/Util.h"
 
 class MeshAssetReader
 {
@@ -52,66 +53,82 @@ private:
         m.CalculateIndices();
     }
 
-    static void ProcessEmbedTextures(Mesh &m, aiMesh *aiMesh, const aiScene * aiScene)
+    static void ProcessMaterial(Mesh &m, aiMesh *aiMesh, const aiScene * aiScene)
     {
         if (aiMesh->mMaterialIndex >= 0 && aiScene->mNumMaterials > 0)
         {
             aiMaterial *mat = aiScene->mMaterials[aiMesh->mMaterialIndex];
-            MemoryTextureData diffuse = ProcessEmbedTexturesByType(mat, aiTextureType_DIFFUSE, aiScene);
+            MeshTexture diffuse = ProcessTexturesByType(mat, aiTextureType_DIFFUSE, aiScene);
+            if (diffuse.valid)
+            {
+                diffuse.type = TextureType::DIFFUSE_TEXTURE;
+                m.AddTextures(diffuse);
+            }
 
-            if (diffuse.data != nullptr) {
-                m.AddEmbedTextures(TextureType::DIFFUSE_TEXTURE, diffuse);
-            }
-            MemoryTextureData specular = ProcessEmbedTexturesByType(mat, aiTextureType_SPECULAR, aiScene);
-            if (specular.data != nullptr)
+            MeshTexture specular = ProcessTexturesByType(mat, aiTextureType_SPECULAR, aiScene);
+            if (specular.valid)
             {
-                m.AddEmbedTextures(TextureType::SPECULAR_TEXTURE, specular);
+                specular.type = TextureType::SPECULAR_TEXTURE;
+                m.AddTextures(specular);
             }
-            MemoryTextureData normal = ProcessEmbedTexturesByType(mat, aiTextureType_NORMALS, aiScene);
-            if (normal.data != nullptr)
+            
+            MeshTexture normal = ProcessTexturesByType(mat, aiTextureType_NORMALS, aiScene);
+            if (normal.valid)
             {
-                m.AddEmbedTextures(TextureType::NORMAL_TEXTURE, normal);
+                normal.type = TextureType::NORMAL_TEXTURE;
+                m.AddTextures(normal);
             }
-            MemoryTextureData roughness = ProcessEmbedTexturesByType(mat, aiTextureType_DIFFUSE_ROUGHNESS, aiScene);
-            if (roughness.data != nullptr)
+            MeshTexture roughness = ProcessTexturesByType(mat, aiTextureType_DIFFUSE_ROUGHNESS, aiScene);
+            if (roughness.valid)
             {
-                m.AddEmbedTextures(TextureType::ROUGHNESS_TEXTURE, roughness);
+                roughness.type = TextureType::ROUGHNESS_TEXTURE;
+                m.AddTextures(roughness);
             } else {
                 // use shininess for backup
-                roughness = ProcessEmbedTexturesByType(mat, aiTextureType_SHININESS, aiScene);
-                if (roughness.data != nullptr)
+                roughness = ProcessTexturesByType(mat, aiTextureType_SHININESS, aiScene);
+                if (roughness.valid)
                 {
-                    m.AddEmbedTextures(TextureType::ROUGHNESS_TEXTURE, roughness);
+                    roughness.type = TextureType::ROUGHNESS_TEXTURE;
+                    m.AddTextures(roughness);
                 }
             }
 
-            MemoryTextureData metalness = ProcessEmbedTexturesByType(mat, aiTextureType_METALNESS, aiScene);
-            if (metalness.data != nullptr)
+            MeshTexture metalness = ProcessTexturesByType(mat, aiTextureType_METALNESS, aiScene);
+            if (metalness.valid)
             {
-                m.AddEmbedTextures(TextureType::METALNESS_TEXTURE, metalness);
+                metalness.type = TextureType::METALNESS_TEXTURE;
+                m.AddTextures(metalness);
             }
-            ProcessEmbedTexturesByType(mat, aiTextureType_UNKNOWN, aiScene);
+            ProcessTexturesByType(mat, aiTextureType_UNKNOWN, aiScene);
         }
 
     }
-    static MemoryTextureData ProcessEmbedTexturesByType(aiMaterial *mat, aiTextureType type, const aiScene *scene)
+    static MeshTexture ProcessTexturesByType(aiMaterial *mat, aiTextureType type, const aiScene *scene)
     {
-        // just load 1 texture per type for short;
+        MeshTexture texture;
         if (mat->GetTextureCount(type) <= 0)
         {
-            return {};
+            return texture;
         }
-        aiString imagePath;
-        mat->GetTexture(type, 0, &imagePath);
-        auto tex = scene->GetEmbeddedTexture(imagePath.C_Str());
+        aiString aiImagePath;
+        texture.valid = true;
+        mat->GetTexture(type, 0, &aiImagePath);
+        aiString matName = mat->GetName();
+        auto tex = scene->GetEmbeddedTexture(aiImagePath.C_Str());
+
         if (tex == nullptr)
         {
             // no embed texture. just return;
-            return {};
+            std::string imagePath = aiImagePath.C_Str();
+            std::string imageName = util::GetFileNameByPath(imagePath);
+            std::string pathPrefix = matName.C_Str();
+            texture.path = imageName;
+            return texture;
         }
         // no need to free(tex),   the data is still management by assimp and will be correctly deconstructed.
 
         int width, height, channels;
+        texture.embeded = true;
         unsigned char * data = nullptr;
         if (tex->mHeight == 0) 
         {
@@ -122,7 +139,8 @@ private:
 		    data = stbi_load_from_memory(reinterpret_cast<unsigned char*>(tex->pcData), tex->mWidth * tex->mHeight, &width, &height, &channels, 4);
         }
         // this data need to be freed after pumping to Texture
-        return {data, width, height, channels};
+        texture.data = { data, width, height, channels };
+        return texture;
     }
    
 public:
@@ -138,7 +156,7 @@ public:
         ProcessFaces(m, aiMesh);
         ProcessFacePercentage(m);
         ProcessIndices(m);
-        ProcessEmbedTextures(m, aiMesh, aiScene);
+        ProcessMaterial(m, aiMesh, aiScene);
         return m;
     }
 

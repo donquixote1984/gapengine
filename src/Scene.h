@@ -8,7 +8,6 @@
 #include "Ground.h"
 #include "TestGeometry.h"
 #include "skybox/EnvBox.h"
-#include "render/GeometryRenderer.h"
 #include "render/NormalRenderer.h"
 #include "render/EmptyRenderer.h"
 #include "render/lightmap/LightMapRenderer.h"
@@ -51,7 +50,6 @@ private:
     EnvBox *m_EnvBox= nullptr;
 
     EmptyRenderer m_Er;
-    GeometryRenderer m_Gr;
     LightMapRenderer m_LMR;
     NormalRenderer m_Nr;
     RenderPassLinkList *m_RenderPasses;

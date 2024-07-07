@@ -33,6 +33,12 @@ void BasicMaterial::FlushToShader()
     }*/
 }
 
+void BasicMaterial::FlushToShader(ShaderUniformsCache& cache)
+{
+    FlushToShader();
+    cache.FlushToShader(m_IntrinsicShader);
+}
+
 void BasicMaterial::InitAttribs()
 {
     /*
@@ -62,6 +68,7 @@ void BasicMaterial::InitAttribs()
 
     normal = glm::vec3(1.0f);
     normal.uniform = "normal";
+    normal.reverseY = true;
     
     metalness = glm::vec3(0.0f);
     metalness.uniform = "metalness";
@@ -112,6 +119,47 @@ void BasicMaterial::SetShadow(bool receiveShadow)
     {
         AddShaderSnippet(ShaderSnippet::ShadowSnippet());
     }
+}
+
+void BasicMaterial::UpdateTextureFromPath(TextureType type, std::string path)
+{
+    if (path.empty())
+    {
+        return;
+    }
+
+    Texture* t = nullptr;
+    if (type == TextureType::DIFFUSE_TEXTURE)
+    {
+        t = new Texture(path, true, true);
+        diffuse.texture = t;
+    }
+
+    if (type == TextureType::METALNESS_TEXTURE)
+    {
+        t = new Texture(path, true, true);
+        metalness.texture = t;
+    }
+
+    if (type == TextureType::NORMAL_TEXTURE)
+    {
+        t = new Texture(path, true, true);
+        normal.texture = t;
+        this->SetTangent(true);
+    }
+
+    if (type == TextureType::ROUGHNESS_TEXTURE)
+    {
+        t = new Texture(path, true, true);
+        roughness.texture = t;
+    }
+
+    if (type == TextureType::SPECULAR_TEXTURE)
+    {
+        t = new Texture(path, true, true);
+        specular.texture = t;
+    }
+
 }
 
 void BasicMaterial::InitDefaultSnippets()

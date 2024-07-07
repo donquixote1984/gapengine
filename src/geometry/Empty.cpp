@@ -129,6 +129,9 @@ bool EmptyTransform::IsEmpty()
 void EmptyTransform::RenderDrawCall()
 {}
 
+void EmptyTransform::RenderDrawCall(Shader * shader)
+{}
+
 void EmptyTransform::SetScene(Scene *s)
 {
     m_Scene = s;
@@ -151,26 +154,44 @@ RenderPassLinkList *EmptyTransform::GetRenderPass()
     return m_RenderPasses;
 }
 
-
-void ShadedEmptyTransform:: SetMaterial(Material *m)
+void ShadedEmptyTransform::HandleMaterials(std::function<void(Material*)> opts)
 {
-    if (m_Mat != nullptr)
+    std::for_each(m_Mats.begin(), m_Mats.end(), opts);
+}
+
+void ShadedEmptyTransform:: AddMaterial(Material *m)
+{
+    m_Mats.push_back(m);
+}
+
+void ShadedEmptyTransform::ClearMaterial()
+{
+    for (int i = 0; i < m_Mats.size(); i++)
     {
-        delete m_Mat;
+        delete m_Mats[i];
     }
-    m_Mat = m;
+
+    m_Mats.clear();
+}
+
+ShaderUniformsCache& ShadedEmptyTransform::GetUniforms()
+{
+    return m_ShaderUniformsCache;
 }
 ShadedEmptyTransform::~ShadedEmptyTransform()
 {
-    if (m_Mat != nullptr)
+    for (Material* m : m_Mats)
     {
-        delete m_Mat;
+        if (m != nullptr)
+        {
+            delete m;
+        }
     }
 }
 
-Material * ShadedEmptyTransform::GetMaterial() const
+std::vector<Material*> ShadedEmptyTransform::GetMaterial() const
 {
-    return m_Mat;
+    return m_Mats;
 }
 bool ShadedEmptyTransform::IsEmpty()
 {
@@ -186,14 +207,18 @@ void ShadedEmptyTransform::PreRender()
 
 void ShadedEmptyTransform::ReadyToScene()
 {
-    Shader * shader = m_Mat->GetShader();
-    shader->Ready();
-    shader->BindToUniformBuffer(LightUniformBufferBindings::LightSlot);
-    shader->BindToUniformBuffer(MatricesUniformBufferBindings::MatricesSlot);
-    shader->BindToUniformBuffer(MatricesUniformBufferBindings::CSMSlot);
-    shader->BindToUniformBuffer(MatricesUniformBufferBindings::PSMSlot);
-    shader->BindToUniformBuffer(MatricesUniformBufferBindings::SUNSlot);
-    shader->BindToUniformBuffer(SettingsUniformBufferBindings::SettingsSlot);
+    for (auto mat : m_Mats)
+    {
+        Shader* shader = mat->GetShader();
+        shader->Ready();
+        shader->BindToUniformBuffer(LightUniformBufferBindings::LightSlot);
+        shader->BindToUniformBuffer(MatricesUniformBufferBindings::MatricesSlot);
+        shader->BindToUniformBuffer(MatricesUniformBufferBindings::CSMSlot);
+        shader->BindToUniformBuffer(MatricesUniformBufferBindings::PSMSlot);
+        shader->BindToUniformBuffer(MatricesUniformBufferBindings::SUNSlot);
+        shader->BindToUniformBuffer(SettingsUniformBufferBindings::SettingsSlot);
+
+    }
 }
 
 

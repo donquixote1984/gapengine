@@ -22,11 +22,9 @@ private:
     std::string m_AssetRealFullPath;
     ObjPreProcessing m_OPP;
     void ResolveModel(Geometry *g);
-    void ResolveTex(BasicMaterial *m);
     bool ValidateModel();
     bool ValidateTex();
 public:
     AssetHandler(const std::string &assetpath, ObjPreProcessing opp);
     void operator >> (Geometry *g);
-    void operator >> (BasicMaterial *m);
 };

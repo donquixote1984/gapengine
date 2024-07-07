@@ -1,6 +1,5 @@
 #include <format>
 #include "Scene.h"
-#include "render/GeometryRenderer.h"
 #include "FrameBufferDebugger.h"
 
 
@@ -129,7 +128,6 @@ void Scene::AddGround(Ground * ground)
 void Scene::AddEnvBox(EnvBox *s)
 {
     m_EnvBox = s;
-    m_Gr.SetEnvBox(m_EnvBox);
 }
 
 EnvBox *Scene::GetEnvBox() const

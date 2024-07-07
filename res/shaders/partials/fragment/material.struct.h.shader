@@ -5,6 +5,7 @@ struct Channel {
     int enable;
     bool type;
     float constant;
+    int reverseY;
 };
 
 struct ConstantChannel

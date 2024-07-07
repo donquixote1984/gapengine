@@ -50,12 +50,12 @@ void SunLightMapCSM::OnRenderGeometryCSM(Geometry *g)
     //glBindTexture(GL_TEXTURE_2D_ARRAY, m_LightMapTex);
     LightMapUtils::OnRenderGeometryCSM(g, m_Camera, m_ShadowCascadeLevels, true);
 }
-void SunLightMapCSM::OnRenderGeometry(Geometry *g)
+void SunLightMapCSM::OnRenderGeometry(Geometry *g, RenderContext &rc)
 {
     if (m_SunLight != nullptr) 
     {
         OnRenderGeometryCSM(g);
-        LightMapArray::OnRenderGeometry(g);
+        LightMapArray::OnRenderGeometry(g, rc);
     }
 }
 

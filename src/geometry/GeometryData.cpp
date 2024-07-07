@@ -18,6 +18,15 @@ GeometryData::GeometryData(std::vector<Mesh> meshes, std::vector<std::unordered_
     FeedData(bones);
 }
 
+void GeometryData::SetUseAssetMaterial(bool uam)
+{
+    m_UseAssetMaterial = uam;
+}
+
+bool GeometryData::UseAssetMaterial()
+{
+    return m_UseAssetMaterial;
+}
 GeometryData::GeometryData(Mesh mesh): m_IsEmpty(false)
 {
     FeedData(mesh);
@@ -166,7 +175,7 @@ GeometryData::~GeometryData()
 }
 
 
-std::vector<Mesh> GeometryData::GetMeshes()
+std::vector<Mesh> & GeometryData::GetMeshes()
 {
     return m_Meshes;
 }

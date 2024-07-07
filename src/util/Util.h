@@ -17,5 +17,6 @@ namespace util {
     std::string ReadFile(const std::string &path);
     std::string GetContainerFolder(const std::string &path);
     int GetLayoutSize(std::bitset<32> layout);
+    std::string GetFileNameByPath(const std::string& path);
 };
 std::ostream& operator<<(std::ostream& os, std::byte b);

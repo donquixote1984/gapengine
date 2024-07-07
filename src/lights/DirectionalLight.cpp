@@ -20,12 +20,13 @@ LightType DirectionalLight::GetLightType() const
 
 void DirectionalLight::InitMaterial()
 {
-    m_Mat = new DirectionalLightMaterial();
+    //m_Mat = new DirectionalLightMaterial();
+    m_Mats.push_back(new DirectionalLightMaterial());
 }
 void DirectionalLight::GetImpact(LightImpact* impacts, int &size)
 {
     //impacts.reserve(5);
-    LightMaterial *lm = static_cast<LightMaterial *> (m_Mat);
+    LightMaterial *lm = static_cast<LightMaterial *> (m_Mats[0]);
     const glm::vec3 amb = lm->GetAmbient();
     const glm::vec3 diff= lm->GetDiffuse();
     const glm::vec3 spec = lm->GetSpecular();
@@ -39,7 +40,7 @@ void DirectionalLight::GetImpact(LightImpact* impacts, int &size)
 
 float DirectionalLight::GetFarPlane()
 {
-    LightMaterial *lm = static_cast<LightMaterial *> (m_Mat);
+    LightMaterial *lm = static_cast<LightMaterial *> (m_Mats[0]);
     return glm::length(lm->GetDiffuse()) * glm::length(lm->GetDiffuse());
 }
 
@@ -50,7 +51,7 @@ std::string DirectionalLight::GetName()
 
 ShaderDirLight DirectionalLight::Serialize()
 {
-    LightMaterial *lm = static_cast<LightMaterial *> (m_Mat);
+    LightMaterial *lm = static_cast<LightMaterial *> (m_Mats[0]);
     ShaderDirLight sdl;
     sdl.intensity = lm->GetIntensity();
     sdl.ambient = {lm->GetAmbient(), 0.0f};

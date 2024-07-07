@@ -65,18 +65,25 @@ public:
 
     static void OnRenderGeometryCSM(Geometry *g, Camera *camera, std::vector<float> &shadowCascadeLevels, bool useCSM)
     {
-        Shader * s = g->GetMaterial()->GetShader();
-        s->Bind();
-        //s->setUniform1i("hasShadowMap", 1);
-        s->setUniform1i("u_CascadeShadowMap", constants::CSM);
+        //Shader * s = g->GetMaterial()->GetShader();
+        //s->Bind();
+        //s->setUniform1i("u_CascadeShadowMap", constants::CSM);
+        g->GetUniforms().Cache("hasShadowMap", 1);
+        g->GetUniforms().Cache("u_CascadeShadowMap", constants::CSM);
+
         //s->setUniform4m("lightSpaceMatrix", this->GetLightSpaceMat(l));
         if (useCSM) {
             for (int i = 0 ; i < shadowCascadeLevels.size(); i ++)
             {
-                s->setUniform1f("u_CascadePlaneDistances[" +std::to_string(i)+ "]", shadowCascadeLevels[i]);
+                //s->setUniform1f("u_CascadePlaneDistances[" +std::to_string(i)+ "]", shadowCascadeLevels[i]);
+                g->GetUniforms().Cache("u_CascadePlaneDistances[" + std::to_string(i) + "]", shadowCascadeLevels[i]);
+
             }
         } else {
-            s->setUniform1f("u_CascadePlaneDistances[0]", camera->GetCameraSettings().farPlane);
+            //s->setUniform1f("u_CascadePlaneDistances[0]", camera->GetCameraSettings().farPlane);
+
+            g->GetUniforms().Cache("u_CascadePlaneDistances[0]", camera->GetCameraSettings().farPlane);
+
         }
     }
 

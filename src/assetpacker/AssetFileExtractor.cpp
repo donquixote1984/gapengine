@@ -1,24 +1,24 @@
 #include "AssetFileExtractor.h"
 
 namespace assetpacker {
-    AssetFileExtractor::AssetFileExtractor(const std::string &outputPath)
+    AssetFileExtractor::AssetFileExtractor(const std::string& outputPath)
     {
         std::srand(unsigned(std::time(nullptr)));
         m_OutputDir = outputPath;
-        if (!m_OutputDir.empty() && !StrEndsWith(m_OutputDir, "/")) 
+        if (!m_OutputDir.empty() && !StrEndsWith(m_OutputDir, "/"))
         {
             m_OutputDir += "/";
         }
     }
-    bool AssetFileExtractor::Extract(const std::string &inputfilepath)
-    { 
-    // temp/asset/models/grass/grass1/model/xxxx.model.fbx => 
-    // . m_Filename = asset/models/grass/grass1.asset
-    //  filepath = temp/asset/models/grass/grass1
-    // 
+    bool AssetFileExtractor::Extract(const std::string& inputfilepath)
+    {
+        // temp/asset/models/grass/grass1/model/xxxx.model.fbx => 
+        // . m_Filename = asset/models/grass/grass1.asset
+        //  filepath = temp/asset/models/grass/grass1
+        // 
 
         m_Filename = inputfilepath;
-        
+
         if (!filesystem::exists(m_Filename)) {
             std::cout << "File: " + m_Filename + " does not exist.";
             return false;
@@ -30,7 +30,7 @@ namespace assetpacker {
 
         ExtractModels();
         ExtractTextures();
-       
+
         return true;
     }
 
@@ -38,7 +38,7 @@ namespace assetpacker {
     {
         ifstream input;
         input.open(m_Filename, std::ios::in | std::ios::binary);
-        input.read((char *)&m_HeaderStruct, sizeof(HeaderStruct));
+        input.read((char*)&m_HeaderStruct, sizeof(HeaderStruct));
         if (m_HeaderStruct.header != HEADER_SIGN)
         {
             std::cout << "Invalid Asset file header" << std::endl;
@@ -53,7 +53,7 @@ namespace assetpacker {
     }
 
 
- 
+
     bool AssetFileExtractor::ExtractModels()
     {
         ifstream input;
@@ -66,7 +66,7 @@ namespace assetpacker {
 
         for (int i = 0; i < min(m_HeaderStruct.mcount, MAX_MODEL_COUNT); i++)
         {
-        
+
             SizeOffsetTypeMime mblock = m_HeaderStruct.modelSizeAndOffset[i];
             unsigned int offset = mblock.offset;
             unsigned int size = mblock.size;
@@ -74,7 +74,7 @@ namespace assetpacker {
 
             std::string basename = GetTimeMills();
             std::string filepath;
-            
+
             filepath = m_OutputDir + MODEL_FOLDER_PREFIX + basename + ".model" + GetModelSuffix(type);
             fstream outfile;
             outfile.open(filepath, std::ios::out | std::ios::binary);
@@ -92,7 +92,7 @@ namespace assetpacker {
             int type = (int)(mblock & bs).to_ullong();
             int offset = (int)((mblock >> 32) & bs).to_ullong();
             int size = (int)((mblock >> 64)).to_ullong();
-            
+
             std::string basename = GetTimeMills();
             std::string filepath;
 
@@ -117,8 +117,6 @@ namespace assetpacker {
         ifstream input;
         input.open(m_Filename, std::ios::in | std::ios::binary);
         std::string basename = GetTimeMills();
-        std::bitset<128> bs16(INT16_MAX);
-        std::bitset<128> bs32(INT32_MAX);
 
         if (!filesystem::exists(m_OutputDir + TEX_FOLDER_PREFIX))
         {
@@ -131,9 +129,18 @@ namespace assetpacker {
             int type = (int)tblock.type;
             int offset = (int)tblock.offset;
             int size = (int)tblock.size;
+            //char * name = tblock.name;
+            std::string name = tblock.name;
             TextureType tt = GetTexType(type);
 
-            std::string outputPath = m_OutputDir + TEX_FOLDER_PREFIX + basename + GetSampleTextureName(tt) + GetMimeSuffix(mime);
+            std::string outputPath = "";
+            if (name.empty())
+            {
+                outputPath = m_OutputDir + TEX_FOLDER_PREFIX + basename + GetSampleTextureName(tt) + GetMimeSuffix(mime);
+            }
+            else {
+                outputPath = m_OutputDir + TEX_FOLDER_PREFIX + name;
+            }
             ofstream outfile;
             outfile.open(outputPath, std::ios::out | std::ios::binary);
             input.seekg(offset);
@@ -167,5 +174,5 @@ namespace assetpacker {
         }
         return true;
     }
- 
+
 }

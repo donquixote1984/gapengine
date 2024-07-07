@@ -142,7 +142,8 @@ void TerrainCPU::ProcessData()
 
 void TerrainCPU::PreRender()
 {
-    Shader * s = this->GetMaterial()->GetShader();
-    s->setUniform1i("u_CombineNormal", 1);
+    //Shader * s = this->GetMaterial()->GetShader();
+    //s->setUniform1i("u_CombineNormal", 1);
+    this->GetUniforms().Cache("u_CombineNormal", 1);
 }
 

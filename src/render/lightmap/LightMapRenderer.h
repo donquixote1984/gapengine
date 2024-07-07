@@ -38,6 +38,6 @@ public:
     void OnRenderShadowSpace(GLFWwindow *window);
     void SetSceneLights(LightCollection* );
     void ActiveTexture();
-    void RenderGeometry(Geometry *g) const;
+    void RenderGeometry(Geometry *g, RenderContext &rc) const;
     void EnableSunLight(Light * light);
 };

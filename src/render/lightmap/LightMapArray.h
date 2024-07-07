@@ -8,6 +8,7 @@
 #include "../../ScreenCanvas.h"
 #include "../../shaders/ShaderSnippet.h"
 #include "../../lights/LightCollection.h"
+#include "../RenderContext.h"
 
 
 class LightMapRenderer;
@@ -43,12 +44,12 @@ public:
     void UnBind();
     virtual void ActiveTexture() = 0;
     virtual void OnRenderLightSpace() = 0;
-    virtual void OnRenderMVP(Geometry * geo);
+    virtual void OnRenderMVP(Geometry * geo, RenderContext &rc);
 
     bool IsDebugging();
     void EnableDebug();
 
     virtual void RenderDebug(Geometry*g) = 0;
-    virtual void OnRenderGeometry(Geometry * g);
+    virtual void OnRenderGeometry(Geometry * g, RenderContext &rc);
     virtual bool HasLights() = 0;
 };

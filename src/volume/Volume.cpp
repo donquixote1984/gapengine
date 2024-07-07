@@ -17,9 +17,9 @@ Volume::~Volume()
 
 void Volume::PreRender()
 {
-    Shader *s = this->GetMaterial()->GetShader();
-    s->Bind();
-    s->setUniform2f("u_Resolution", m_CanvasWidth, m_CanvasHeight);
+    //Shader *s = this->GetMaterial()->GetShader();
+    //s->Bind();
+    this->GetUniforms().Cache("u_Resolution", m_CanvasWidth, m_CanvasHeight);
     glViewport(0, 0, m_CanvasWidth, m_CanvasHeight);
 }
 void Volume::InitPasses()
@@ -31,5 +31,6 @@ void Volume::InitPasses()
 
 void Volume::RenderDrawCall()
 {
+    this->GetMaterial()[0]->FlushToShader(m_ShaderUniformsCache);
     m_Canvas.Draw();
 }

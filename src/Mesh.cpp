@@ -329,14 +329,15 @@ int Mesh::GetStride()
     return m_Stride;
 }
 
-void Mesh::AddEmbedTextures(TextureType type, MemoryTextureData data)
-{
-    m_EmbedTextures.push_back({type, data});
-}
 
-std::vector<MeshEmbedTexture> Mesh::GetEmbedTextures()
+void Mesh::AddTextures(MeshTexture texture)
 {
-    return m_EmbedTextures;
+    m_Material.valid = true;
+    m_Material.textures.push_back(texture);
+}
+std::vector<MeshTexture> Mesh::GetTextures()
+{
+    return m_Material.textures;
 }
 
 void Mesh::UpdateBoneData(int indices, unsigned int boneId, float weight)
@@ -375,4 +376,14 @@ void Mesh::AddVertexWeight(std::unordered_map<std::string, Bone *> boneMap)
 bool Mesh::HasBone()
 {
     return m_HasBone;
+}
+
+bool Mesh::HasMaterial()
+{
+    return m_Material.valid;
+}
+
+MeshMaterial& Mesh::GetMaterial()
+{
+    return m_Material;
 }
