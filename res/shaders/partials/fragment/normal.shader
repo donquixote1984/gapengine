@@ -1,6 +1,7 @@
 if (material.normal.hasTexture == 1) {
     norm = CalcChannel(material.normal);
     norm = normalize(norm * 2.0 - 1.0);
+    norm.y *= -1;
     {{__TBN_FRAG_NORMAL__}}
 
     if (u_CombineNormal == 1)

@@ -21,8 +21,8 @@
         "ambient": {
             "basecolor": {
                 "r": 1.0 ,
-                "g": 0.5,
-                "b": 0.31
+                "g": 1,
+                "b": 1
             }
         } ,
         "diffuse": {

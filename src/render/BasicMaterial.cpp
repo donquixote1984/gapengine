@@ -68,7 +68,7 @@ void BasicMaterial::InitAttribs()
 
     normal = glm::vec3(1.0f);
     normal.uniform = "normal";
-    normal.reverseY = true;
+    normal.reverseY = false;
     
     metalness = glm::vec3(0.0f);
     metalness.uniform = "metalness";

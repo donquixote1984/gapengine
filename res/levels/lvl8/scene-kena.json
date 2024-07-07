@@ -1,6 +1,7 @@
 {
   "geometry": [
-    "geos/floor3.json"
+    "geos/floor3.json",
+    "kena.json"
   ],
   "lights": [
     "lights/dlight1.json"

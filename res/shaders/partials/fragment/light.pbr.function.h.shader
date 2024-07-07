@@ -104,6 +104,7 @@ vec3 PBRLighting(vec3 normal, vec3 viewDir)
             }
         }
 
+        //color = CalculatePBR(dLight, normal, viewDir);
         color = shadow * vec3(0.0) + (1 - shadow) * CalculatePBR(dLight, normal, viewDir);
         //color =  CalculatePBR(dLight, normal, viewDir);
         //color = vec3(shadow);
@@ -142,11 +143,12 @@ vec3 PBRLighting(vec3 normal, vec3 viewDir)
     }
 
     vec3 color = presult + dresult + sunresult + ambient + skyambient;
-    //vec3 color = sunresult;
+    //vec3 color = CalcChannel(material.normal);
 
-    color = color / (color + vec3(1.0));
+
+    //color = color / (color + vec3(1.0));
     // gamma correct
-    color = pow(color, vec3(1.0/2.2)); 
+    //color = pow(color, vec3(1.0/2.2)); 
 
     //    int layer = GetShadowCSMLayer();
         /*
