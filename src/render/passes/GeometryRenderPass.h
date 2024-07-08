@@ -3,6 +3,7 @@
 #include "../../ui/UISettings.h"
 #include "../../global/Sky.h"
 #include "../../geometry/Geometry.h"
+#include "../../UniformBuffer.h"
 
 class GeometryRenderPass: public RenderPass
 {

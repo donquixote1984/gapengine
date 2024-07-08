@@ -78,8 +78,8 @@ void ShaderBatch::InitShader()
 	{
 		int length; 
 		glGetShaderiv(m_RendererID, GL_INFO_LOG_LENGTH, &length);
-		char * message = (char*)alloca(100* sizeof(char));
-		glGetProgramInfoLog(m_RendererID, 100, &length, message);
+		char * message = (char*)alloca(200* sizeof(char));
+		glGetProgramInfoLog(m_RendererID, 200, &length, message);
 		std::cout << "failed to link shader: " << std::endl << message << std::endl;
 		//glDeleteShader(id);
         assert(0);

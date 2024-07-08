@@ -17,6 +17,10 @@ layout (std140) uniform Matrices
     mat4 view;
     mat4 clipPlane;
 };
+layout (std140) uniform Bones
+{
+    mat4 bonesMatrices[600];
+};
 
 uniform mat4 model;
 uniform int u_IsPlaying;

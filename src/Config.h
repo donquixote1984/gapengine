@@ -79,6 +79,7 @@ namespace constants
    const int FRAME_CACHE = 14;
    // bones
    const int MAX_BONE_PER_VERTEX = 4;
+   const int MAX_BONE_NUM = 600;
 };
 
 class ConfigIniReader

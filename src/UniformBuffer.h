@@ -30,6 +30,7 @@ enum class UBOBindings
     LIGHTS = 4,
     SETTINGS = 5,
     SUN_CSM = 6,
+    BONES = 7,
 };
 
 struct UniformBufferBindingSlot
@@ -91,6 +92,13 @@ public:
     void Feed(ShaderSunLight *l, int offset);
     void Feed(int num, int offset);
     static LightUniformBuffer* GetUniformBuffer();
+};
+
+class BoneUniformBuffer : public UniformBuffer
+{
+public:
+    void Feed(glm::mat4* bones, int boneNum);
+    static BoneUniformBuffer* GetUniformBuffer();
 };
 
 class SettingsUniformBuffer: public UniformBuffer
@@ -396,6 +404,28 @@ public:
     }
 };
 
+class BoneUniformBufferBindings
+{
+public:
+    inline static UniformBufferBindingSlot BoneSlot = {
+        (unsigned int)UBOBindings::BONES,
+        0,
+        "Bones",
+        constants::MAX_BONE_NUM * sizeof(glm::mat4)
+    };
+    static void BindBones(unsigned int shaderId)
+    {
+        BoneUniformBuffer::GetUniformBuffer()->BindShaderSlot(shaderId, BoneSlot);
+    }
+
+    static void FeedBones(glm::mat4* bones, int boneNum)
+    {
+        BoneUniformBuffer* ub = BoneUniformBuffer::GetUniformBuffer();
+        ub->Feed(bones, boneNum);
+    }
+
+};
+
 class UniformBufferBindings
 {
 public:
@@ -404,10 +434,15 @@ public:
         if (LightUniformBufferBindings::LightSlot == slot)
         {
             LightUniformBufferBindings::BindLights(shaderId);
-        } else if (SettingsUniformBufferBindings::SettingsSlot == slot) {
+        }
+        else if (BoneUniformBufferBindings::BoneSlot == slot) {
+            BoneUniformBufferBindings::BindBones(shaderId);
+        }
+        else if (SettingsUniformBufferBindings::SettingsSlot == slot) {
             SettingsUniformBufferBindings::BindSettings(shaderId);
         } else {
             MatricesUniformBufferBindings::BindSlot(shaderId, slot);
         }
     }
 };
+

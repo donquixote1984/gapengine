@@ -12,6 +12,7 @@ private:
 
 public:
     Bone(std::string name, unsigned int id, glm::mat4 offset);
+    ~Bone();
     void AddWeights(unsigned int vertexId, float weight);
     std::unordered_map<unsigned int, float> GetWeights();
     unsigned int GetId();

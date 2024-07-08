@@ -217,6 +217,7 @@ void ShadedEmptyTransform::ReadyToScene()
         shader->BindToUniformBuffer(MatricesUniformBufferBindings::PSMSlot);
         shader->BindToUniformBuffer(MatricesUniformBufferBindings::SUNSlot);
         shader->BindToUniformBuffer(SettingsUniformBufferBindings::SettingsSlot);
+        shader->BindToUniformBuffer(BoneUniformBufferBindings::BoneSlot);
 
     }
 }

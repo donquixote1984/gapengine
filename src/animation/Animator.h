@@ -9,7 +9,8 @@ public:
 
     void PlayAnimation(SceneAnimation* pAnimation);
     void CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 parentTransform);
-    std::vector<glm::mat4> GetFinalBoneMatrices();
+    std::vector<glm::mat4> &GetFinalBoneMatrices();
+    glm::mat4 * GetFinalBoneMatricesPtr(unsigned int& count);
     void SetCurrentSceneAnimation(SceneAnimation * animation);
 
 private:

@@ -74,7 +74,7 @@ LightType PointLight::GetLightType() const
 void PointLight::InitMaterial()
 {
     //m_Mat = new PointLightMaterial();
-    m_Mats.push_back(new PointLightMaterial());
+    //m_Mats.push_back(new PointLightMaterial());
 }
 
 void PointLight::GetImpact(LightImpact* impacts, int &size)

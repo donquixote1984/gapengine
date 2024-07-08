@@ -4,6 +4,10 @@ Bone::Bone(std::string name,  unsigned int id, glm::mat4 offset): m_Name(name), 
 {
 
 }
+Bone::~Bone()
+{
+    m_Weights.clear();
+}
 
  void Bone::AddWeights(unsigned int vertexId, float weight)
  {

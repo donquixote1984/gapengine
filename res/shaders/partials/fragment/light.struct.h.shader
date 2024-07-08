@@ -32,6 +32,7 @@ struct PointLight {
     float quadratic;
     int castShadow;
     float farPlane;
+    float bak;
     vec3 position;
     vec3 ambient;
     vec3 diffuse;

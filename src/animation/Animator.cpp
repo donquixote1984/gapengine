@@ -1,11 +1,12 @@
 #include "Animator.h"
+#include "../Config.h"
 
 Animator::Animator()
 {
     m_CurrentTime = 0.0;
-    m_FinalBoneMatrices.reserve(100);
+    m_FinalBoneMatrices.reserve(constants::MAX_BONE_NUM);
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < constants::MAX_BONE_NUM; i++)
         m_FinalBoneMatrices.push_back(glm::mat4(1.0f));
 }
 void Animator::UpdateAnimation(float dt, bool additive)
@@ -42,7 +43,7 @@ void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 pare
         bone = boneAnimation->GetBone();
         if (bone == nullptr)
         {
-            assert(0);
+            //assert(0);
         }
     }
 
@@ -61,9 +62,15 @@ void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 pare
         CalculateBoneTransform(&node->children[i], globalTransformation);
 }
 
-std::vector<glm::mat4> Animator::GetFinalBoneMatrices() 
+std::vector<glm::mat4> & Animator::GetFinalBoneMatrices() 
 { 
     return m_FinalBoneMatrices;  
+}
+
+glm::mat4* Animator::GetFinalBoneMatricesPtr(unsigned int& count)
+{
+    count = m_FinalBoneMatrices.size();
+    return m_FinalBoneMatrices.data();
 }
 
 void Animator::SetCurrentSceneAnimation(SceneAnimation * anmiation)

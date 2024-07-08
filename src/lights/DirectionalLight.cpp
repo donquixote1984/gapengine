@@ -21,7 +21,7 @@ LightType DirectionalLight::GetLightType() const
 void DirectionalLight::InitMaterial()
 {
     //m_Mat = new DirectionalLightMaterial();
-    m_Mats.push_back(new DirectionalLightMaterial());
+    //m_Mats.push_back(new DirectionalLightMaterial());
 }
 void DirectionalLight::GetImpact(LightImpact* impacts, int &size)
 {

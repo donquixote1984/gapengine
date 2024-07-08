@@ -22,12 +22,8 @@ vec3 pointLightResolvePBR(vec3 fragPos, vec3 normal, vec3 viewDir, float shadow)
         if (pLight.castShadow == 1) {
             shadow = ShadowCalculationPointLight(pLight, normal);
         }
-        if (shadow == 1.0)
-        {
-            pbr = vec3(0.0);
-        } else {
-            pbr = CalculatePBR(pLight, normal, viewDir);
-        }
+
+        pbr = shadow * vec3(0.0) + (1 - shadow) * CalculatePBR(pLight, normal, viewDir);
 
         lightColor += pbr;
     }

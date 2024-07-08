@@ -15,6 +15,11 @@ uniform int instancing;
 // also need to consider about animation
 
 uniform int u_IsPlaying;
+layout (std140) uniform Bones 
+{
+    mat4 bonesMatrices[600];
+};
+
 {{__BONE_DEF__}}
 
 void main()

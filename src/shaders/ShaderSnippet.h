@@ -102,9 +102,8 @@ public:
         ss.AddArgs(ShaderTemplateKeys::location4, bone);
         ss.AddArgs(ShaderTemplateKeys::location5, weight);
         std::string boneDef = R"(
-            const int MAX_BONES = 100;
+            int MAX_BONES = 600;
             const int MAX_BONE_INFLUENCE = 4;
-            uniform mat4 finalBonesMatrices[MAX_BONES];
         )";
 
         ss.AddArgs(ShaderTemplateKeys::BONE_DEF, boneDef);
@@ -124,10 +123,10 @@ public:
                         totalPosition = pos;
                         break;
                     }
-                    vec4 localPosition = finalBonesMatrices[int(boneIds[i])] * pos;
+                    vec4 localPosition = bonesMatrices[int(boneIds[i])] * pos;
                     totalPosition += localPosition * weights[i];
                 
-                    vec3 localNormal = mat3(finalBonesMatrices[int(boneIds[i])]) * norm;
+                    vec3 localNormal = mat3(bonesMatrices[int(boneIds[i])]) * norm;
                     totalNormal+=localNormal * weights[i];
                 }
                 pos = totalPosition;

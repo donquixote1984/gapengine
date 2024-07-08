@@ -39,9 +39,9 @@ void GeometryRenderPass::OnRenderMVP(RenderContext &rc) const
         m_Geo->PlayAnimation();
         m_Geo->GetUniforms().Cache("u_IsPlaying", true);
         m_Geo->GetAnimator()->UpdateAnimation(rc.deltaTime, false);
-        std::vector<glm::mat4> transforms = m_Geo->GetAnimator()->GetFinalBoneMatrices();
-        for (int i = 0; i < transforms.size(); ++i)
-            m_Geo->GetUniforms().Cache("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+        unsigned int boneNum = 0;
+        glm::mat4 *trans= m_Geo->GetAnimator()->GetFinalBoneMatricesPtr(boneNum);
+        BoneUniformBufferBindings::FeedBones(trans, boneNum);
         //shader->setUniform4m();
     } else {
         m_Geo->GetUniforms().Cache("u_IsPlaying", false);

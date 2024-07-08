@@ -4,6 +4,7 @@
     "kena.json"
   ],
   "lights": [
-    "lights/dlight1.json"
+    "lights/dlight1.json",
+    "lights/light1.json"
   ]
 }

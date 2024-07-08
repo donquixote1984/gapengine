@@ -25,6 +25,12 @@ LightUniformBuffer * LightUniformBuffer::GetUniformBuffer()
     static LightUniformBuffer ub;
     return &ub;
 }
+BoneUniformBuffer* BoneUniformBuffer::GetUniformBuffer()
+{
+    static BoneUniformBuffer ub;
+    return &ub;
+}
+
 
 SettingsUniformBuffer * SettingsUniformBuffer::GetUniformBuffer()
 {
@@ -118,3 +124,9 @@ void LightUniformBuffer::Feed(ShaderSunLight *light, int offset)
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
+void BoneUniformBuffer::Feed(glm::mat4* bones, int boneNum)
+{
+    glBindBuffer(GL_UNIFORM_BUFFER, m_UBO);
+    glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4) * boneNum, bones);
+    glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}

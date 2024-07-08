@@ -75,11 +75,10 @@ void LightMapArray::OnRenderMVP(Geometry * geo, RenderContext &rc)
         geo->PlayAnimation();
         targetShader->setUniform1i("u_IsPlaying", true);
         geo->GetAnimator()->UpdateAnimation(rc.deltaTime);
-        std::vector<glm::mat4> transforms = geo->GetAnimator()->GetFinalBoneMatrices();
-        for (int i = 0; i < transforms.size(); ++i)
-        {
-            targetShader->setUniform4m("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
-        }
+        std::vector<glm::mat4> &transforms = geo->GetAnimator()->GetFinalBoneMatrices();
+        unsigned int boneNum = 0;
+        glm::mat4* trans = geo->GetAnimator()->GetFinalBoneMatricesPtr(boneNum);
+        BoneUniformBufferBindings::FeedBones(trans, boneNum);
     }
     else
     {

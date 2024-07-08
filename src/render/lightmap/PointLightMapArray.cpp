@@ -65,7 +65,8 @@ void PointLightMapArray::InitShaders()
 {
     m_LightMapShader =      new Shader("res/shaders/lightmap/point/depth.shader");
     m_LightMapShader->Nohup();
-    ShaderSnippet::InstancingSnippet(5).ApplyToShader(m_LightMapShader);
+    ShaderSnippet::AnimationSnippet().ApplyToShader(m_LightMapShader);
+    ShaderSnippet::InstancingSnippet(7).ApplyToShader(m_LightMapShader);
 
     m_LightMapDebugShader = new Shader("res/shaders/lightmap/point/debug.shader");
     m_LightMapDebugShader->Nohup();
@@ -76,6 +77,7 @@ void PointLightMapArray::InitShaders()
     ShaderSnippet::InstancingSnippet(5).ApplyToShader(m_LightMapDebugShader);
     m_LightMapShader->Ready();
     m_LightMapShader->BindToUniformBuffer(MatricesUniformBufferBindings::PSMSlot);
+    m_LightMapShader->BindToUniformBuffer(BoneUniformBufferBindings::BoneSlot);
 }
 
 void PointLightMapArray::RenderDebug(Geometry*g)

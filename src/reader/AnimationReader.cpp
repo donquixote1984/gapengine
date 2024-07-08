@@ -26,7 +26,7 @@ void AnimationReader::LoadModel()
     {
         import.SetPropertyBool(AI_CONFIG_IMPORT_FBX_PRESERVE_PIVOTS, false);
     }
-    const aiScene *scene = import.ReadFile(m_ObjPath, aiProcess_Triangulate | aiProcess_GlobalScale); 
+    const aiScene *scene = import.ReadFile(m_ObjPath, aiProcess_GlobalScale); 
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;

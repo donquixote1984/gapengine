@@ -88,8 +88,9 @@ void DirectionalLightMapArray::InitShaders()
     ShaderSnippet::AnimationSnippet().ApplyToShader(m_LightMapShader);
     m_LightMapShader->Ready();
     m_LightMapShader->BindToUniformBuffer(MatricesUniformBufferBindings::CSMSlot);
+    m_LightMapShader->BindToUniformBuffer(BoneUniformBufferBindings::BoneSlot);
     GeometryShaderPartials::AddPartials(m_LightMapDebugShader);
-    ShaderSnippet::InstancingSnippet(5).ApplyToShader(m_LightMapDebugShader);
+    ShaderSnippet::InstancingSnippet(7).ApplyToShader(m_LightMapDebugShader);
 }
 
 void DirectionalLightMapArray::RenderDebug(Geometry*g)
