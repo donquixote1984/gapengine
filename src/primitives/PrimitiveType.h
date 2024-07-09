@@ -1,4 +1,6 @@
 #pragma once
 enum PrimitiveType {
-    CUBE, PLANE, SPHERE
+    CUBE, PLANE, SPHERE,
+    CONE, TORUS, CYLINDER,
+    MONKEY, TUBE,
 };

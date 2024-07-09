@@ -23,7 +23,6 @@ public:
         }
         else if (pType == PrimitiveType::PLANE)
         {
-          
         }
         else if (pType == PrimitiveType::SPHERE)
         {

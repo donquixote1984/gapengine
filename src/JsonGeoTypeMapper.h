@@ -57,6 +57,29 @@ public:
             {
                 t = PrimitiveType::SPHERE;
             }
+
+            if (subtype == "cone")
+            {
+                t = PrimitiveType::CONE;
+            }
+
+            if (subtype == "cylinder")
+            {
+                t = PrimitiveType::CYLINDER;
+            }
+            if (subtype == "monkey")
+            {
+                t = PrimitiveType::MONKEY;
+            }
+            if (subtype == "tube")
+            {
+                t = PrimitiveType::TUBE;
+            }
+
+            if (subtype == "torus")
+            {
+                t = PrimitiveType::TORUS;
+            }
             return std::make_tuple(GeometryType::PRIMITIVE, static_cast<unsigned int>(t));
         }
         std::string exp = fmt::format("Unsupported Geo Type: {}", type);

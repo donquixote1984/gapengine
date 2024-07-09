@@ -65,24 +65,32 @@ void PointLightMapArray::InitShaders()
 {
     m_LightMapShader =      new Shader("res/shaders/lightmap/point/depth.shader");
     m_LightMapShader->Nohup();
-    ShaderSnippet::AnimationSnippet().ApplyToShader(m_LightMapShader);
+       ShaderSnippet::AnimationSnippet().ApplyToShader(m_LightMapShader);
     ShaderSnippet::InstancingSnippet(7).ApplyToShader(m_LightMapShader);
 
     m_LightMapDebugShader = new Shader("res/shaders/lightmap/point/debug.shader");
     m_LightMapDebugShader->Nohup();
-
-    //m_LightMapDebugShader = GeometryShaderFactory::CreateGeometryShader(ShaderType::DEFAULT_SHADER);
     GeometryShaderPartials::AddPartials(m_LightMapDebugShader);
     ShaderSnippet::ShadowSnippet().ApplyToShader(m_LightMapDebugShader);
     ShaderSnippet::InstancingSnippet(5).ApplyToShader(m_LightMapDebugShader);
-    m_LightMapShader->Ready();
+
+    m_LightMapDebugShader->Ready();
+    m_LightMapDebugShader->Statistic();
+    m_LightMapDebugShader->BindToUniformBuffer(LightUniformBufferBindings::LightSlot);
+    m_LightMapDebugShader->BindToUniformBuffer(MatricesUniformBufferBindings::MatricesSlot);
+
+
+
+    //m_LightMapDebugShader = GeometryShaderFactory::CreateGeometryShader(ShaderType::DEFAULT_SHADER);
+        m_LightMapShader->Ready();
+        m_LightMapShader->Statistic();
+
     m_LightMapShader->BindToUniformBuffer(MatricesUniformBufferBindings::PSMSlot);
     m_LightMapShader->BindToUniformBuffer(BoneUniformBufferBindings::BoneSlot);
 }
 
 void PointLightMapArray::RenderDebug(Geometry*g)
 {
-    Light * light = m_Lights->GetLights()[1];
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0 + constants::SHADOWCUBE);
     glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY, m_LightMapArrayTex);
@@ -91,8 +99,6 @@ void PointLightMapArray::RenderDebug(Geometry*g)
     //Global::scene->GetPointLightMapArray()->ActiveTexture();
     m_LightMapDebugShader->Bind();
     m_LightMapDebugShader->setUniform1i("u_ShadowCubes", constants::SHADOWCUBE);
-    m_LightMapDebugShader->setUniform3f("u_PointLights[1].position", light->GetPosition().x, light->GetPosition().y, light->GetPosition().z);
-    m_LightMapDebugShader->setUniform1f("u_PointLights[1].farPlane", light->GetFarPlane());
     m_LightMapDebugShader->setUniform4m("model", g->GetModelMat());
     if (g->IsInstancing())
     {
@@ -100,7 +106,7 @@ void PointLightMapArray::RenderDebug(Geometry*g)
     } else {
         m_LightMapDebugShader->setUniform1i("instancing", 0);
     }
-    g->RenderDrawCall();
+    g->RenderDrawCall(m_LightMapDebugShader);
     m_LightMapDebugShader->UnBind();
     //m_ScreenCanvas.Draw();
 }

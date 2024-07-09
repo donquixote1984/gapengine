@@ -136,6 +136,12 @@ JsonSceneReader::JsonSceneReader(const std::string &file)
         terrainfile >> terrainjson;
         m_Terrain = ReadTerrain(terrainjson);
     }
+
+    if (j.contains("camnav"))
+    {
+        bool camNav = j["camnav"];
+        m_CamNav = camNav;
+    }
    
     f.close();
 }
@@ -280,6 +286,8 @@ void JsonSceneReader::AddToScene(Scene &scene)
         scene.AddSea(m_Sea);
     }
     scene.settings.showNormal = m_ShowNormal;
+
+    scene.SetCamNav(m_CamNav);
 
     Global::ui->RegisterComponent(UIComponent::LIGHTS, (void *)scene.GetLights());
     

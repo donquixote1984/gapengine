@@ -1,0 +1,38 @@
+{
+  "type": "direction",
+  "material": {
+    "ambient": {
+      "basecolor": {
+        "r": 10,
+        "g": 10,
+        "b": 10
+      }
+    },
+    "diffuse": {
+      "basecolor": {
+        "r": 5.0,
+        "g": 5.0,
+        "b": 5.0
+      }
+    },
+    "specular": {
+      "basecolor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    "roughness": {
+      "basecolor": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+      }
+    }
+  },
+  "direction": {
+    "x": -5.0,
+    "y": -2,
+    "z": -5
+  }
+}

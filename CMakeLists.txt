@@ -33,7 +33,7 @@ add_compile_definitions(GLFW_INCLUDE_NONE)
 
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (${PROJECT_NAME} ${MAIN_SRC} ${PROJECT_SOURCE_DIR}/gapengine.cpp)
+add_executable (${PROJECT_NAME} ${MAIN_SRC} ${PROJECT_SOURCE_DIR}/gapengine.cpp "src/primitives/Torus.h" "src/primitives/Torus.cpp" "src/primitives/Cone.h" "src/primitives/Cylinder.cpp" "src/primitives/Monkey.h" "src/primitives/Monkey.cpp" "src/primitives/Tube.h" "src/primitives/Tube.cpp")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
 glm::glm fmt::fmt glfw assimp::assimp Boost::program_options Boost::log_setup Boost::log nlohmann_json mstch::mstch glfw magic_enum::magic_enum  glad::glad

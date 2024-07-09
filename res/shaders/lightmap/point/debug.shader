@@ -55,6 +55,8 @@ void main()
 
 {{{__SHADOW_FRAG_HEADER__}}}
 
+{{> vertex/uniforms.h.shader}}
+
 {{> fragment/define.h.shader}}
 
 {{> fragment/material.struct.h.shader}}
@@ -73,9 +75,8 @@ void main()
 {{> fragment/shadow.point.function.h.shader}}
 {{> fragment/shadow.directional.function.h.shader}}
 
-{{> fragment/light.function.h.shader}}
-
 {{> fragment/shadow.function.h.shader}}
+
 
 void main()
 {
@@ -92,9 +93,9 @@ void main()
     //vec3 result = pointLightResolve(FragPos, norm, viewDir);
     //vec3 result = ambient + diffuse + specular;
 
-    PointLight pl = u_PointLights[pickCube];
+    PointLight pl = ub_DynamicPointLights[0];
     vec3 fragToLight = FragPos - pl.position;
-    float closestDepth = texture(u_ShadowCubes, vec4(fragToLight, 1)).r;
+    float closestDepth = texture(u_ShadowCubes, vec4(fragToLight, 0)).r;
     //closestDepth *= pl.farPlane;
     //FragColor = vec4(vec3(0.1, 0.5, 0.1), 1.0);
     FragColor = vec4(vec3(closestDepth), 1.0);

@@ -123,6 +123,12 @@ void Camera::OnUpdate(GLFWwindow *window)
 	//shader->setUniform4m("projection", m_Projection);
 	//shader->setUniform4m("view", getView());
 	//shader->setUniform3f("camPos", m_Pos.x, m_Pos.y, m_Pos.z);
+	OnNav();
+}
+
+void Camera::OnNav()
+{
+
 }
 
 void Camera::SetPosition(glm::vec3 pos)
@@ -241,4 +247,9 @@ void Camera::ReverseY(float height)
 	m_CamFront = glm::normalize(front);
 	
 	m_YInversed = false;
+}
+
+void Camera::SetCamNav(bool nav)
+{
+	m_CamNav = nav;
 }

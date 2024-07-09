@@ -1,0 +1,1 @@
+obj.rotation = Quat(.2, 0, 0, 1) * obj.rotation;

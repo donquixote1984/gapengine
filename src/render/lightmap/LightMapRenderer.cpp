@@ -115,6 +115,9 @@ void LightMapRenderer::RenderGeometry(Geometry *g, RenderContext &rc) const
         m_PointLightMapArray->Bind();
         m_PointLightMapArray->OnRenderGeometry(g, rc);
         m_PointLightMapArray->UnBind();
+
+        //m_PointLightMapArray->EnableDebug();
+
         if (m_PointLightMapArray->IsDebugging())
         {
             m_PointLightMapArray->RenderDebug(g);

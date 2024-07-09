@@ -1,0 +1,41 @@
+{
+  "type": "point",
+  "material": {
+    "ambient": {
+      "basecolor": {
+        "r": 2,
+        "g": 2,
+        "b": 1
+      }
+    },
+    "diffuse": {
+      "basecolor": {
+        "r": 30,
+        "g": 20,
+        "b": 10
+      }
+    },
+    "specular": {
+      "basecolor": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+      }
+    },
+    "linear": {
+      "constant": 0.09
+    },
+    "quadratic": {
+      "constant": 0.032
+    },
+    "constant": {
+      "constant": 1
+    }
+  },
+
+  "position": {
+    "x": -1.7,
+    "y": 2.6,
+    "z": 1.7
+  }
+}

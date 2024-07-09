@@ -97,9 +97,9 @@ void Scene::OnUpdate(GLFWwindow *window)
         geo->OnUpdateScript(window);
     }
 
-    m_RenderPasses->Render(rc);
-
+  
     try {
+        m_RenderPasses->Render(rc);
         //m_Gr.SetRC(rc);
         //m_Gr.SetSceneLights(m_Lights);
         //m_Gr.OnRenderGeos(m_Geos, window);
@@ -145,6 +145,9 @@ void Scene::AddTerrain(Terrain *terrain)
 void Scene::AddSea(Sea* sea)
 {
     m_Sea = sea;
+}
+void Scene::SetCamNav(bool nav)
+{
 }
 void Scene::AddAtomsphere(Atomsphere * atomsphere)
 {

@@ -258,6 +258,7 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string & source
 		assert(0);
 		return 0;
 	}
+
 	return id;
 }
 unsigned int Shader::CreateShader(
@@ -291,6 +292,21 @@ unsigned int Shader::CreateShader(
 		glAttachShader(program, tse);
 	}
 	GLCALL(glLinkProgram(program));
+
+	int result;
+	glGetProgramiv(program, GL_LINK_STATUS, &result);
+	if (result == GL_FALSE)
+	{
+		int length;
+		glGetShaderiv(program, GL_INFO_LOG_LENGTH, &length);
+		char* message = (char*)alloca(200 * sizeof(char));
+		glGetProgramInfoLog(program, 200, &length, message);
+		std::cout << "failed to link shader: " << std::endl << message << std::endl;
+		//glDeleteShader(id);
+		assert(0);
+	}
+
+
 	return program;
 }
 

@@ -36,7 +36,7 @@ void main()
 #shader geometry
 #version 410
 layout (triangles) in;
-layout (triangle_strip, max_vertices=108) out;
+layout (triangle_strip, max_vertices=78) out;
 layout (std140) uniform PSM
 {
     mat4 shadowCubeMatrices[60];

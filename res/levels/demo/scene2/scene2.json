@@ -1,0 +1,9 @@
+{
+  "geometry": [
+    "geos/hori/hori.json",
+    "plane.json"
+  ],
+  "lights": [
+    "p1.json"
+  ]
+}

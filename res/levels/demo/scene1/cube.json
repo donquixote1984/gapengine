@@ -1,0 +1,35 @@
+{
+  "type": "primitive",
+  "name": "cub1",
+  "subtype": "cube",
+  "position": {
+    "x": 2,
+    "y": 0,
+    "z": 0
+  },
+  "scale": {
+    "x": 0.5,
+    "y": 0.5,
+    "z": 0.5
+  },
+  "material": {
+    "shadings": [ "pbr" ],
+
+    "ambient": {
+      "r": 1.0,
+      "g": 0.5,
+      "b": 0.31
+    },
+    "diffuse": {
+      "r": 1.0,
+      "g": 0.5,
+      "b": 0.31
+    },
+    "specular": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "shininess": 32
+  }
+}

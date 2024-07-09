@@ -1,0 +1,17 @@
+{
+  "geometry": [
+    "cone.json",
+    "cube.json",
+    "sphere.json",
+    "torus.json",
+    "cylinder.json",
+    "monkey.json",
+    "tube.json",
+    "plane.json"
+  ],
+  "camnav": true,
+  "lights": [
+    "lights/p1.json",
+      "lights/p2.json"
+  ]
+}

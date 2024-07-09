@@ -1,0 +1,9 @@
+{
+  "geometry": [
+    "plane.json",
+    "kena.json"
+  ],
+  "lights": [
+    "lights/p1.json"
+  ]
+}

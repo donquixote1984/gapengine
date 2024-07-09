@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "ui/ImGuiUtil.h"
+#include "global/ScreenProps.h"
 
 // settings
 const unsigned int SCR_WIDTH = 2400;
@@ -11,7 +12,7 @@ const unsigned int SCR_HEIGHT = 2160;
 struct CameraSettings
 {
     float nearPlane = .01f;
-    float farPlane = 500.0f;
+    float farPlane = 200.0f;
     float zoom = 45.0f;
 };
 
@@ -60,7 +61,7 @@ private:
     glm::vec3 m_Offset = glm::vec3(0.0);
     glm::vec3 m_CamFront = glm::vec3(.0f, .0f, -1.0f);
     glm::vec3 m_CamUp = glm::vec3(.0f, 1.0f, .0f);
-    glm::mat4 m_Projection = glm::perspective(glm::radians(m_Settings.zoom), (float)SCR_WIDTH / (float) SCR_HEIGHT, m_Settings.nearPlane, m_Settings.farPlane);
+    glm::mat4 m_Projection = glm::perspective(glm::radians(m_Settings.zoom), (float)Global::screen.width/ (float)Global::screen.height, m_Settings.nearPlane, m_Settings.farPlane);
 
     bool m_FirstMouse = true;
     float m_LastMouseX = SCR_WIDTH / 2;
@@ -68,6 +69,10 @@ private:
     float m_Yaw = -90.0f;
     float m_Pitch = 0.0f;
     bool m_YInversed = false;
+    bool m_CamNav = false;
+
+    float m_NavSpeed = 0.05;
+    float m_NavAngle = 0.0f;
 public:
     Camera();
     Camera(glm::vec3 pos);
@@ -84,7 +89,7 @@ public:
     float GetYaw();
     void InverseY(float height = 0);
     void ReverseY(float height = 0);
-
+    void SetCamNav(bool);
     void ResetMouse();
     CameraSettings GetCameraSettings();
     static void cursorPosCallback(GLFWwindow* window, double xpos, double ypos)
@@ -114,4 +119,5 @@ public:
     CameraWorldCorner GetFrustumCornersWorldSpace(glm::mat4 projection);
     
     glm::vec3 GetFrustumWorldCenter();
+    void OnNav();
 };

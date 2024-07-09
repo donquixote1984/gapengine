@@ -42,6 +42,7 @@ class JsonSceneReader
 private:
     std::string m_BasePath;
     bool m_ShowNormal = false;
+    bool m_CamNav = false;
     WorldGraphNode *root;
     std::vector<EmptyTransform *> m_Geos;
     std::vector<Light *> m_Lights;

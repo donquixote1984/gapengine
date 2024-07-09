@@ -69,7 +69,7 @@ public:
 		ui = new SceneUI(window);
 		Global::ui = ui;
 
-		JsonSceneReader j("./res/levels/lvl8/scene-kena.json");
+		JsonSceneReader j("./res/levels/demo/scene1/scene1.json");
 		j.AddToScene(*scene);
 		Ground *ground = new Ground();
 		scene->AddGround(ground);

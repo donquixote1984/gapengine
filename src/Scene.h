@@ -57,6 +57,7 @@ private:
     void InitRenderPasses();
     unsigned int m_Frame = 0;
     float m_LastFrameTime = 0;
+    bool m_CamNav = false;
 public:
     SceneSettings settings;
     Scene();
@@ -83,6 +84,7 @@ public:
     void AppendPreRenderPass(RenderPass *pass);
     void AppendPostRenderPass(RenderPass *pass);
     void RenderEnv(RenderContext &rc);
+    void SetCamNav(bool);
     RenderContext InverseCamera(float height);
     RenderContext ReverseCamera(float height);
 };

@@ -1,0 +1,43 @@
+{
+  "type": "primitive",
+  "name": "monk",
+  "subtype": "monkey",
+  "position": {
+    "x": -1,
+    "y": -0.5,
+    "z": 2
+  },
+  "scale": {
+    "x": 0.5,
+    "y": 0.5,
+    "z": 0.5
+  },
+  "rotate": {
+    "angle": -30,
+    "axis": {
+      "x": 1,
+      "y": 1,
+      "z": 0
+    }
+  },
+  "material": {
+    "shadings": [ "pbr" ],
+
+    "ambient": {
+      "r": 1.0,
+      "g": 0.5,
+      "b": 0.31
+    },
+    "diffuse": {
+      "r": 1.0,
+      "g": 0.5,
+      "b": 0.31
+    },
+    "specular": {
+      "r": 0.5,
+      "g": 0.5,
+      "b": 0.5
+    },
+    "shininess": 32
+  }
+}
