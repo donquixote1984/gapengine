@@ -1,13 +1,10 @@
 {
     "type": "mesh",
     "name": "hori-frontleg",
-    "asset": "models/hardsurface/hori-frontleg.asset",
-    "preprocessing": {
-        "unitscale": 0.5
-    },
+    "asset": "models/hori/frontleg.asset",
     "position": {
         "x": 0,
-        "y": 0.1,
+        "y": 0,
         "z": 0
     },
     "scale": {

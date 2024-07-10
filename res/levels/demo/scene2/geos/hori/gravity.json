@@ -1,13 +1,10 @@
 {
     "type": "mesh",
     "name": "hori-gravity",
-    "asset": "models/hardsurface/hori-gravity.asset",
-    "preprocessing": {
-        "unitscale": 0.5
-    },
+    "asset": "models/hori/gravity.asset",
     "position": {
         "x": 0,
-        "y": 0.1,
+        "y": 0,
         "z": 0
     },
     "scale": {

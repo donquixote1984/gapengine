@@ -82,7 +82,9 @@ void Geometry::RenderDrawCall()
 
     for (int i = 0; i < clusterNum; i++)
     {
-        static_cast<BasicMaterial*>(m_Mats[i])->FlushToShader(m_ShaderUniformsCache);
+        if (i <= m_Mats.size() - 1) {
+            static_cast<BasicMaterial*>(m_Mats[i])->FlushToShader(m_ShaderUniformsCache);
+        }
         rawVertices[i].Draw(DisplayMode::MESH);
     }
 
@@ -263,7 +265,7 @@ void Geometry::MoveEmbedTexturesToMaterial()
     {
         for (auto texture : meshes[i].GetTextures())
         {
-            if (texture.embeded)
+            if (texture.embeded && m_Mats.size() == meshes.size())
             {
                 BasicMaterial* m = static_cast<BasicMaterial*>(m_Mats[i]);
                 m->UpdateTextureFromMemory(texture.type, texture.data);

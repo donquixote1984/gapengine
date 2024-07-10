@@ -1,13 +1,10 @@
 {
     "type": "mesh",
     "name": "hori-jaw",
-    "asset": "models/hardsurface/hori-jaw.asset",
-    "preprocessing": {
-        "unitscale": 0.5
-    },
+    "asset": "models/hori/jaw.asset",
     "position": {
         "x": 0,
-        "y": 0.1,
+        "y": 0,
         "z": 0
     },
     "scale": {

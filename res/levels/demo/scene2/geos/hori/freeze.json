@@ -1,13 +1,10 @@
 {
     "type": "mesh",
     "name": "hori-freeze",
-    "asset": "models/hardsurface/hori-freeze.asset",
-    "preprocessing": {
-        "unitscale": 0.5
-    },
+    "asset": "models/hori/freeze.asset",
     "position": {
         "x": 0,
-        "y": 0.1,
+        "y": 0,
         "z": 0
     },
     "scale": {

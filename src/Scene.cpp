@@ -40,7 +40,7 @@ void Scene::InitRenderPasses()
     m_RenderPasses->AppendRenderPass(RenderPassLinkList::CreateSceneRenderPass(RenderPassType::SHADOW));
     m_RenderPasses->AppendRenderPass(RenderPassLinkList::CreateSceneRenderPass(RenderPassType::SCREEN));
     //m_RenderPasses->AppendRenderPass(RenderPassLinkList::CreateSceneRenderPass(RenderPassType::POSTPROCESS));
-    //m_RenderPasses->AppendRenderPass(RenderPassLinkList::CreateSceneRenderPass(RenderPassType::FRAME_BUFFER_DEBUG));
+    m_RenderPasses->AppendRenderPass(RenderPassLinkList::CreateSceneRenderPass(RenderPassType::FRAME_BUFFER_DEBUG));
 }
 
 void Scene::AddLight(Light *light)

@@ -10,6 +10,7 @@
 #include "EnvBox.h"
 #include "../Config.h"
 #include "../FrameBuffer.h"
+#include "../ScreenCanvas.h"
 
 class HDRIBox: public EnvBox 
 {
@@ -35,6 +36,7 @@ private:
     Shader *m_BRDFShader = nullptr;
 
     FrameBuffer *m_BRDFFb = nullptr;
+    ScreenCanvas m_ScreenCanvas;
 
     glm::mat4 m_CaptureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
     glm::mat4 m_CaptureViews[6] =

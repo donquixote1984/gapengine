@@ -1,9 +1,12 @@
 {
   "geometry": [
     "geos/hori/hori.json",
-    "plane.json"
+    "ground/ground1.json"
   ],
   "lights": [
-    "p1.json"
-  ]
+    "lights/d1.json"
+  ],
+  "skybox": {
+    "hdri": "./res/skybox/hdri/kloppenheim_06_puresky_2k.hdr"
+  }
 }

@@ -1,5 +1,5 @@
 #include "HDRIBox.h"
-
+#include "../FrameBufferDebugger.h"
 HDRIBox::HDRIBox(std::string & hdriFile): m_HdriFile(hdriFile)
 {
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
@@ -35,8 +35,6 @@ HDRIBox::HDRIBox(std::string & hdriFile): m_HdriFile(hdriFile)
     m_BRDFShader = new Shader("res/shaders/skybox/brdf.shader");
     m_BRDFShader->Nohup();
 
-
-    m_BRDFFb = new FrameBuffer(m_BRDFShader, BRDF_RES, BRDF_RES);
 
     glGenFramebuffers(1, &m_CubeMapFrameBuffer);
     glGenRenderbuffers(1, &m_CubeMapRenderBuffer);
@@ -176,9 +174,8 @@ void HDRIBox::RenderToPrefilterMap()
 
 void HDRIBox::RenderToBRDFMap()
 {
-    /*
     glGenTextures(1, &m_BRDFTextureId);
-    glBindBuffer(GL_TEXTURE_2D, m_BRDFTextureId);
+    glBindTexture(GL_TEXTURE_2D, m_BRDFTextureId);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, BRDF_RES, BRDF_RES, 0, GL_RG, GL_FLOAT, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -189,13 +186,14 @@ void HDRIBox::RenderToBRDFMap()
     glBindRenderbuffer(GL_RENDERBUFFER, m_CubeMapRenderBuffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, BRDF_RES, BRDF_RES);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_BRDFTextureId, 0);
-    //glViewport(0, 0, BRDF_RES, BRDF_RES);
-    //m_BRDFShader->Bind();
-
+    glViewport(0, 0, BRDF_RES, BRDF_RES);
+    m_BRDFShader->Bind();
+    m_BRDFShader->Statistic();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    */
+    m_ScreenCanvas.Draw();
+    //FrameBufferDebugger::get()->SetCurrentFrameBuffer(m_ReflectionFrameBuffer);
 
-    m_BRDFFb->Render();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void HDRIBox::RenderCube()
@@ -244,7 +242,10 @@ void HDRIBox::ActiveEnvironment()
     glActiveTexture(GL_TEXTURE0 + constants::PREFILTER_MAP);  // 25slot => prefiltermap
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_PrefilterTextureId);
 
-    m_BRDFFb->ActiveTexture(constants::BRDFLUT_MAP);
+    //m_BRDFFb->ActiveTexture(constants::BRDFLUT_MAP);
+    glActiveTexture(GL_TEXTURE0 + constants::BRDFLUT_MAP);
+    glBindTexture(GL_TEXTURE_2D, m_BRDFTextureId);
+    
 }
 
 void HDRIBox::RenderTestBRDF()

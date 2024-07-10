@@ -139,6 +139,11 @@ vec3 PBRLighting(vec3 normal, vec3 viewDir)
     }
 
     vec3 color = presult + dresult + sunresult + ambient + skyambient;
+    //vec3 color =   texture(u_BRDFLut, vec2(max(dot(normal, viewDir), 0.0), CalcChannel(material.roughness).r)).rgb;
+ 
+ 
+
+   //vec3 color = CalcChannel(material.roughness);
     //vec3 color = CalcChannel(material.normal);
 
 
