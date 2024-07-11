@@ -1,23 +1,20 @@
 {
-  "type": "primitive",
-  "subtype": "plane",
+  "type": "mesh",
+  "subtype": "ground",
   "name": "plane",
-  "asset": "textures/ground2.asset",
+  "asset": "models/ground/plate.asset",
   "position": {
     "x": 0,
     "y": 0,
     "z": 0
   },
   "scale": {
-    "x": 10,
+    "x": 50,
     "y": 10,
-    "z": 10
+    "z": 50
   },
   "material": {
     "shadings": [ "pbr" ],
-    "tile": {
-      "constant": 2
-    },
     "ambient": {
       "basecolor": {
         "r": 1.0,

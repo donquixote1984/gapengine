@@ -345,6 +345,12 @@ EnvBox *JsonSceneReader::ReadEnvBox(json skyboxJson)
         ss->ActiveEnvironment();
         s = ss;
     }
+    if (skyboxJson.contains("hideBackground"))
+    {
+        bool hideBackground = skyboxJson["hideBackground"];
+        s->HideBackground(hideBackground);
+
+    }
     return s;
 }
 

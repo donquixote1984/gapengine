@@ -10,6 +10,10 @@ EnvBox::~EnvBox()
 }
 void EnvBox::OnUpdateMVP(RenderContext &rc)
 {
+    if (m_HideBackground)
+    {
+        return;
+    }
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     m_Shader->Bind();
@@ -22,4 +26,8 @@ void EnvBox::OnUpdateMVP(RenderContext &rc)
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
     glDepthFunc(GL_LESS);
+}
+void EnvBox::HideBackground(bool hide)
+{
+    m_HideBackground = hide;
 }
