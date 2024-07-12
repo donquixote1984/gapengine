@@ -4,13 +4,15 @@ HDRIBox::HDRIBox(std::string & hdriFile): m_HdriFile(hdriFile)
 {
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
     stbi_set_flip_vertically_on_load(true);
+    stbi_ldr_to_hdr_scale(1.0f);
+    stbi_ldr_to_hdr_gamma(1.0f);
     int width, height, nrChannels;
     float *data = stbi_loadf(hdriFile.c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glGenTextures(1, &m_HDRITextureId);
         glBindTexture(GL_TEXTURE_2D, m_HDRITextureId);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data); // note how we specify the texture's data value to be float
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RGB, GL_FLOAT, data); // note how we specify the texture's data value to be float
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -53,7 +55,7 @@ void HDRIBox::RenderToCubeMap()
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_CubeMapTextureId);
     for (int i = 0; i < 6; i++)
     {
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, HDRI_RES, HDRI_RES, 0, GL_RGB, GL_FLOAT, nullptr);
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB32F, HDRI_RES, HDRI_RES, 0, GL_RGB, GL_FLOAT, nullptr);
     }
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

@@ -1,0 +1,90 @@
+{
+  "type": "terrain",
+  "subtype": "plane",
+  "name": "terrain 1",
+  "asset": "textures/ground6.asset",
+  "meta": {
+    "type": "CPU",
+    "noise": false,
+    "heightmap": "res/heightmap/heightmap2.png",
+
+    "res": {
+      "cpu": 1024,
+      "gpu": 10
+    },
+    "size": 10,
+    "from": {
+      "x": 0.4,
+      "y": 1
+    },
+    "to": {
+      "x": 0,
+      "y": 0.1
+    },
+    "animated": {
+      "x": 0.1,
+      "y": 0.2
+    }
+  },
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "scale": {
+    "x": 5,
+    "y": 5,
+    "z": 5
+  },
+  "material": {
+    "shadings": [ "terrain" ],
+    "tile": {
+      "constant": 16
+    },
+    "ambient": {
+      "basecolor": {
+        "r": 1.0,
+        "g": 1,
+        "b": 1
+      }
+    },
+    "diffuse": {
+      "basecolor": {
+        "r": 1.0,
+        "g": 1,
+        "b": 1
+      }
+    },
+    "normal": {
+      "basecolor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0
+      }
+    },
+    "metalness": {
+      "basecolor": {
+        "r": 0,
+        "g": 0,
+        "b": 0
+      }
+    },
+    "roughness": {
+      "basecolor": {
+        "r": 2,
+        "g": 2,
+        "b": 2
+      }
+    },
+    "specular": {
+      "basecolor": {
+        "r": 0.5,
+        "g": 0.5,
+        "b": 0.5
+      }
+    },
+    "shininess": {
+      "constant": 32
+    }
+  }
+}

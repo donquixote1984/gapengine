@@ -31,3 +31,12 @@ void EnvBox::HideBackground(bool hide)
 {
     m_HideBackground = hide;
 }
+
+void EnvBox::SetExposure(float exposure)
+{
+    m_Exposure = exposure;
+}
+float EnvBox::GetExposure()
+{
+    return m_Exposure;
+}

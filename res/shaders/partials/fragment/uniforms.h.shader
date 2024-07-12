@@ -5,6 +5,7 @@ uniform Material material;
 
 //uniform int u_PointLightNum;
 uniform int u_CombineNormal;
+uniform float u_EnvExposure;
 
 // pbr
 uniform samplerCube u_IRMap;

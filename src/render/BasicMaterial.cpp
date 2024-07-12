@@ -120,6 +120,17 @@ void BasicMaterial::SetShadow(bool receiveShadow)
         AddShaderSnippet(ShaderSnippet::ShadowSnippet());
     }
 }
+void BasicMaterial::FeedTexturePackage(TexturePackagePath p)
+{
+    UpdateTextureFromPath(TextureType::AO_TEXTURE, p.ao);
+    UpdateTextureFromPath(TextureType::DIFFUSE_TEXTURE, p.diffuse);
+    UpdateTextureFromPath(TextureType::METALNESS_TEXTURE, p.metalness);
+    UpdateTextureFromPath(TextureType::NORMAL_TEXTURE, p.normal);
+    UpdateTextureFromPath(TextureType::OPACITY_TEXTURE, p.opacity);
+    UpdateTextureFromPath(TextureType::ROUGHNESS_TEXTURE, p.roughness);
+    UpdateTextureFromPath(TextureType::SPECULAR_TEXTURE, p.specular);
+}
+
 
 void BasicMaterial::UpdateTextureFromPath(TextureType type, std::string path)
 {

@@ -222,11 +222,40 @@ class TerrainGeometryFactory: public GeometryFactory
         EmptyTransform * _g = Global::CreateTerrain(meta);
         Geometry *g = static_cast<Geometry *>(_g);
         PresolveGeometryMVP(g, geojson);
-        PresolveGeometryMaterial(g, geojson);
         PresolveGeometryData(g, geojson);
+        PresolveGeometryMaterial(g, geojson);
         PresolveGeometryScript(g, geojson);
         return g;
     }
+
+    ShadedEmptyTransform* PresolveGeometryMaterial(ShadedEmptyTransform* _g, const nlohmann::json& geojson) override
+    {
+        Geometry* g = static_cast<Geometry*> (_g);
+        if (g->GetGeoData()->UseAssetMaterial())
+        {
+            for (auto mesh : g->GetGeoData()->GetMeshes())
+            {
+                nlohmann::json materialJson = geojson["material"];
+                std::shared_ptr<MaterialTemplate> t = MaterialTemplateBuilder::buildTemplate(materialJson);
+                std::shared_ptr<MaterialValueNode> mvn = MaterialNodeReader::ReadMaterial(materialJson, t.get());
+                DefaultMaterial* df = static_cast<DefaultMaterial*>(mvn.get()->GetFirstOutputValue().GetPtr());
+                g->AddMaterial(df);
+                if (mesh.HasMaterial())
+                {
+                    df->FeedMeshMaterial(mesh.GetMaterial());
+                }
+            }
+        }
+        else
+        {
+            // single material
+            GeometryFactory::PresolveGeometryMaterial(_g, geojson);
+            BasicMaterial* df = static_cast<BasicMaterial*>(g->GetMaterial()[0]);
+            df->FeedTexturePackage(g->GetGeoData()->GetDefaultTextures());
+        }
+        return g;
+    }
+
 };
 
 class WaterGeometryFactory: public GeometryFactory

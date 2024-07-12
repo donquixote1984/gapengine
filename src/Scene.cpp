@@ -210,3 +210,8 @@ RenderContext Scene::ReverseCamera(float height)
     MatricesUniformBufferBindings::FeedMatrices(mats, 2);
     return rc;
 }
+
+float Scene::GetEnvExposure()
+{
+    return m_EnvBox->GetExposure();
+}

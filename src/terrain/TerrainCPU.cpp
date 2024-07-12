@@ -1,14 +1,19 @@
 #include "TerrainCPU.h"
 
 TerrainCPU::TerrainCPU(TerrainMeta meta): Terrain(meta)
-{}
+{
+    GenTerrainMesh();
+    GenIndices();
+    GeometryData* d = GeometryDataFactory::CreateGeometryData(m_Mesh);
+    InitGeometryData(d, 1);
+}
 
 void TerrainCPU::GenTerrainMesh()
 {
 
     stbi_set_flip_vertically_on_load(true);
     int width, height, nChannels;
-    unsigned char *data = stbi_load(m_Meta.heightmap.c_str(), &width, &height, &nChannels, 4);
+    unsigned short *data = stbi_load_16(m_Meta.heightmap.c_str(), &width, &height, &nChannels, 0);
     int res = m_Meta.res;
     int verticesCount = res * res;
     int indicesCount = (res-1) * (res-1) * 6;
@@ -17,7 +22,7 @@ void TerrainCPU::GenTerrainMesh()
 
     unsigned int index = 0;
 
-    m_Mesh = Mesh(res * res, {3,3,2,3,3});
+    m_Mesh = Mesh(res * res, {3,3,2,3,3,4,4});
     //InitGeometryData(mesh, m_Meta.res * m_Meta.res, {3,3,2,3,3});
     //GeometryDataFactory::CreateGeometryData(mesh);
     m_Mesh.InitFace(faceCount);
@@ -31,7 +36,15 @@ void TerrainCPU::GenTerrainMesh()
             //unsigned char  y = texel[0];
             vertex[0] =  FitSize(i - res /  2.0) ; //-m_Height/2.0f + m_Height*i/(float)m_Height;
 
-            vertex[1] = SampleHeight(data,i, j, width, height, nChannels) * 0.02;
+            vertex[1] = SampleHeight(data, i, j, width, height, nChannels);
+            if (vertex[1] > m_HeightMax)
+            {
+                m_HeightMax = vertex[1];
+            }
+            if (vertex[1] < m_HeightMin)
+            {
+                m_HeightMin = vertex[1];
+            }
 
             vertex[2] = FitSize(j - res /2.0);
 
@@ -72,10 +85,17 @@ void TerrainCPU::GenTerrainMesh()
             vertex[20] = -0.0f;
             vertex[21] = -0.0f;
             m_Mesh.AddVertex(vertex);
-            index += 14;
+            index += 22;
         }
     }
     stbi_image_free(data);
+
+    if (m_Meta.averageHeight)
+    {
+        float transformY = (m_HeightMax + m_HeightMin)/2;
+        //this->Translate(glm::vec3(0, -transformY, 0));
+        m_Position.y -= transformY;
+    }
 }
 
 glm::vec3 TerrainCPU::GetNormal(int x, int y)
@@ -119,23 +139,27 @@ void TerrainCPU::GetTangent(int x, int y, glm::vec3 &tangent, glm::vec3 &bitange
     bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
     bitangent = glm::normalize(bitangent);  
 }
-unsigned char TerrainCPU::SampleHeight(unsigned char *data, int i, int j,  int texWidth, int texHeight, int channels)
+float TerrainCPU::SampleHeight(unsigned short *data, int i, int j,  int texWidth, int texHeight, int channels)
 {
     int coordx = floor(i * ((float)texWidth / m_Meta.res));//floor((float)i / m_Meta.res * texWidth);
     int coordy = floor(j * ((float)texHeight / m_Meta.res));
-    unsigned char* texel = data + (coordx + coordy* texWidth) *channels;
-   
-    return texel[0];
-}
+    unsigned short* texel = data + (coordx + coordy* texWidth) *channels;
+    float height = texel[0] * 0.0001;
+    if (height > m_HeightMax)
+    {
+        m_HeightMax= height;
+    }
+    if (height < m_HeightMin)
+    {
+        m_HeightMin = height;
+    }
 
+    return height;
+}
 
 
 void TerrainCPU::ProcessData()
 {
-    GenTerrainMesh();
-    GenIndices();
-    GeometryData *d = GeometryDataFactory::CreateGeometryData(m_Mesh);
-    InitGeometryData(d, 1);
     m_Dp->Process(this);
 }
 

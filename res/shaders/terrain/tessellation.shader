@@ -9,10 +9,10 @@ out vec2 texe[];
 uniform int u_TessLevelOuter[4];
 uniform int u_TessLevelInner[2];
 
-const int MIN_TESS_LEVEL = 16;
-const int MAX_TESS_LEVEL = 128;
+const int MIN_TESS_LEVEL = 64;
+const int MAX_TESS_LEVEL = 64;
 const float MIN_DISTANCE = 1;
-const float MAX_DISTANCE = 50;
+const float MAX_DISTANCE = 100;
 
 uniform mat4 model;
 layout (std140) uniform Matrices
@@ -65,6 +65,7 @@ out vec3 Normal;
 out vec2 TexCoords;
 out vec3 FragPos;
 out vec3 FragViewPos;
+out vec3 ScreenSpaceDir;
 
 {{__OUT_TBN_TESS__}}
 layout (std140) uniform Matrices
@@ -142,14 +143,16 @@ void TerrainCPU::GetTangent(int x, int y, glm::vec3 &tangent, glm::vec3 &bitange
 void main()
 {
     
-    float heightFactor = 20;
+    float heightFactor = 3;
     float u = gl_TessCoord.x; 
     float v = gl_TessCoord.y;
     float w = gl_TessCoord.z;
 
-    float delta = 0.001 ;
-    float u1 = max(u + delta, 0);
-    float v1 = max(v + delta, 0);
+    float delta = 0.1 ;
+    float u1 = (u + delta);
+    float v1 = (v + delta);
+    float u2 = (u - delta);
+    float v2 = (v - delta);
 
     vec4 p00 = (gl_in[0].gl_Position);
     vec4 p01 = (gl_in[1].gl_Position);
@@ -170,10 +173,21 @@ void main()
     vec2 texCoordu1v1 = mix(mix(t00, t01, u1), mix(t10, t11, u1), v1); 
     vec2 texCoorduv1 =  mix(mix(t00, t01, u),  mix(t10, t11, u), v1); 
 
+
+    vec2 texCoordu2v =  mix(mix(t00, t01, u2), mix(t10, t11, u2), v); 
+    vec2 texCoordu2v2 = mix(mix(t00, t01, u2), mix(t10, t11, u2), v2); 
+    vec2 texCoorduv2 =  mix(mix(t00, t01, u),  mix(t10, t11, u), v2); 
+
+
+
     vec4 p =     mix(mix(p00, p01, u),  mix(p10, p11, u), v);
-    vec4 pu1v =  mix(mix(p00, p01, u1), mix(p10, p11, u1), v);
+    vec4 puv1 =  mix(mix(p00, p01, u1), mix(p10, p11, u1), v);
     vec4 pu1v1 = mix(mix(p00, p01, u1), mix(p10, p11, u1), v1);
-    vec4 puv1 =  mix(mix(p00, p01, u),  mix(p10, p11, u), v1);
+    vec4 pu1v =  mix(mix(p00, p01, u),  mix(p10, p11, u), v1);
+
+    vec4 pu2v =  mix(mix(p00, p01, u2), mix(p10, p11, u2), v);
+    vec4 pu2v2 = mix(mix(p00, p01, u2), mix(p10, p11, u2), v2);
+    vec4 puv2 =  mix(mix(p00, p01, u),  mix(p10, p11, u), v2);
 
 
     
@@ -182,6 +196,20 @@ void main()
     float heightu1v1 = fitRange(texture(u_HeightMap, texCoordu1v1).y, u_MapRange.x, u_MapRange.y, u_MapRange.z, u_MapRange.w) * heightFactor;
     float heightuv1  = fitRange(texture(u_HeightMap, texCoorduv1).y, u_MapRange.x, u_MapRange.y, u_MapRange.z, u_MapRange.w) * heightFactor;
 
+   // float height     = (texture(u_HeightMap, texCoord).y) * heightFactor;
+   // float heightu1v  = (texture(u_HeightMap, texCoordu1v).y) * heightFactor;
+   // float heightu1v1 = (texture(u_HeightMap, texCoordu1v1).y) * heightFactor;
+   // float heightuv1  = (texture(u_HeightMap, texCoorduv1).y) * heightFactor;
+
+
+//    float height     = 1;
+//    float heightu1v  = 1;
+//    float heightu1v1 = 1;
+//    float heightuv1  = 1;
+
+
+
+
 
     //vec4 p = mix(mix(p00, p01, u), mix(p10, p11, u), v);
 
@@ -189,9 +217,8 @@ void main()
     pu1v.y = heightu1v;
     pu1v1.y = heightu1v1;
     puv1.y = heightuv1;
-
-
-    vec3 normal = normalize(cross(vec3(p-pu1v), vec3(puv1-p)));
+ 
+    vec3 normal = normalize(cross(vec3(p-pu1v), vec3(p-puv1)));
     gl_Position = projection * view * model * p;
 
 
@@ -199,6 +226,8 @@ void main()
     FragPos = vec3(model * p);
     TexCoords = texCoord;
     FragViewPos = vec3(view * model * p);
+    ScreenSpaceDir =  (inverse(view) * vec4((inverse(projection) * vec4(p.x, p.y, 0, 1.0)).xyz, 0.0)).xyz;
+    ScreenSpaceDir = normalize(ScreenSpaceDir);
     {{__TBN_TESS__}}
     //vec3 tangent, bitangent;
     //getTangent(p, puv1, pu1v1, pu1v, texCoord, texCoorduv1, texCoordu1v1, texCoordu1v, tangent, bitangent);

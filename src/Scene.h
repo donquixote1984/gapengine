@@ -87,4 +87,5 @@ public:
     void SetCamNav(bool);
     RenderContext InverseCamera(float height);
     RenderContext ReverseCamera(float height);
+    float GetEnvExposure();
 };

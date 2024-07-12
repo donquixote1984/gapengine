@@ -133,7 +133,7 @@ vec3 PBRLighting(vec3 normal, vec3 viewDir)
         vec3 ir = CalculateIR(normal, viewDir);
         vec3 specular = CalculateSpecular(normal, viewDir);
         //vec3 specular = vec3(0);
-        ambient = ir + specular;
+        ambient = u_EnvExposure * (ir + specular);
     } else {
         ambient = vec3(0.03) * CalcChannel(material.diffuse);
     }

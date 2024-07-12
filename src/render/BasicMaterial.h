@@ -6,6 +6,8 @@
 #include "../shaders/ShaderSnippet.h"
 #include "../ui/UISettings.h"
 #include "../textures/MemoryTextureData.h"
+#include "../reader/TextureReader.h"
+
 
 class BasicMaterial: public Material
 {
@@ -33,6 +35,8 @@ public:
     void SetTangent(bool hasNormal);
     void SetShadow(bool receiveShadow);
     void InitDefaultSnippets();
+    void FeedTexturePackage(TexturePackagePath p);
+
     void UpdateTextureFromMemory(TextureType type, MemoryTextureData data);
     void UpdateTextureFromPath(TextureType type, std::string path);
 };

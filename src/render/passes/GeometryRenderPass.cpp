@@ -1,4 +1,5 @@
 #include "GeometryRenderPass.h"
+#include "../../global/GlobalData.h"
 
 
 GeometryRenderPass::GeometryRenderPass(Geometry *g)
@@ -54,4 +55,5 @@ void GeometryRenderPass::OnRenderMaterial(RenderContext &rc) const
     
     //mat->FlushToShader();
     //mat->FlushToGlobalSettings();
+    m_Geo->GetUniforms().Cache("u_EnvExposure", Global::scene->GetEnvExposure());
 }

@@ -26,6 +26,7 @@ struct TerrainMeta
     bool useNoise;
     glm::vec4 range = {.0f, 1.0f, .0f, 1.0f};
     glm::vec2 animated = {0.0f, .0f};
+    bool averageHeight = false;
     static TerrainMeta FromJson(json j)
     {
         TerrainMeta meta;
@@ -62,6 +63,10 @@ struct TerrainMeta
                     throw MissingConfigurationException("too large for terrain meta resolution");
                 }
             }
+        }
+        if (j.contains("averageHeight"))
+        {
+            meta.averageHeight = j["averageHeight"];
         }
 
         if (j.contains("size"))

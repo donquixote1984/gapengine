@@ -6,6 +6,11 @@ TerrainGPU::TerrainGPU(TerrainMeta meta): Terrain(meta)
     if (!meta.useNoise) {
         m_Texture = new Texture(meta.heightmap);
     }
+        GenTerrainMesh();
+    GenIndices();
+    GeometryData* d = GeometryDataFactory::CreateGeometryData(m_Mesh);
+    InitGeometryData(d, 1);
+
 }
 
 TerrainGPU::~TerrainGPU()
@@ -21,7 +26,7 @@ void TerrainGPU::GenTerrainMesh()
     int faceCount = (res - 1) * (res - 1) * 2;
     //int indices[(res-1) * (res-1) * 6];  // can not alloc 1k * 1k *6 size in stack.
 
-    m_Mesh = Mesh(res * res * m_Unit, {3, 3, 2, 3, 3});
+    m_Mesh = Mesh(res * res * m_Unit, {3, 3, 2, 3, 3, 4, 4});
     m_Mesh.InitFace(faceCount);
     for (unsigned int j = 0; j < res; j++)
     {
@@ -61,7 +66,7 @@ void TerrainGPU::GenTerrainMesh()
                     vertex[19] = -0.0f;
                     vertex[20] = -0.0f;
                     vertex[21] = -0.0f;
-                    //m_Mesh.AddVertex(vertex);
+                    m_Mesh.AddVertex(vertex);
                 }
                
             }
@@ -72,12 +77,7 @@ void TerrainGPU::GenTerrainMesh()
 
 void TerrainGPU::ProcessData()
 {
-    glPatchParameteri(GL_PATCH_VERTICES, m_Unit);
-    GenTerrainMesh();
-    GenIndices();
-    GeometryData *d = GeometryDataFactory::CreateGeometryData(m_Mesh);
-    InitGeometryData(d, 1);
-    m_Dp->Process(this);
+       m_Dp->Process(this);
     //m_Dp->SetDisplayMode(DisplayMode::WIREFRAME);
 }
 
@@ -85,6 +85,8 @@ void TerrainGPU::PreRender()
 {
     //Shader * s = this->GetMaterial()->GetShader();
     //s->Bind();
+    glPatchParameteri(GL_PATCH_VERTICES, m_Unit);
+
     this->GetUniforms().Cache("u_CombineNormal", 1);
     if (!m_Meta.useNoise) 
     {
@@ -104,7 +106,7 @@ void TerrainGPU::InitPasses()
         RenderPass *nrp = RenderPassLinkList::CreateRenderPass(RenderPassType::NOISE, this);
         nrp->Buffer(m_Meta.animated.x, 0);
         nrp->Buffer(m_Meta.animated.y, 1);
-        nrp->Buffer(16, 2);
+        nrp->Buffer(4, 2);
         m_RenderPasses->PrependRenderPass(nrp);
     } 
     //m_RenderPasses = new RenderPassLinkList();

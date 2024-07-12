@@ -52,6 +52,10 @@ void AssetHandler::operator >> (Geometry *g)
 {
     ResolveModel(g);
     std::string texFolder = m_AssetTempFullPath + "/" + constants::TEMP_TEX_FOLDER;
+    if (g->GetGeoData() == nullptr)
+    {
+        return;
+    }
     if (g->GetGeoData()->UseAssetMaterial())
     {
         for (auto& mesh : g->GetGeoData()->GetMeshes())

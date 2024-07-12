@@ -349,7 +349,11 @@ EnvBox *JsonSceneReader::ReadEnvBox(json skyboxJson)
     {
         bool hideBackground = skyboxJson["hideBackground"];
         s->HideBackground(hideBackground);
-
+    }
+    if (skyboxJson.contains("exposure"))
+    {
+        float exposure = skyboxJson["exposure"];
+        s->SetExposure(exposure);
     }
     return s;
 }

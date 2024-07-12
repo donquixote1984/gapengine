@@ -114,5 +114,6 @@ void Terrain::ReadyToScene()
 {
     m_Mats[0]->AddShaderSnippet(ShaderSnippet::TerrainSnippet(m_Meta.renderType == TerrainRenderType::GPU));
     Geometry::ReadyToScene();
+    m_Mats[0]->GetShader()->Statistic();
 }
 int Terrain::TerrainCounter = 0;

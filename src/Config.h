@@ -38,7 +38,7 @@ namespace constants
 
     // Terrain
     const int MAX_TERRAIN_RES_GPU = 20;
-    const int MAX_TERRAIN_RES_CPU = 1024;
+    const int MAX_TERRAIN_RES_CPU = 2048;
     const int HEIGHT_MAP = 23;  // texture slot
     const int NOISE_MAP = 22;   // texture slot
 

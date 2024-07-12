@@ -53,6 +53,6 @@ void main()
     vec3 result = PBRLighting(norm, viewDir);
     
     FragColor = vec4(result, 1);
-    //FragColor = vec4(vec3(shadow), 1);
+    //FragColor = vec4(CalcChannel(material.diffuse), 1);
     //FragColor = vec4(vec3(1), 1);
 }
