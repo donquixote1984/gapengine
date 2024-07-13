@@ -1,9 +1,7 @@
 {
   "geometry": [
-    "geos/floor3.json",
-    "geos/cube.json"
+    "kena.json"
   ],
-  "camnav": true,
   "lights": [
     "lights/dlight1.json",
     "lights/light1.json"

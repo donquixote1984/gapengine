@@ -213,5 +213,12 @@ RenderContext Scene::ReverseCamera(float height)
 
 float Scene::GetEnvExposure()
 {
-    return m_EnvBox->GetExposure();
+    if (m_EnvBox != nullptr)
+    {
+        return m_EnvBox->GetExposure();
+    } 
+    else
+    {
+        return 1.0f;
+    }
 }
