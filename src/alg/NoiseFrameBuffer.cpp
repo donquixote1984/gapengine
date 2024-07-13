@@ -52,9 +52,9 @@ NoiseFrameBuffer::NoiseFrameBuffer(NoiseType type, unsigned int res):FrameBuffer
     m_Shader->Bind();
 
   
-        for (int i = 0; i < 500; i ++)
+        //for (int i = 0; i < 500; i ++)
         {
-            m_Shader->setUniform1i("perm["+std::to_string(i)+"]", noise_perm[i]);
+            //m_Shader->setUniform1i("perm["+std::to_string(i)+"]", noise_perm[i]);
         }
 }
 

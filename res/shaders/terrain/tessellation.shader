@@ -9,8 +9,8 @@ out vec2 texe[];
 uniform int u_TessLevelOuter[4];
 uniform int u_TessLevelInner[2];
 
-const int MIN_TESS_LEVEL = 64;
-const int MAX_TESS_LEVEL = 64;
+const int MIN_TESS_LEVEL = 16;
+const int MAX_TESS_LEVEL = 32;
 const float MIN_DISTANCE = 1;
 const float MAX_DISTANCE = 100;
 
@@ -42,13 +42,13 @@ void main()
         float tessLevel2 = mix( MAX_TESS_LEVEL, MIN_TESS_LEVEL, min(distance01, distance11) );
         float tessLevel3 = mix( MAX_TESS_LEVEL, MIN_TESS_LEVEL, min(distance11, distance10) );
 
-        gl_TessLevelOuter[0] = tessLevel0;
-        gl_TessLevelOuter[1] = tessLevel1;
-        gl_TessLevelOuter[2] = tessLevel2;
-        gl_TessLevelOuter[3] = tessLevel3;
+        gl_TessLevelOuter[0] = MAX_TESS_LEVEL;
+        gl_TessLevelOuter[1] = MAX_TESS_LEVEL;
+        gl_TessLevelOuter[2] = MAX_TESS_LEVEL;
+        gl_TessLevelOuter[3] = MAX_TESS_LEVEL;
 
-        gl_TessLevelInner[0] = max(tessLevel1, tessLevel3);
-        gl_TessLevelInner[1] = max(tessLevel0, tessLevel2);
+        gl_TessLevelInner[0] = MIN_TESS_LEVEL;
+        gl_TessLevelInner[1] = MIN_TESS_LEVEL;
     }
 }
 
@@ -148,7 +148,7 @@ void main()
     float v = gl_TessCoord.y;
     float w = gl_TessCoord.z;
 
-    float delta = 0.1 ;
+    float delta = 0.001 ;
     float u1 = (u + delta);
     float v1 = (v + delta);
     float u2 = (u - delta);
@@ -219,6 +219,7 @@ void main()
     puv1.y = heightuv1;
  
     vec3 normal = normalize(cross(vec3(p-pu1v), vec3(p-puv1)));
+    normal.y = abs(normal.y);
     gl_Position = projection * view * model * p;
 
 
