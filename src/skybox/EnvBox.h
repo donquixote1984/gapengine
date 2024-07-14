@@ -11,6 +11,7 @@ class EnvBox: public RawVertices
 protected:
     Shader *m_Shader = nullptr;
     bool m_HideBackground = false;
+    bool m_Blur = false;
     float m_Exposure = 1.0f;
 public:
     EnvBox();
@@ -20,5 +21,6 @@ public:
     virtual void ActiveEnvironment() = 0;
     void HideBackground(bool hide);
     void SetExposure(float exposure);
+    void SetBlur(bool blur);
     float GetExposure();
 };

@@ -149,7 +149,17 @@ public:
             std::string assetPath = geojson["animation"];
             AnimationReader ar(assetPath, opp);
             ar >> g;
+
+            if (geojson.contains("timefactor"))
+            {
+                float timefactor = geojson["timefactor"];
+                if (g->GetAnimator() != nullptr)
+                {
+                    g->GetAnimator()->SetTimeFactor(timefactor);
+                }
+            }
         }
+       
         if (geojson.contains("mode"))
         {
             DisplayMode mode = util::GetDisplayMode(geojson["mode"]);
@@ -160,6 +170,7 @@ public:
             bool autoplay = geojson["autoplay"];
             g->SetPlaying(true);
         }
+
         if(geojson.contains("postprocessing"))
         {
             //for (auto & pp: geojson["postprocessing")

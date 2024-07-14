@@ -229,8 +229,16 @@ HDRIBox::~HDRIBox()
 
 void HDRIBox::BindTexture(int slot)
 {
-    glActiveTexture(GL_TEXTURE0 + slot);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, m_CubeMapTextureId);
+    if (m_Blur) {
+        glActiveTexture(GL_TEXTURE0 + slot);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, m_IRMapTextureId);
+    }
+    else
+    {
+        glActiveTexture(GL_TEXTURE0 + slot);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, m_CubeMapTextureId);
+    }
+
     //glBindTexture(GL_TEXTURE_CUBE_MAP, m_IRMapTextureId);
     //glBindTexture(GL_TEXTURE_CUBE_MAP, m_PrefilterTextureId);
 }

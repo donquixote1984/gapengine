@@ -42,7 +42,6 @@ class JsonSceneReader
 private:
     std::string m_BasePath;
     bool m_ShowNormal = false;
-    bool m_CamNav = false;
     WorldGraphNode *root;
     std::vector<EmptyTransform *> m_Geos;
     std::vector<Light *> m_Lights;
@@ -68,4 +67,5 @@ public:
     std::string ReadTexture(json json, std::string key);
     std::vector<std::string> ReadDefaultShaders(json geojson);
     std::unordered_map<std::string, std::any> GetOperationDesc(json);
+    void ReadCamera(json cam);
 };

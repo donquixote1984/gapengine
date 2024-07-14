@@ -6,10 +6,10 @@
     "glad",
     "glfw3",
     "glm",
-    "lua",
-    "mstch",
-    "nlohmann-json",
     "imgui",
-    "magic-enum"
+    "lua",
+    "magic-enum",
+    "mstch",
+    "nlohmann-json"
   ]
 }

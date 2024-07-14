@@ -9,9 +9,16 @@
     "tube.json",
     "plane.json"
   ],
-  "camnav": true,
+  "camera": {
+    "position": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "naving": true
+  },
   "lights": [
     "lights/p1.json",
-      "lights/p2.json"
+    "lights/p2.json"
   ]
 }

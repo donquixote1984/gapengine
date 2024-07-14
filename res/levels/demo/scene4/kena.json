@@ -1,7 +1,10 @@
 {
   "type": "mesh",
   "name": "kena",
-  "asset": "models/charactors/kena.asset",
+  "asset": "models/charactors/kena/act1.asset",
+  "animation": "models/charactors/kena/act1.fbx",
+  "timefactor": 0.5,
+  "autoplay": true,
   "preprocessing": {
     "useAssetMaterial": true
   },

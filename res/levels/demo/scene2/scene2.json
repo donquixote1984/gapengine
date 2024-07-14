@@ -6,6 +6,9 @@
   "lights": [
     "lights/d1.json"
   ],
+  "camera": {
+    "naving":  true
+  },
   "skybox": {
     "hdri": "./res/skybox/hdri/kloppenheim_06_puresky_2k.hdr",
     "hideBackground": true

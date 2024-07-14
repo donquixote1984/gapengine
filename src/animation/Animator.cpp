@@ -16,7 +16,7 @@ void Animator::UpdateAnimation(float dt, bool additive)
     {
         if (additive)
         {
-            m_CurrentTime += m_CurrentSceneAnimation->GetTicksPerSecond() * dt;
+            m_CurrentTime += m_CurrentSceneAnimation->GetTicksPerSecond() * dt * m_Timefactor;
         }
         m_CurrentTime = fmod(m_CurrentTime, m_CurrentSceneAnimation->GetDuration());
         CalculateBoneTransform(&m_CurrentSceneAnimation->GetRootNode(), glm::mat4(1.0f));
@@ -77,4 +77,9 @@ void Animator::SetCurrentSceneAnimation(SceneAnimation * anmiation)
 {
     //m_CurrentTime = 0.0;
     m_CurrentSceneAnimation = anmiation;
+}
+
+void Animator::SetTimeFactor(float factor)
+{
+    m_Timefactor = factor;
 }

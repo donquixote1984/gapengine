@@ -1,4 +1,5 @@
 #include "SceneUI.h"
+#include "../global/GlobalData.h"
 
 using namespace settings;
 SceneUI::SceneUI(GLFWwindow *window):UI(window)
@@ -25,6 +26,12 @@ void SceneUI::RenderShadow()
     if (ImGui::ArrowButton("##right", ImGuiDir_Right)) { settings->csmlayer++; }
 	ImGui::SameLine();
  	ImGui::Text("%d", settings->csmlayer);
+}
+
+void SceneUI::RenderCamera()
+{
+	glm::vec3 pos = Global::camera->GetPosition();;
+	ImGui::Text("Cam pos: (%g, %g, %g)", pos.x, pos.y, pos.z);
 }
 void SceneUI::RenderNormal()
 {
@@ -85,6 +92,7 @@ void SceneUI::RenderLoop()
 	RenderGamma();
 	RenderShadow();
 	RenderNormal();
+	RenderCamera();
 	RenderLights(m_Lights);
 	RenderSun();
 }

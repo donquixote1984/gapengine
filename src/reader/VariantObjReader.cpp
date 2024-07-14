@@ -41,12 +41,7 @@ void VariantObjReader::operator >> (Geometry* g)
     {
         std::string modelVariant = entry.path().string();
         ObjReader r(modelVariant, m_OPP);
-        if (r.GetMeshes().size() > 0)
-        {
-            variableGeometryData[m_VariantSize].FeedData(r.GetMeshes()); 
-            variableGeometryData[m_VariantSize].SetUseAssetMaterial(m_OPP.useAssetMaterial);
-            m_VariantSize += 1;
-        }
+        r >> g;
     }
-    g->InitGeometryVariant(variableGeometryData, m_VariantSize);
+    //g->InitGeometryVariant(variableGeometryData, m_VariantSize);
 }

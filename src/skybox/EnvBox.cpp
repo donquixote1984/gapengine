@@ -40,3 +40,7 @@ float EnvBox::GetExposure()
 {
     return m_Exposure;
 }
+void EnvBox::SetBlur(bool blur)
+{
+    m_Blur = blur;
+}

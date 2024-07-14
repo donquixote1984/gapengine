@@ -17,6 +17,7 @@ public:
     void RenderNormal();
     void RenderStatistics();
     void RenderPostProcess();
+    void RenderCamera();
     void RenderLoop() override;
     void RegisterComponent(UIComponent ui, void *) override;
     void RenderSun();

@@ -4,9 +4,9 @@
   "lights": [
     "lights/d1.json"
   ],
-  "terrain": "terrain3.json",
+  "terrain": "terrain1.json",
   "skybox": {
-    "hdri": "./res/skybox/hdri/lonely_road_afternoon_puresky_2k.hdr",
+    "hdri": "./res/skybox/hdri/kloppenheim_06_puresky_2k.hdr",
     "exposure": 0.5
   }
 }

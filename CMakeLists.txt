@@ -32,6 +32,7 @@ add_compile_definitions(_USE_MATH_DEFINES)
 add_compile_definitions(GLFW_INCLUDE_NONE)
 
 
+
 # 将源代码添加到此项目的可执行文件。
 add_executable (${PROJECT_NAME} ${MAIN_SRC} ${PROJECT_SOURCE_DIR}/gapengine.cpp "src/primitives/Torus.h" "src/primitives/Torus.cpp" "src/primitives/Cone.h" "src/primitives/Cylinder.cpp" "src/primitives/Monkey.h" "src/primitives/Monkey.cpp" "src/primitives/Tube.h" "src/primitives/Tube.cpp")
 

@@ -2,7 +2,6 @@
   "type": "terrain",
   "subtype": "plane",
   "name": "terrain 1",
-  "asset": "textures/sand1.asset",
   "meta": {
     "type": "GPU",
     "noise": true,

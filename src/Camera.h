@@ -69,9 +69,9 @@ private:
     float m_Yaw = -90.0f;
     float m_Pitch = 0.0f;
     bool m_YInversed = false;
-    bool m_CamNav = false;
+    bool m_Naving = false;
 
-    float m_NavSpeed = 0.05;
+    float m_NavingSpeed = 0.005f;
     float m_NavAngle = 0.0f;
 public:
     Camera();

@@ -137,12 +137,11 @@ JsonSceneReader::JsonSceneReader(const std::string &file)
         m_Terrain = ReadTerrain(terrainjson);
     }
 
-    if (j.contains("camnav"))
+    if (j.contains("camera"))
     {
-        bool camNav = j["camnav"];
-        m_CamNav = camNav;
+        ReadCamera(j["camera"]);
     }
-   
+
     f.close();
 }
 
@@ -287,8 +286,6 @@ void JsonSceneReader::AddToScene(Scene &scene)
     }
     scene.settings.showNormal = m_ShowNormal;
 
-    scene.SetCamNav(m_CamNav);
-
     Global::ui->RegisterComponent(UIComponent::LIGHTS, (void *)scene.GetLights());
     
 }
@@ -320,6 +317,22 @@ std::vector<std::string> JsonSceneReader::ReadDefaultShaders(json geoJson)
     return shaderVector;
 }
 
+
+void JsonSceneReader::ReadCamera(json cameraJson)
+{
+    if (cameraJson.contains("position"))
+    {
+        
+        json pos = cameraJson["position"];
+        Global::camera->SetPosition(util::GetPosition(pos));
+    }
+
+    if (cameraJson.contains("naving"))
+    {
+        bool naving = cameraJson["naving"];
+        Global::camera->SetCamNav(naving);
+    }
+}
 EnvBox *JsonSceneReader::ReadEnvBox(json skyboxJson)
 {
     EnvBox *s = nullptr;
@@ -354,6 +367,11 @@ EnvBox *JsonSceneReader::ReadEnvBox(json skyboxJson)
     {
         float exposure = skyboxJson["exposure"];
         s->SetExposure(exposure);
+    }
+    if (skyboxJson.contains("blur"))
+    {
+        bool blur = skyboxJson["blur"];
+        s->SetBlur(blur);
     }
     return s;
 }

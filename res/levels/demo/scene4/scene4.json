@@ -1,9 +1,17 @@
 {
   "geometry": [
-    "kena.json"
+    "base.json",
+    "kena4.json"
   ],
   "lights": [
     "lights/d1.json",
     "lights/p1.json"
-  ]
+  ],
+
+
+  "skybox": {
+    "hdri": "./res/skybox/hdri/forest2.hdr",
+    "blur":  true,
+    "exposure": 0.5
+  }
 }

@@ -123,12 +123,26 @@ void Camera::OnUpdate(GLFWwindow *window)
 	//shader->setUniform4m("projection", m_Projection);
 	//shader->setUniform4m("view", getView());
 	//shader->setUniform3f("camPos", m_Pos.x, m_Pos.y, m_Pos.z);
-	OnNav();
+	m_Yaw -= 0.1;
+	glm::vec3 front;
+	front.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+	front.y = sin(glm::radians(m_Pitch));
+	front.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+	m_CamFront = glm::normalize(front);
+	m_Pos = glm::length(m_Pos - m_Offset) * -m_CamFront + m_Offset;
 }
 
 void Camera::OnNav()
 {
-
+	if (m_Naving)
+	{
+		glm::vec3 centerPos = glm::vec3(0, m_Pos.y, 0);
+		float radius = glm::distance(m_Pos, centerPos);
+		//m_CamFront = glm::normalize(centerPos - m_Pos);
+		m_NavAngle += m_NavingSpeed;
+		m_Pos.x = radius * glm::sin(m_NavAngle);
+		m_Pos.z = radius* glm::cos(m_NavAngle);
+	}
 }
 
 void Camera::SetPosition(glm::vec3 pos)
@@ -251,5 +265,5 @@ void Camera::ReverseY(float height)
 
 void Camera::SetCamNav(bool nav)
 {
-	m_CamNav = nav;
+	m_Naving = nav;
 }

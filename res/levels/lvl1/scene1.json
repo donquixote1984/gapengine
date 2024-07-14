@@ -2,6 +2,14 @@
     "geometry": ["geos/cannon/cannon.json", "geos/floor3/floor3.json"],
 
     "lights": ["lights/light1.json"],
+  "camera": {
+    "position": {
+      "x": -0.4,
+      "y": 3.7,
+      "z": 6.7
+    },
+    "naving":  true
+  },
     "skybox": {
         "cubemap": {
             "top": "./res/skybox/night/py.png",
